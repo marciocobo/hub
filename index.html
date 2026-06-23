@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Central de Certificações Cloud</title>
+<style>
+:root{--bg:#0f1117;--bg2:#1a1d27;--bg3:#22263a;--border:#2e3250;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;min-height:100vh;display:flex;flex-direction:column;}
+header{padding:40px 32px 28px;text-align:center;border-bottom:1px solid var(--border);}
+header h1{font-size:28px;font-weight:800;background:linear-gradient(90deg,#7c6aff,#60a5fa,#f59e0b);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:8px;}
+header p{color:var(--text2);font-size:15px;}
+main{flex:1;padding:48px 32px;max-width:1100px;margin:0 auto;width:100%;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:24px;}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:14px;padding:28px;cursor:pointer;transition:all .2s;position:relative;overflow:hidden;text-decoration:none;display:block;color:var(--text);}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.card.ccaf::before{background:linear-gradient(90deg,#7c6aff,#a78bfa);}
+.card.saa::before{background:linear-gradient(90deg,#3b82f6,#60a5fa);}
+.card.clf::before{background:linear-gradient(90deg,#f59e0b,#fbbf24);}
+.card:hover{transform:translateY(-4px);border-color:rgba(255,255,255,.15);box-shadow:0 12px 40px rgba(0,0,0,.4);}
+.card.ccaf:hover{border-color:rgba(124,106,255,.4);}
+.card.saa:hover{border-color:rgba(59,130,246,.4);}
+.card.clf:hover{border-color:rgba(245,158,11,.4);}
+.cert-icon{font-size:42px;margin-bottom:16px;}
+.cert-badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;margin-bottom:14px;}
+.card.ccaf .cert-badge{background:rgba(124,106,255,.2);color:#a78bfa;}
+.card.saa .cert-badge{background:rgba(59,130,246,.2);color:#60a5fa;}
+.card.clf .cert-badge{background:rgba(245,158,11,.2);color:#fbbf24;}
+.cert-title{font-size:19px;font-weight:800;margin-bottom:6px;line-height:1.3;}
+.cert-sub{font-size:13px;color:var(--text2);margin-bottom:20px;}
+.cert-info{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
+.ci{background:var(--bg3);border-radius:8px;padding:10px 12px;}
+.ci .label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:600;}
+.ci .value{font-size:14px;font-weight:700;margin-top:2px;}
+.cert-domains{margin-bottom:20px;}
+.dom-bar{margin-bottom:8px;}
+.dom-label{display:flex;justify-content:space-between;font-size:12px;color:var(--text2);margin-bottom:3px;}
+.dom-track{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;}
+.dom-fill{height:100%;border-radius:99px;}
+.open-btn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;padding:11px;border-radius:8px;font-size:14px;font-weight:700;border:none;cursor:pointer;transition:all .15s;}
+.card.ccaf .open-btn{background:#7c6aff;color:#fff;}
+.card.saa .open-btn{background:#3b82f6;color:#fff;}
+.card.clf .open-btn{background:#f59e0b;color:#000;}
+.open-btn:hover{opacity:.9;}
+.stats{display:flex;gap:16px;justify-content:center;padding:20px;border-top:1px solid var(--border);color:var(--text3);font-size:13px;}
+.stat{display:flex;align-items:center;gap:6px;}
+</style>
+</head>
+<body>
+<header>
+  <h1>🎓 Central de Certificações Cloud</h1>
+  <p>Selecione uma certificação para acessar o guia completo de estudos interativo</p>
+</header>
+<main>
+  <div class="grid">
+
+    <!-- CCA-F -->
+    <a href="ccaf_2026.html" class="card ccaf">
+      <div class="cert-icon">☁️</div>
+      <div class="cert-badge">ANTHROPIC</div>
+      <div class="cert-title">Claude Certified Architect — Foundations</div>
+      <div class="cert-sub">CCA-F · Certificação oficial de arquitetura com Claude</div>
+      <div class="cert-info">
+        <div class="ci"><div class="label">Questões</div><div class="value">60</div></div>
+        <div class="ci"><div class="label">Tempo</div><div class="value">90 min</div></div>
+        <div class="ci"><div class="label">Mínimo</div><div class="value">750/1000</div></div>
+        <div class="ci"><div class="label">Nível</div><div class="value">Foundations</div></div>
+      </div>
+      <div class="cert-domains">
+        <div class="dom-bar"><div class="dom-label"><span>D1 — Claude Fundamentals</span><strong>27%</strong></div><div class="dom-track"><div class="dom-fill" style="width:27%;background:#7c6aff"></div></div></div>
+        <div class="dom-bar"><div class="dom-label"><span>D2 — Prompt Engineering</span><strong>25%</strong></div><div class="dom-track"><div class="dom-fill" style="width:25%;background:#a78bfa"></div></div></div>
+        <div class="dom-bar"><div class="dom-label"><span>D3 — Arquitetura de Sistemas</span><strong>27%</strong></div><div class="dom-track"><div class="dom-fill" style="width:27%;background:#7c6aff"></div></div></div>
+        <div class="dom-bar"><div class="dom-label"><span>D4 — Segurança & Conformidade</span><strong>21%</strong></div><div class="dom-track"><div class="dom-fill" style="width:21%;background:#a78bfa"></div></div></div>
+      </div>
+      <button class="open-btn" onclick="event.preventDefault();window.location.href='ccaf_2026.html'">Abrir Guia de Estudos →</button>
+    </a>
+
+    <!-- AWS SAA -->
+    <a href="aws_saa_study.html" class="card saa">
+      <div class="cert-icon">☁️</div>
+      <div class="cert-badge">AWS</div>
+      <div class="cert-title">Solutions Architect — Associate</div>
+      <div class="cert-sub">SAA-C03 · Projeto de arquiteturas seguras, resilientes e eficientes</div>
+      <div class="cert-info">
+        <div class="ci"><div class="label">Questões</div><div class="value">65</div></div>
+        <div class="ci"><div class="label">Tempo</div><div class="value">130 min</div></div>
+        <div class="ci"><div class="label">Mínimo</div><div class="value">720/1000</div></div>
+        <div class="ci"><div class="label">Nível</div><div class="value">Associate</div></div>
+      </div>
+      <div class="cert-domains">
+        <div class="dom-bar"><div class="dom-label"><span>D1 — Arquiteturas Seguras</span><strong>30%</strong></div><div class="dom-track"><div class="dom-fill" style="width:30%;background:#3b82f6"></div></div></div>
+        <div class="dom-bar"><div class="dom-label"><span>D2 — Arquiteturas Resilientes</span><strong>26%</strong></div><div class="dom-track"><div class="dom-fill" style="width:26%;background:#34d399"></div></div></div>
+        <div class="dom-bar"><div class="dom-label"><span>D3 — Alta Performance</span><strong>24%</strong></div><div class="dom-track"><div class="dom-fill" style="width:24%;background:#fbbf24"></div></div></div>
+        <div class="dom-bar"><div class="dom-label"><span>D4 — Custo Otimizado</span><strong>20%</strong></div><div class="dom-track"><div class="dom-fill" style="width:20%;background:#a78bfa"></div></div></div>
+      </div>
+      <button class="open-btn" onclick="event.preventDefault();window.location.href='aws_saa_study.html'">Abrir Guia de Estudos →</button>
+    </a>
+
+    <!-- CLF-C02 -->
+    <a href="clf_c02_study.html" class="card clf">
+      <div class="cert-icon">☁️</div>
+      <div class="cert-badge">AWS</div>
+      <div class="cert-title">Certified Cloud Practitioner</div>
+      <div class="cert-sub">CLF-C02 · Fundamentos de cloud computing e serviços AWS</div>
+      <div class="cert-info">
+        <div class="ci"><div class="label">Questões</div><div class="value">65</div></div>
+        <div class="ci"><div class="label">Tempo</div><div class="value">90 min</div></div>
+        <div class="ci"><div class="label">Mínimo</div><div class="value">700/1000</div></div>
+        <div class="ci"><div class="label">Nível</div><div class="value">Foundational</div></div>
+      </div>
+      <div class="cert-domains">
+        <div class="dom-bar"><div class="dom-label"><span>D1 — Conceitos Cloud</span><strong>24%</strong></div><div class="dom-track"><div class="dom-fill" style="width:24%;background:#f59e0b"></div></div></div>
+        <div class="dom-bar"><div class="dom-label"><span>D2 — Segurança</span><strong>30%</strong></div><div class="dom-track"><div class="dom-fill" style="width:30%;background:#ef4444"></div></div></div>
+        <div class="dom-bar"><div class="dom-label"><span>D3 — Serviços Cloud</span><strong>34%</strong></div><div class="dom-track"><div class="dom-fill" style="width:34%;background:#34d399"></div></div></div>
+        <div class="dom-bar"><div class="dom-label"><span>D4 — Faturamento</span><strong>12%</strong></div><div class="dom-track"><div class="dom-fill" style="width:12%;background:#a78bfa"></div></div></div>
+      </div>
+      <button class="open-btn" onclick="event.preventDefault();window.location.href='clf_c02_study.html'">Abrir Guia de Estudos →</button>
+    </a>
+
+  </div>
+</main>
+<div class="stats">
+  <div class="stat">🎓 3 certificações</div>
+  <div class="stat">·</div>
+  <div class="stat">📝 180+ questões de simulado</div>
+  <div class="stat">·</div>
+  <div class="stat">🃏 100+ flashcards</div>
+  <div class="stat">·</div>
+  <div class="stat">✅ Checklists de prontidão</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,649 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AWS CLF-C02 — Guia de Estudos</title>
+<style>
+:root{--bg:#0f1117;--bg2:#1a1d27;--bg3:#22263a;--border:#2e3250;--accent:#f59e0b;--accent2:#fbbf24;--green:#34d399;--yellow:#fbbf24;--red:#f87171;--blue:#60a5fa;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--r:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:15px;line-height:1.7;display:flex;min-height:100vh;}
+#sidebar{width:260px;min-width:260px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
+#sh{padding:20px 16px 12px;border-bottom:1px solid var(--border);}
+#sh h1{font-size:15px;font-weight:700;color:var(--accent2);}
+#sh p{font-size:11px;color:var(--text3);margin-top:2px;}
+.ns{padding:10px 8px 4px;}
+.nst{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;padding:0 8px 6px;}
+.ni{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text2);transition:all .15s;}
+.ni:hover{background:var(--bg3);color:var(--text);}
+.ni.active{background:rgba(245,158,11,.18);color:var(--accent2);font-weight:600;}
+.ni .dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;}
+.nb{margin-left:auto;font-size:10px;background:var(--bg3);padding:1px 6px;border-radius:99px;color:var(--text3);}
+#main{flex:1;overflow-y:auto;}
+#topbar{position:sticky;top:0;z-index:50;background:rgba(15,17,23,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 28px;display:flex;align-items:center;gap:16px;}
+#topbar h2{font-size:14px;font-weight:600;}
+.pp{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);}
+.pbw{width:120px;height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;}
+.pbf{height:100%;background:var(--accent);border-radius:99px;transition:width .4s;}
+#content{padding:28px 32px;max-width:900px;}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;}
+.ct{font-size:17px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.cs{font-size:13px;color:var(--text2);margin-bottom:16px;}
+.hero{background:linear-gradient(135deg,rgba(245,158,11,.15),rgba(96,165,250,.08));border:1px solid rgba(245,158,11,.3);border-radius:var(--r);padding:28px;margin-bottom:24px;}
+.hero h1{font-size:22px;font-weight:800;background:linear-gradient(90deg,var(--accent2),#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero p{color:var(--text2);margin-top:6px;font-size:14px;}
+.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:16px 0;}
+.ii{background:var(--bg3);border-radius:8px;padding:14px;}
+.ii .lb{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:600;}
+.ii .vl{font-size:16px;font-weight:700;color:var(--text);margin-top:4px;}
+.dbi{margin-bottom:14px;}
+.dbh{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
+.dbt{height:10px;background:var(--bg3);border-radius:99px;overflow:hidden;}
+.dbf{height:100%;border-radius:99px;transition:width 1s .2s;}
+.al{border-radius:8px;padding:12px 16px;margin:12px 0;font-size:13.5px;border-left:3px solid;}
+.aw{background:rgba(251,191,36,.08);border-color:var(--yellow);color:#fde68a;}
+.at{background:rgba(52,211,153,.08);border-color:var(--green);color:#a7f3d0;}
+.ai{background:rgba(96,165,250,.08);border-color:var(--blue);color:#bfdbfe;}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+th{background:var(--bg3);color:var(--text2);font-weight:600;text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);}
+td{padding:8px 12px;border-bottom:1px solid rgba(46,50,80,.5);}
+tr:last-child td{border-bottom:none;}
+.qo{padding:11px 16px;border-radius:8px;cursor:pointer;font-size:13.5px;border:1px solid var(--border);background:var(--bg3);color:var(--text);transition:all .15s;text-align:left;width:100%;margin-bottom:8px;}
+.qo:hover:not(.correct):not(.wrong){border-color:var(--accent);background:rgba(245,158,11,.1);}
+.qo.correct{background:rgba(52,211,153,.15);border-color:var(--green);color:#a7f3d0;}
+.qo.wrong{background:rgba(248,113,113,.15);border-color:var(--red);color:#fecaca;}
+.qfb{margin-top:14px;padding:12px 16px;border-radius:8px;font-size:13.5px;display:none;}
+.qfb.show{display:block;}
+.qfb.ok{background:rgba(52,211,153,.1);color:#a7f3d0;border:1px solid rgba(52,211,153,.3);}
+.qfb.bad{background:rgba(248,113,113,.1);color:#fecaca;border:1px solid rgba(248,113,113,.3);}
+.qnav{display:flex;align-items:center;gap:10px;margin-top:16px;}
+.btn{padding:8px 18px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;}
+.bp{background:var(--accent);color:#fff;}
+.bp:hover{opacity:.9;}
+.bg{background:var(--bg3);color:var(--text2);border:1px solid var(--border);}
+.bg:hover{background:var(--border);color:var(--text);}
+.qc{font-size:12px;color:var(--text3);margin-left:auto;}
+.fcw{perspective:1000px;height:200px;cursor:pointer;margin-bottom:16px;}
+.fc{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s;border-radius:var(--r);}
+.fc.flipped{transform:rotateY(180deg);}
+.cf{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--r);display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;border:1px solid var(--border);flex-direction:column;}
+.cf.front{background:var(--bg2);}
+.cf.back{background:linear-gradient(135deg,rgba(245,158,11,.12),rgba(96,165,250,.08));transform:rotateY(180deg);}
+.cf .hint{position:absolute;bottom:10px;right:14px;font-size:11px;color:var(--text3);}
+.chi{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(46,50,80,.4);cursor:pointer;}
+.chi:last-child{border-bottom:none;}
+.chb{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .15s;color:transparent;}
+.chi.ck .chb{background:var(--green);border-color:var(--green);color:#fff;}
+.chi.ck .cht{text-decoration:line-through;color:var(--text3);}
+.cht{font-size:13.5px;}
+.cp{height:8px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:16px 0 8px;}
+.cpf{height:100%;background:var(--green);border-radius:99px;transition:width .4s;}
+.td{font-size:52px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-2px;color:var(--accent2);text-align:center;margin:10px 0;}
+.page{display:none;}
+.page.active{display:block;}
+h2.sh{font-size:20px;font-weight:700;margin-bottom:6px;}
+h3.sbh{font-size:15px;font-weight:700;color:var(--accent2);margin:18px 0 8px;}
+p{margin-bottom:10px;color:var(--text2);}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;}
+.exam-header{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;}
+.exam-timer{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--yellow);}
+.exam-prog{flex:1;}
+.exam-qnum{font-size:13px;color:var(--text3);margin-bottom:4px;}
+.exam-bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;}
+.exam-bf{height:100%;background:var(--accent);border-radius:99px;transition:width .3s;}
+.exam-q{font-size:15px;font-weight:600;margin-bottom:16px;line-height:1.6;}
+.exam-domain{font-size:11px;color:var(--text3);margin-bottom:8px;}
+.exam-nav{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+.exam-flag{padding:6px 14px;border-radius:7px;font-size:12px;cursor:pointer;border:1px solid var(--yellow);background:rgba(251,191,36,.08);color:var(--yellow);}
+.result-bar{height:16px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:8px 0;}
+.result-fill{height:100%;border-radius:99px;transition:width 1s;}
+.rcard{background:var(--bg3);border-radius:8px;padding:12px 16px;margin-bottom:8px;font-size:13px;border-left:3px solid var(--border);}
+.rcard.rc{border-color:var(--green);}
+.rcard.rw{border-color:var(--red);}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+.td1{background:rgba(245,158,11,.2);color:#f59e0b;}
+.td2{background:rgba(239,68,68,.2);color:#ef4444;}
+.td3{background:rgba(52,211,153,.2);color:#34d399;}
+.td4{background:rgba(167,139,250,.2);color:#a78bfa;}
+
+</style>
+</head>
+<body>
+<nav id="sidebar">
+<div id="sh"><h1>AWS CLF-C02</h1><p>Cloud Practitioner</p></div>
+<div class="ns">
+<div class="nst">Visão Geral</div>
+<div class="ni active" id="nhome" onclick="P('home',this)">🏠 Dashboard</div>
+<div class="ni" onclick="P('simulado',this)">📝 Simulado (65q)</div>
+<div class="ni" onclick="P('checklist',this)">✅ Checklist</div>
+<div class="ni" onclick="P('timer',this)">⏱️ Pomodoro</div>
+</div>
+<div class="ns">
+<div class="nst">Estudo por Domínio</div>
+<div class="ni" id="nw1" onclick="P('w1',this)"><span class="dot"></span>S1 — Conceitos Cloud<span class="nb">D1</span></div>
+<div class="ni" id="nw2" onclick="P('w2',this)"><span class="dot"></span>S2 — Segurança<span class="nb">D2</span></div>
+<div class="ni" id="nw3" onclick="P('w3',this)"><span class="dot"></span>S3 — Serviços AWS<span class="nb">D3</span></div>
+<div class="ni" id="nw4" onclick="P('w4',this)"><span class="dot"></span>S4 — Faturamento<span class="nb">D4</span></div>
+</div>
+<div class="ns">
+<div class="nst">Referência</div>
+<div class="ni" onclick="P('flashcards',this)">🃏 Flashcards (32)</div>
+<div class="ni" onclick="P('resources',this)">📚 Recursos</div>
+</div>
+</nav>
+<div id="main">
+<div id="topbar"><h2 id="tbtitle">Dashboard</h2>
+<div class="pp"><span id="ptext">0 itens</span><div class="pbw"><div class="pbf" id="gpbar" style="width:0%"></div></div></div>
+</div>
+<div id="content">
+<div id="page-home" class="page active">
+<div class="hero"><h1>🏆 AWS CLF-C02</h1><p>Cloud Practitioner — Guia completo e interativo. Tudo que você precisa.</p></div>
+<div class="ig">
+<div class="ii"><div class="lb">Questões</div><div class="vl">65</div></div>
+<div class="ii"><div class="lb">Tempo</div><div class="vl">90 min</div></div>
+<div class="ii"><div class="lb">Nota mín.</div><div class="vl">700/1000</div></div>
+<div class="ii"><div class="lb">Custo</div><div class="vl">USD 100</div></div>
+<div class="ii"><div class="lb">Plataforma</div><div class="vl">Pearson VUE</div></div>
+</div>
+<div class="card"><div class="ct">📊 Distribuição dos Domínios</div><div class="dbi"><div class="dbh"><span><span class="tag td1">D1</span> Conceitos de Cloud</span><strong>24%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#f59e0b" data-t="24"></div></div></div>
+<div class="dbi"><div class="dbh"><span><span class="tag td2">D2</span> Segurança e Conformidade</span><strong>30%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#ef4444" data-t="30"></div></div></div>
+<div class="dbi"><div class="dbh"><span><span class="tag td3">D3</span> Serviços Cloud AWS</span><strong>34%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#34d399" data-t="34"></div></div></div>
+<div class="dbi"><div class="dbh"><span><span class="tag td4">D4</span> Faturamento e Suporte</span><strong>12%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#a78bfa" data-t="12"></div></div></div>
+</div>
+<div class="card"><div class="ct">🗺️ Estudo por Domínio</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:8px"><div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w1',document.getElementById('nw1'))"><strong style="font-size:13px">S1 — Conceitos Cloud</strong><br><span style="font-size:12px;color:var(--text3)">IaaS, PaaS, SaaS, modelos de nuvem, AWS Global Infrastructure</span></div>
+<div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w2',document.getElementById('nw2'))"><strong style="font-size:13px">S2 — Segurança</strong><br><span style="font-size:12px;color:var(--text3)">IAM, Shared Responsibility, Shield, WAF, Compliance</span></div>
+<div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w3',document.getElementById('nw3'))"><strong style="font-size:13px">S3 — Serviços AWS</strong><br><span style="font-size:12px;color:var(--text3)">EC2, S3, RDS, Lambda, VPC, CloudFront, Route 53</span></div>
+<div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w4',document.getElementById('nw4'))"><strong style="font-size:13px">S4 — Faturamento</strong><br><span style="font-size:12px;color:var(--text3)">Pricing, Cost Explorer, Budgets, Support Plans, Trusted Advisor</span></div>
+</div>
+</div>
+</div>
+<div id="page-simulado" class="page">
+<h2 class="sh">📝 Simulado — AWS CLF-C02</h2>
+<p style="margin-bottom:20px">65 questões · 90 min · Mínimo: 700/1000</p>
+<div id="exam-start">
+<div class="card" style="max-width:520px">
+<div style="font-size:48px;text-align:center;margin-bottom:12px">🎓</div>
+<div class="ct" style="justify-content:center">Pronto para o simulado?</div>
+<p>Simula o exame real com questões embaralhadas e timer.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0"><div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D1</strong> — ~16q (24%)</div>
+<div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D2</strong> — ~20q (30%)</div>
+<div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D3</strong> — ~22q (34%)</div>
+<div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D4</strong> — ~8q (12%)</div>
+</div>
+<button class="btn bp" style="font-size:15px;padding:12px 32px;width:100%;margin-top:8px" onclick="startExam()">▶ Iniciar Simulado</button>
+</div>
+</div>
+<div id="exam-body" style="display:none">
+<div class="exam-header">
+<div><div style="font-size:11px;color:var(--text3)">TEMPO</div><div class="exam-timer" id="exam-clock">90:00</div></div>
+<div class="exam-prog">
+<div class="exam-qnum" id="exam-qnum">Questão 1 de 65</div>
+<div class="exam-bar"><div class="exam-bf" id="exam-bf" style="width:1%"></div></div>
+<div style="font-size:11px;color:var(--text3);margin-top:4px" id="exam-score-live">Respondidas: 0 | Marcadas: 0</div>
+</div>
+</div>
+<div class="card">
+<div class="exam-domain" id="exam-domain"></div>
+<div class="exam-q" id="exam-q"></div>
+<div id="exam-opts"></div>
+<div class="exam-nav">
+<button class="btn bg" onclick="examNav(-1)">← Anterior</button>
+<button class="exam-flag" onclick="examFlag()">🚩 Marcar</button>
+<button class="btn bp" onclick="examNav(1)" style="margin-left:auto">Próxima →</button>
+</div>
+<div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap" id="exam-dots"></div>
+</div>
+<button class="btn" onclick="finishExam()" style="background:#f87171;color:#fff;margin-top:4px">⏹ Encerrar</button>
+</div>
+<div id="exam-result" style="display:none"><div class="card" id="exam-result-card"></div></div>
+</div>
+<div id="page-w1" class="page">
+<h2 class="sh">S1 — Conceitos Cloud</h2><p style="margin-bottom:20px">IaaS, PaaS, SaaS, modelos de nuvem, AWS Global Infrastructure</p>
+<div class="card"><div class="ct">🧠 Quiz — S1 — Conceitos Cloud</div><div id="qw1"></div></div>
+</div>
+<div id="page-w2" class="page">
+<h2 class="sh">S2 — Segurança</h2><p style="margin-bottom:20px">IAM, Shared Responsibility, Shield, WAF, Compliance</p>
+<div class="card"><div class="ct">🧠 Quiz — S2 — Segurança</div><div id="qw2"></div></div>
+</div>
+<div id="page-w3" class="page">
+<h2 class="sh">S3 — Serviços AWS</h2><p style="margin-bottom:20px">EC2, S3, RDS, Lambda, VPC, CloudFront, Route 53</p>
+<div class="card"><div class="ct">🧠 Quiz — S3 — Serviços AWS</div><div id="qw3"></div></div>
+</div>
+<div id="page-w4" class="page">
+<h2 class="sh">S4 — Faturamento</h2><p style="margin-bottom:20px">Pricing, Cost Explorer, Budgets, Support Plans, Trusted Advisor</p>
+<div class="card"><div class="ct">🧠 Quiz — S4 — Faturamento</div><div id="qw4"></div></div>
+</div>
+<div id="page-flashcards" class="page">
+<h2 class="sh">🃏 Flashcards (32 cards)</h2>
+<p>Clique no card para revelar. Use setas ou teclado ← → para navegar, Espaço para virar.</p>
+<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap" id="fc-tags"></div>
+<div class="fcw" onclick="flipFC()">
+<div class="fc" id="fc-card">
+<div class="cf front"><div style="font-size:12px;color:var(--accent2);margin-bottom:10px" id="fc-dom"></div><div style="font-size:16px;font-weight:600;line-height:1.5" id="fc-front"></div><div class="hint">clique para revelar →</div></div>
+<div class="cf back"><div style="font-size:12px;color:var(--green);margin-bottom:10px" id="fc-dom2"></div><div style="font-size:14px;line-height:1.6;color:var(--text)" id="fc-back"></div></div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+<button class="btn bg" onclick="fcNav(-1)">← Anterior</button>
+<span style="font-size:13px;color:var(--text3)" id="fc-ctr">1 / 32</span>
+<button class="btn bg" onclick="fcNav(1)">Próximo →</button>
+<button class="btn bp" onclick="shuffleFC()" style="margin-left:auto">🔀 Embaralhar</button>
+</div>
+</div>
+<div id="page-checklist" class="page">
+<h2 class="sh">✅ Checklist de Prontidão</h2>
+<p>Marque os tópicos que você já domina. Progresso salvo automaticamente.</p>
+<div class="cp"><div class="cpf" id="cpf" style="width:0%"></div></div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:20px" id="cp-txt">0 / 45 concluídos</div>
+<div style="font-size:14px;font-weight:700;color:var(--accent2);margin:20px 0 10px;padding-top:12px;border-top:1px solid var(--border)">☁️ D1: Conceitos de Cloud (24%)</div>
+<div class="chi" id="chi0" onclick="toggleChi(0)"><div class="chb" id="chb0">✓</div><div class="cht">Definir computação em nuvem segundo o NIST</div></div>
+<div class="chi" id="chi1" onclick="toggleChi(1)"><div class="chb" id="chb1">✓</div><div class="cht">Diferenciar IaaS, PaaS e SaaS com exemplos AWS de cada</div></div>
+<div class="chi" id="chi2" onclick="toggleChi(2)"><div class="chb" id="chb2">✓</div><div class="cht">Entender os 3 modelos de implantação: pública, privada e híbrida</div></div>
+<div class="chi" id="chi3" onclick="toggleChi(3)"><div class="chb" id="chb3">✓</div><div class="cht">Saber o que são Regiões, AZs e Edge Locations e como diferem</div></div>
+<div class="chi" id="chi4" onclick="toggleChi(4)"><div class="chb" id="chb4">✓</div><div class="cht">Entender o modelo pay-as-you-go e CapEx vs OpEx</div></div>
+<div class="chi" id="chi5" onclick="toggleChi(5)"><div class="chb" id="chb5">✓</div><div class="cht">Conhecer os 6 benefícios da computação em nuvem</div></div>
+<div class="chi" id="chi6" onclick="toggleChi(6)"><div class="chb" id="chb6">✓</div><div class="cht">Saber o que é elasticidade vs escalabilidade</div></div>
+<div class="chi" id="chi7" onclick="toggleChi(7)"><div class="chb" id="chb7">✓</div><div class="cht">Entender os 6 pilares do AWS Well-Architected Framework</div></div>
+<div class="chi" id="chi8" onclick="toggleChi(8)"><div class="chb" id="chb8">✓</div><div class="cht">Conhecer os benefícios de economia de escala da AWS</div></div>
+<div class="chi" id="chi9" onclick="toggleChi(9)"><div class="chb" id="chb9">✓</div><div class="cht">Saber quantas regiões, AZs e Edge Locations a AWS tem (aprox.)</div></div>
+<div style="font-size:14px;font-weight:700;color:var(--accent2);margin:20px 0 10px;padding-top:12px;border-top:1px solid var(--border)">🔐 D2: Segurança e Conformidade (30%)</div>
+<div class="chi" id="chi10" onclick="toggleChi(10)"><div class="chb" id="chb10">✓</div><div class="cht">Explicar o Shared Responsibility Model para EC2, RDS, S3 e Lambda</div></div>
+<div class="chi" id="chi11" onclick="toggleChi(11)"><div class="chb" id="chb11">✓</div><div class="cht">Entender IAM: users, groups, roles, policies (diferenças e uso)</div></div>
+<div class="chi" id="chi12" onclick="toggleChi(12)"><div class="chb" id="chb12">✓</div><div class="cht">Saber o que é MFA e por que é essencial para a conta root</div></div>
+<div class="chi" id="chi13" onclick="toggleChi(13)"><div class="chb" id="chb13">✓</div><div class="cht">Entender o princípio de Least Privilege</div></div>
+<div class="chi" id="chi14" onclick="toggleChi(14)"><div class="chb" id="chb14">✓</div><div class="cht">Saber o que o AWS CloudTrail registra e por que é importante</div></div>
+<div class="chi" id="chi15" onclick="toggleChi(15)"><div class="chb" id="chb15">✓</div><div class="cht">Diferenciar GuardDuty, Inspector, Macie, Config e Security Hub</div></div>
+<div class="chi" id="chi16" onclick="toggleChi(16)"><div class="chb" id="chb16">✓</div><div class="cht">Entender AWS WAF e quando usar vs Shield</div></div>
+<div class="chi" id="chi17" onclick="toggleChi(17)"><div class="chb" id="chb17">✓</div><div class="cht">Saber o que é AWS Artifact e quais documentos fornece</div></div>
+<div class="chi" id="chi18" onclick="toggleChi(18)"><div class="chb" id="chb18">✓</div><div class="cht">Entender criptografia em repouso vs em trânsito na AWS</div></div>
+<div class="chi" id="chi19" onclick="toggleChi(19)"><div class="chb" id="chb19">✓</div><div class="cht">Saber o que é conformidade (PCI DSS, HIPAA, SOC) na AWS</div></div>
+<div class="chi" id="chi20" onclick="toggleChi(20)"><div class="chb" id="chb20">✓</div><div class="cht">Entender NACLs vs Security Groups no contexto de VPC</div></div>
+<div style="font-size:14px;font-weight:700;color:var(--accent2);margin:20px 0 10px;padding-top:12px;border-top:1px solid var(--border)">🛠️ D3: Serviços Cloud AWS (34%)</div>
+<div class="chi" id="chi21" onclick="toggleChi(21)"><div class="chb" id="chb21">✓</div><div class="cht">Saber o que é EC2 e seus tipos de instância (T, M, C, R, I, G)</div></div>
+<div class="chi" id="chi22" onclick="toggleChi(22)"><div class="chb" id="chb22">✓</div><div class="cht">Entender Amazon S3: objetos, buckets, durabilidade, storage classes</div></div>
+<div class="chi" id="chi23" onclick="toggleChi(23)"><div class="chb" id="chb23">✓</div><div class="cht">Saber o que é RDS e quais bancos suporta vs DynamoDB</div></div>
+<div class="chi" id="chi24" onclick="toggleChi(24)"><div class="chb" id="chb24">✓</div><div class="cht">Entender AWS Lambda: serverless, eventos, limites, cobrança</div></div>
+<div class="chi" id="chi25" onclick="toggleChi(25)"><div class="chb" id="chb25">✓</div><div class="cht">Entender VPC: subnets públicas/privadas, IGW, NAT, Security Groups</div></div>
+<div class="chi" id="chi26" onclick="toggleChi(26)"><div class="chb" id="chb26">✓</div><div class="cht">Saber para que serve CloudFront vs Route 53 vs Global Accelerator</div></div>
+<div class="chi" id="chi27" onclick="toggleChi(27)"><div class="chb" id="chb27">✓</div><div class="cht">Entender SQS vs SNS: fila vs pub/sub, casos de uso de cada</div></div>
+<div class="chi" id="chi28" onclick="toggleChi(28)"><div class="chb" id="chb28">✓</div><div class="cht">Saber o que é Elastic Beanstalk (PaaS) vs EC2 (IaaS)</div></div>
+<div class="chi" id="chi29" onclick="toggleChi(29)"><div class="chb" id="chb29">✓</div><div class="cht">Entender ECS/Fargate para containers vs Lambda para serverless</div></div>
+<div class="chi" id="chi30" onclick="toggleChi(30)"><div class="chb" id="chb30">✓</div><div class="cht">Saber o que é AWS CloudFormation (IaC)</div></div>
+<div class="chi" id="chi31" onclick="toggleChi(31)"><div class="chb" id="chb31">✓</div><div class="cht">Entender Amazon Redshift (data warehouse) vs RDS (OLTP)</div></div>
+<div class="chi" id="chi32" onclick="toggleChi(32)"><div class="chb" id="chb32">✓</div><div class="cht">Saber o que é Amazon SageMaker para Machine Learning</div></div>
+<div class="chi" id="chi33" onclick="toggleChi(33)"><div class="chb" id="chb33">✓</div><div class="cht">Entender Direct Connect vs VPN para conectividade on-premises</div></div>
+<div class="chi" id="chi34" onclick="toggleChi(34)"><div class="chb" id="chb34">✓</div><div class="cht">Saber o que é ElastiCache e quando usar (latência de ms → µs)</div></div>
+<div style="font-size:14px;font-weight:700;color:var(--accent2);margin:20px 0 10px;padding-top:12px;border-top:1px solid var(--border)">💰 D4: Faturamento e Suporte (12%)</div>
+<div class="chi" id="chi35" onclick="toggleChi(35)"><div class="chb" id="chb35">✓</div><div class="cht">Entender o modelo pay-as-you-go e outros modelos de preços</div></div>
+<div class="chi" id="chi36" onclick="toggleChi(36)"><div class="chb" id="chb36">✓</div><div class="cht">Saber o que inclui o AWS Free Tier (12 meses, sempre grátis, trials)</div></div>
+<div class="chi" id="chi37" onclick="toggleChi(37)"><div class="chb" id="chb37">✓</div><div class="cht">Diferenciar On-Demand, Reserved, Spot e Savings Plans</div></div>
+<div class="chi" id="chi38" onclick="toggleChi(38)"><div class="chb" id="chb38">✓</div><div class="cht">Saber o que é o AWS Pricing Calculator e quando usar</div></div>
+<div class="chi" id="chi39" onclick="toggleChi(39)"><div class="chb" id="chb39">✓</div><div class="cht">Entender AWS Cost Explorer: análise de custos históricos</div></div>
+<div class="chi" id="chi40" onclick="toggleChi(40)"><div class="chb" id="chb40">✓</div><div class="cht">Configurar AWS Budgets para alertas proativos</div></div>
+<div class="chi" id="chi41" onclick="toggleChi(41)"><div class="chb" id="chb41">✓</div><div class="cht">Saber o que o Trusted Advisor analisa e quais planos têm acesso completo</div></div>
+<div class="chi" id="chi42" onclick="toggleChi(42)"><div class="chb" id="chb42">✓</div><div class="cht">Conhecer os 4 planos de suporte: Basic, Developer, Business, Enterprise</div></div>
+<div class="chi" id="chi43" onclick="toggleChi(43)"><div class="chb" id="chb43">✓</div><div class="cht">Entender faturamento consolidado no Organizations</div></div>
+<div class="chi" id="chi44" onclick="toggleChi(44)"><div class="chb" id="chb44">✓</div><div class="cht">Saber o que é AWS Cost Allocation Tags</div></div>
+
+</div>
+<div id="page-timer" class="page">
+<h2 class="sh">⏱️ Pomodoro Timer</h2>
+<p>Estude em blocos focados com pausas estratégicas.</p>
+<div class="card" style="max-width:380px;text-align:center">
+<div class="td" id="ptimer">25:00</div>
+<div style="font-size:14px;color:var(--text2);margin-bottom:20px" id="pmode">Foco</div>
+<div style="display:flex;gap:10px;justify-content:center;margin-bottom:16px">
+<button class="btn bp" id="pbtn" onclick="pToggle()">▶ Iniciar</button>
+<button class="btn bg" onclick="pReset()">↺ Resetar</button>
+</div>
+<div style="display:flex;gap:8px;justify-content:center">
+<button class="btn bg" onclick="pSet(25,5)" style="border-color:var(--accent)">25 min</button>
+<button class="btn bg" onclick="pSet(50,10)">50 min</button>
+<button class="btn bg" onclick="pSet(5,0)">5 min</button>
+</div>
+<div style="font-size:13px;color:var(--text3);margin-top:16px">Sessões concluídas: <strong id="psess">0</strong></div>
+</div>
+</div>
+<div id="page-resources" class="page">
+<h2 class="sh">📚 Recursos & Links</h2>
+<div class="card"><a href="https://aws.amazon.com/certification/certified-cloud-practitioner/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📘 AWS Certified Cloud Practitioner (Página oficial)</a>
+<a href="https://explore.skillbuilder.aws/learn/course/134/aws-cloud-practitioner-essentials" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🎓 AWS Cloud Practitioner Essentials (gratuito no Skill Builder)</a>
+<a href="https://explore.skillbuilder.aws/learn/course/14050/aws-certified-cloud-practitioner-official-practice-question-set" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📝 CLF-C02 Official Practice Question Set</a>
+<a href="https://www.youtube.com/watch?v=NhDYbskXRgc" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🎥 AWS CLF-C02 Full Course — FreeCodeCamp</a>
+<a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/introduction.html" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📄 AWS Overview — The Basics</a>
+<a href="https://tutorialsdojo.com/aws-certified-cloud-practitioner/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📊 TutorialsDojo — CLF-C02 Practice Exams</a>
+<a href="https://www.udemy.com/course/aws-certified-cloud-practitioner-new/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">⚡ Stephane Maarek — CLF-C02 Udemy</a>
+<a href="https://aws.amazon.com/free/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🔧 AWS Free Tier — Pratique sem custo</a>
+<a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📖 AWS Well-Architected Framework</a>
+<a href="https://docs.aws.amazon.com/general/latest/gr/glos-chap.html" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">💡 AWS Glossary</a>
+</div>
+</div></div></div>
+<script>
+const TITLES={'home':'Dashboard','simulado':'Simulado Completo','flashcards':'Flashcards','checklist':'Checklist','timer':'Pomodoro','resources':'Recursos','w1':'S1 — Conceitos Cloud','w2':'S2 — Segurança','w3':'S3 — Serviços AWS','w4':'S4 — Faturamento',};
+
+function P(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  if(el)el.classList.add('active');
+  document.getElementById('tbtitle').textContent=TITLES[id]||id;
+  document.getElementById('main').scrollTo(0,0);
+  if(id==='home')setTimeout(animBars,150);
+}
+function animBars(){document.querySelectorAll('.dbf[data-t]').forEach(e=>{e.style.width=e.dataset.t+'%';});}
+setTimeout(animBars,300);
+const QD={
+w1:[
+{q:'O que define computação em nuvem?',o:['Servidores no escritório','Acesso sob demanda a recursos de TI pela internet com pagamento pelo uso','Software instalado localmente','Virtualização privada'],a:1,e:'Cloud computing = acesso sob demanda, via internet, a recursos de TI (compute, storage, rede) com pagamento pelo uso e sem necessidade de gerenciar hardware físico.'},
+{q:'O que são Zonas de Disponibilidade (AZs)?',o:['Pontos do CloudFront','Data centers físicos isolados dentro de uma Região','Servidores Edge','Regiões menores'],a:1,e:'AZs são data centers fisicamente separados (energia, rede, cooling independentes) dentro de uma Região. Falha em uma AZ não afeta as outras. Tipicamente 3-6 AZs por região.'},
+{q:'O que é elasticidade na nuvem?',o:['Alta durabilidade de dados','Capacidade de escalar recursos para cima E para baixo conforme demanda','Replicação em múltiplas regiões','Backup automático'],a:1,e:'Elasticidade = você não precisa provisionar para o pico. Escala para cima quando necessário, reduz quando não precisa. Paga apenas pelo que usa no momento.'},
+{q:'Qual é a diferença entre CapEx e OpEx?',o:['São equivalentes','CapEx = compra antecipada de hardware; OpEx = pagamento pelo uso conforme você consome','CapEx é mais barato a longo prazo','OpEx requer contrato anual'],a:1,e:'Cloud transforma CapEx (comprar servidores, data center) em OpEx (pagar por hora/GB). Sem capital inicial, sem depreciação, com flexibilidade para aumentar ou reduzir.'},
+{q:'O que são Edge Locations no contexto AWS?',o:['Zonas de disponibilidade extras','Pontos de presença do CloudFront distribuídos globalmente para entrega de conteúdo com baixa latência','Regiões AWS secundárias','Servidores de backup'],a:1,e:'Edge Locations (450+) são pontos de cache do CloudFront distribuídos globalmente. Servem conteúdo do cache mais próximo ao usuário final, reduzindo latência drasticamente.'},
+{q:'Quantas Regiões AWS existem aproximadamente?',o:['5','33+','100+','12'],a:1,e:'A AWS possui 33+ regiões geográficas ao redor do mundo (crescendo continuamente), cada uma com múltiplas AZs. Escolha a região mais próxima dos seus usuários.'},
+{q:'O que é AWS Global Infrastructure?',o:['Apenas data centers nos EUA','Rede global de Regiões, AZs e Edge Locations conectadas pelo backbone privado da AWS','Servidores compartilhados com outras clouds','Infraestrutura apenas para grandes empresas'],a:1,e:'A infraestrutura global AWS inclui: 33+ regiões, 105+ AZs, 450+ edge locations e pontos de troca de tráfego, tudo conectado por rede backbone privada (não internet pública).'},
+{q:'O que é o modelo de nuvem híbrida?',o:['Usar dois provedores de nuvem','Combinação de infraestrutura on-premises com serviços de nuvem pública','Nuvem exclusiva para setor público','Multi-cloud apenas'],a:1,e:"Nuvem híbrida combina infraestrutura on-premises com nuvem pública (AWS). Permite migração gradual, manter dados sensíveis localmente e 'burstar' para nuvem em picos."},
+{q:'Qual é um benefício de escala ao usar AWS?',o:['Você compra hardware mais barato','A AWS compra em escala massiva e passa os descontos para os clientes via preços menores','Não há benefício de escala','Apenas grandes empresas se beneficiam'],a:1,e:'AWS compra hardware em volume enorme, negocia melhores preços e distribui os custos entre milhões de clientes. Resultado: preços cada vez menores (AWS reduziu preços mais de 100 vezes).'},
+{q:'O que é o AWS Well-Architected Framework?',o:['Ferramenta de deploy de aplicações','Conjunto de melhores práticas em 6 pilares para avaliar e melhorar arquiteturas cloud','Serviço de monitoramento','Linguagem de programação AWS'],a:1,e:'Well-Architected Framework tem 6 pilares: Excelência Operacional, Segurança, Confiabilidade, Eficiência de Performance, Otimização de Custo e Sustentabilidade. Ferramenta gratuita na console.'},
+],
+w2:[
+{q:'No Shared Responsibility Model, quem é responsável pela segurança da infraestrutura física?',o:['O cliente','A AWS','Ambos igualmente','Depende do contrato'],a:1,e:"AWS é responsável pela 'segurança DA nuvem': hardware, data centers, rede, hipervisor. Cliente é responsável pela 'segurança NA nuvem': dados, OS (se EC2), configurações e acessos."},
+{q:'O que é IAM e qual seu objetivo?',o:['Infraestrutura como Máquina','Identity and Access Management: gerencia quem pode fazer o quê nos recursos AWS','Banco de dados de usuários','Monitor de infraestrutura'],a:1,e:'IAM gerencia identidades (users, roles, groups) e permissões (policies) na conta AWS. Permite controle granular: usuário X pode fazer ação Y em recurso Z sob condição W.'},
+{q:'Qual é a melhor prática ao criar uma conta AWS nova?',o:['Usar a conta root para tudo','Criar usuário IAM admin e não usar root para operações diárias','Habilitar todos os serviços','Compartilhar as credenciais root com a equipe'],a:1,e:'A conta root tem acesso irrestrito e não pode ter permissões limitadas. Melhor prática: habilitar MFA no root, criar usuário IAM com permissões admin para uso diário, nunca compartilhar credenciais root.'},
+{q:'O que é MFA e por que é importante?',o:['Multi-Factor Allocation — distribuição de recursos','Multi-Factor Authentication — segunda camada de verificação além da senha','Backup multi-fatorial','Monitoramento de falhas'],a:1,e:'MFA exige senha + código temporário de dispositivo MFA (app ou hardware). Se a senha vazar, o atacante ainda não consegue acesso sem o segundo fator. Essencial para conta root e admins.'},
+{q:'O que o AWS CloudTrail monitora?',o:['Performance de aplicações','Todas as chamadas de API: quem fez, o quê, quando e de onde','Tráfego de rede','Custos da conta'],a:1,e:'CloudTrail é o log de auditoria: registra cada chamada de API na conta. Essencial para: compliance, investigação de incidentes, detectar atividade não autorizada e auditoria.'},
+{q:'O que é o princípio de Least Privilege?',o:['Conceder acesso máximo para evitar bloqueios','Conceder apenas as permissões mínimas necessárias para realizar a tarefa','Permitir que usuários gerenciem suas próprias permissões','Negar tudo por padrão'],a:1,e:'Least Privilege: cada usuário/serviço deve ter apenas o acesso mínimo necessário. Reduz impacto de credenciais comprometidas. É um pilar fundamental de segurança AWS.'},
+{q:'Qual serviço detecta automaticamente ameaças como mineração de criptomoeda?',o:['AWS Config','Amazon GuardDuty','AWS Security Hub','Amazon Macie'],a:1,e:'GuardDuty usa ML para detectar comportamento anômalo analisando CloudTrail, VPC Flow Logs e DNS Logs. Detecta: mineração, credenciais comprometidas, IPs maliciosos e exfiltração de dados.'},
+{q:'Para que serve o AWS Artifact?',o:['Deploy de aplicações','Acesso a relatórios de conformidade (SOC, ISO, PCI DSS) e acordos AWS','Monitoramento de segurança','Ferramenta de custo'],a:1,e:'AWS Artifact é um portal self-service para: baixar relatórios de conformidade (SOC 1/2, ISO 27001, PCI DSS) e assinar acordos como BAA (Business Associate Agreement para HIPAA).'},
+{q:'O que é criptografia em repouso?',o:['Criptografar dados em movimento pela rede','Criptografar dados armazenados em disco, banco ou S3','Usar HTTPS em todas as APIs','Criptografar apenas backups'],a:1,e:'Encryption at rest protege dados armazenados: S3 (SSE-S3, SSE-KMS), RDS (engine encryption com KMS), EBS (AES-256). AWS gerencia a criptografia transparentemente com KMS.'},
+{q:'O que é o Amazon Inspector?',o:['Serviço de auditoria de faturamento','Avalia vulnerabilidades de segurança em EC2 e containers ECR automaticamente','Monitor de performance','Serviço de conformidade de dados'],a:1,e:'Inspector escaneia instâncias EC2 e imagens de container (ECR) em busca de vulnerabilidades de software (CVEs) e configurações inseguras. Gera findings com severity e recomendações.'},
+],
+w3:[
+{q:'O que é Amazon EC2?',o:['Elastic Cache Compute','Servidores virtuais na nuvem com controle total de OS e configurações','Banco de dados relacional','Serviço de CDN'],a:1,e:'EC2 são instâncias virtuais de computação. Você escolhe tipo, OS, storage e rede. Inicia em minutos. Paga por segundo (Linux) ou hora (Windows). Escalável de 1 a milhares de instâncias.'},
+{q:'Qual é a durabilidade do Amazon S3?',o:['99,9%','99,99%','99,999999999% (11 noves)','100%'],a:2,e:'S3 Standard replica objetos em mínimo 3 AZs com 11 noves de durabilidade. Praticamente impossível perder dados por falha da infraestrutura AWS.'},
+{q:'O que é AWS Lambda?',o:['Servidor virtual como EC2','Computação serverless: código sem gerenciar servidores, paga por execução','Banco de dados NoSQL','Serviço de fila'],a:1,e:'Lambda executa código em resposta a eventos. Zero servidores para gerenciar. Escala automaticamente. 1M requisições gratuitas/mês. Ideal para backends de APIs e processamento de eventos.'},
+{q:'O que é Amazon RDS?',o:['Random Data Storage','Serviço de banco de dados relacional totalmente gerenciado pela AWS','Cache in-memory','Banco de dados NoSQL'],a:1,e:'RDS gerencia: patches, backups, Multi-AZ, Read Replicas. Suporta MySQL, PostgreSQL, MariaDB, Oracle, SQL Server e Aurora. Você cuida apenas dos dados e schema.'},
+{q:'O que é Amazon DynamoDB?',o:['Banco relacional escalável','Banco de dados NoSQL serverless com latência de ms e escala ilimitada','Versão do MySQL da AWS','Cache de banco de dados'],a:1,e:'DynamoDB é NoSQL key-value/document, totalmente gerenciado, serverless, com latência consistente de ms em qualquer escala. Sem provisioning manual. Ideal para apps de alta escala.'},
+{q:'Qual serviço AWS faz cache de conteúdo em pontos de presença globais?',o:['Amazon Route 53','Amazon CloudFront','AWS Global Accelerator','Amazon S3'],a:1,e:'CloudFront é uma CDN com 450+ edge locations. Faz cache de conteúdo (imagens, vídeo, APIs) próximo ao usuário. Reduz latência e carga na origem.'},
+{q:'O que é Amazon VPC?',o:['Virtual Pricing Calculator','Rede virtual privada e isolada na AWS com controle total sobre subnets e roteamento','Serviço de monitoramento','Banco de dados virtual'],a:1,e:'VPC é sua rede virtual na AWS. Você controla: faixas de IP (CIDR), subnets públicas/privadas, tabelas de roteamento, Security Groups e Internet Gateway.'},
+{q:'Qual serviço AWS armazena objetos (arquivos) de qualquer tamanho com alta durabilidade?',o:['Amazon EBS','Amazon S3','Amazon EFS','Amazon RDS'],a:1,e:'S3 (Simple Storage Service) armazena objetos com 11 noves de durabilidade. Use para: backup, data lake, site estático, distribuição de conteúdo, data analytics.'},
+{q:'O que é Amazon SQS?',o:['Simple Queue Service — fila de mensagens para comunicação assíncrona entre serviços','Serviço de banco SQL','Serviço de queries seguras','Sistema de notificações'],a:0,e:'SQS é uma fila de mensagens gerenciada. Desacopla produtores de consumidores. Garante entrega de mensagens mesmo se o consumer estiver temporariamente offline.'},
+{q:'O que diferencia Amazon Aurora de RDS MySQL?',o:['Aurora não suporta MySQL','Aurora tem armazenamento distribuído (6 cópias em 3 AZs), até 5x mais rápido e failover em ~30s','Aurora é mais barato','Aurora não tem backups automáticos'],a:1,e:'Aurora usa arquitetura de storage distribuído proprietária: 6 cópias em 3 AZs automático, failover em ~30s, até 5x mais rápido que MySQL, storage auto-scale até 128TB.'},
+],
+w4:[
+{q:'Qual é o modelo de preços principal da AWS?',o:['Assinatura mensal fixa','Pay-as-you-go: pague pelo que usar, quando usar, sem compromisso mínimo','Taxa anual com desconto','Cobrança por usuário'],a:1,e:'Pay-as-you-go = zero compromisso em On-Demand. Pague por segundo/hora de uso. Instância parada não cobra compute. Comece pequeno e cresça conforme a necessidade.'},
+{q:'O que é o AWS Free Tier?',o:['Sem cobrança para sempre em todos os serviços','Nível gratuito para experimentar AWS: 12 meses, sempre grátis e trials de serviços específicos','Desconto de 50%','Plano sem suporte'],a:1,e:'Free Tier: 12 meses (750h EC2 t3.micro, 5GB S3), sempre gratuito (Lambda 1M req, DynamoDB 25GB), trials limitados. Ideal para aprender e experimentar sem custo.'},
+{q:'Qual serviço prevê e alerta quando o custo AWS vai exceder um limite?',o:['CloudWatch','AWS Budgets','Cost Explorer','Trusted Advisor'],a:1,e:'AWS Budgets envia alertas (email, SNS) quando custo real ou previsto excede o threshold. Configure antes de começar a usar serviços novos para evitar surpresas na fatura.'},
+{q:'O que são Reserved Instances?',o:['Instâncias reservadas para uso exclusivo da AWS','Compromisso de uso de 1 ou 3 anos em troca de desconto de até 72% vs On-Demand','Instâncias com hardware dedicado','Instâncias Spot com reserva'],a:1,e:'Reserved Instances: comprometimento de 1 ou 3 anos por tipo específico de instância em troca de desconto de até 72%. Ideal para workloads 24/7 com uso previsível.'},
+{q:'Qual plano de suporte AWS inclui suporte 24/7 por telefone com SLA para casos críticos?',o:['Basic','Developer','Business','Enterprise'],a:2,e:'Business (~$100/mês): suporte 24/7 por telefone/chat/email, SLA de 1h para sistemas críticos, acesso completo ao Trusted Advisor, AWS Support API. Developer: apenas email e horário comercial.'},
+{q:'O que o AWS Cost Explorer permite fazer?',o:['Criar instâncias EC2 mais baratas','Visualizar e analisar custos históricos AWS por serviço, conta, região e tag com previsões','Desligar instâncias automaticamente','Monitorar performance'],a:1,e:'Cost Explorer: gráficos interativos de custos históricos e previsão de 12 meses. Filtre por serviço, conta, região, tag. Identifique o que mais custa e otimize.'},
+{q:'Qual é a vantagem de Spot Instances?',o:['Sem interrupção garantida','Desconto de até 90% usando capacidade EC2 ociosa, com possibilidade de interrupção','Instâncias sempre disponíveis','Desconto de 30%'],a:1,e:'Spot usa capacidade ociosa da AWS com até 90% de desconto. Podem ser interrompidas com 2 min de aviso. Perfeitas para: batch, ML training, renderização, CI/CD.'},
+{q:'O que é AWS Trusted Advisor?',o:['Consultor humano da AWS','Ferramenta que analisa a conta em 5 categorias: custo, segurança, performance, tolerância a falhas e service quotas','Serviço de deploy automático','Monitor de aplicações'],a:1,e:'Trusted Advisor verifica a conta contra centenas de boas práticas. Básico gratuito (6 checks de segurança). Business/Enterprise: acesso completo incluindo custo e performance.'},
+{q:'O que é faturamento consolidado no AWS Organizations?',o:['Fatura separada para cada conta','Uma única fatura para todas as contas da organização com descontos por volume agregado','Desconto automático de 20%','Sistema de pagamento parcelado'],a:1,e:'Organizations consolida faturamento: 1 fatura, uso agregado para descontos por volume (S3, EC2 ficam mais baratos quando múltiplas contas somam mais uso), gerenciamento centralizado.'},
+{q:'Qual é o plano de suporte AWS mais básico e seu custo?',o:['Developer — $29/mês','Business — $100/mês','Basic — gratuito','Enterprise — $15.000/mês'],a:2,e:'Basic Support é gratuito para todos os clientes AWS. Inclui: documentação, whitepapers, fóruns, AWS Personal Health Dashboard e 6 checks básicos do Trusted Advisor.'},
+],
+};
+
+function buildQ(cid,qs){
+  const el=document.getElementById(cid);if(!el)return;
+  const sq=qs.map(q=>{const n=q.o.length,ix=[...Array(n).keys()].sort(()=>Math.random()-.5);return{...q,o:ix.map(i=>q.o[i]),a:ix.indexOf(q.a)};});const st={qs:sq,cur:0,score:0,ans:false};window['_q'+cid]=st;renderQ(el,st);
+}
+function renderQ(el,st){
+  const q=st.qs[st.cur];
+  el.innerHTML=`<div style="font-size:15px;font-weight:600;margin-bottom:14px;line-height:1.5">${st.cur+1}. ${q.q}</div>
+${q.o.map((o,i)=>`<button class="qo" onclick="pickQ(this,${i},'_q${el.id}')">${o}</button>`).join('')}
+<div class="qfb" id="fb_${el.id}"></div>
+<div class="qnav">
+${st.cur>0?`<button class="btn bg" onclick="navQ('${el.id}',-1)">← Ant.</button>`:''}
+<span class="qc">${st.cur+1}/${st.qs.length} · Acertos: ${st.score}</span>
+${st.cur<st.qs.length-1?`<button class="btn bp" onclick="navQ('${el.id}',1)" style="margin-left:auto">Próx. →</button>`:`<button class="btn bp" onclick="finQ('${el.id}')" style="margin-left:auto">Ver resultado</button>`}
+</div>`;
+}
+window.pickQ=function(btn,idx,stk){
+  const st=window[stk];if(st.ans)return;st.ans=true;
+  const q=st.qs[st.cur];
+  btn.closest('[id]').querySelectorAll('.qo').forEach((o,i)=>{
+    if(i===q.a)o.classList.add('correct');
+    else if(i===idx&&idx!==q.a)o.classList.add('wrong');
+    o.disabled=true;
+  });
+  if(idx===q.a)st.score++;
+  const fbid='fb_'+stk.replace('_q','');
+  const fb=document.getElementById(fbid);
+  if(fb){fb.textContent=(idx===q.a?'✅ Correto! ':'❌ Incorreto. ')+q.e;fb.className='qfb show '+(idx===q.a?'ok':'bad');}
+};
+window.navQ=function(eid,dir){
+  const st=window['_q'+eid];st.cur=Math.max(0,Math.min(st.qs.length-1,st.cur+dir));st.ans=false;renderQ(document.getElementById(eid),st);
+};
+window.finQ=function(eid){
+  const st=window['_q'+eid];const pct=Math.round((st.score/st.qs.length)*100);
+  const col=pct>=72?'#34d399':pct>=50?'#fbbf24':'#f87171';
+  document.getElementById(eid).innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:48px;font-weight:800;color:${col}">${pct}%</div><div style="font-size:16px;font-weight:600;margin:8px 0">${st.score}/${st.qs.length} corretas</div><div style="color:var(--text2);font-size:14px;margin-bottom:20px">${pct>=72?'🏆 Aprovado!':pct>=50?'📚 Quase lá!':'🔁 Continue estudando.'}</div><button class="btn bp" onclick="restQ('${eid}')">↺ Refazer</button></div>`;
+};
+window.restQ=function(eid){const st=window['_q'+eid];st.cur=0;st.score=0;st.ans=false;renderQ(document.getElementById(eid),st);};
+Object.keys(QD).forEach(k=>buildQ('q'+k,QD[k]));
+const EXAM=[
+{d:'D1',q:'O que é computação em nuvem segundo o NIST?',o:['Servidores no escritório com acesso remoto','Acesso ubíquo a recursos de TI compartilhados via internet, provisionados rapidamente com mínima interação','Virtualização de servidores locais','Software como serviço apenas'],a:1,e:'NIST define cloud computing como acesso ubíquo, conveniente, sob demanda a um pool compartilhado de recursos de computação configuráveis (redes, servidores, storage, apps) que podem ser provisionados e liberados rapidamente.'},
+{d:'D1',q:'Qual é um benefício fundamental de mover infraestrutura para a AWS?',o:['Mais controle sobre hardware físico','Trocar despesa de capital (CapEx) por despesa operacional (OpEx)','Garantia de 100% de uptime','Eliminar toda necessidade de TI'],a:1,e:'Na nuvem, você paga pelo que usa (OpEx) em vez de comprar hardware antecipadamente (CapEx). Elimina custos de data center, hardware obsoleto e provisioning excessivo.'},
+{d:'D1',q:'Qual modelo de nuvem permite que a empresa use recursos em nuvem pública e mantenha alguns on-premises?',o:['Nuvem Pública','Nuvem Privada','Nuvem Híbrida','Nuvem Comunitária'],a:2,e:'Nuvem Híbrida combina infraestrutura on-premises (privada) com serviços de nuvem pública (AWS). Permite migração gradual, compliance com dados locais e burst para nuvem em picos.'},
+{d:'D1',q:'O que são Regiões AWS?',o:['Pontos de presença do CloudFront','Localizações geográficas com múltiplas AZs isoladas entre si','Servidores individuais de borda','Data centers únicos'],a:1,e:'Regiões são localizações geográficas (ex: us-east-1, sa-east-1) que contêm múltiplas Zonas de Disponibilidade. Cada região é independente, com dados que não saem dela por padrão.'},
+{d:'D1',q:'O que são Zonas de Disponibilidade (AZs) na AWS?',o:['Regiões AWS menores','Um ou mais data centers físicos com energia, rede e cooling independentes dentro de uma Região','Pontos de presença do CloudFront','Servidores individuais'],a:1,e:'AZs são data centers fisicamente separados dentro de uma Região (tipicamente 3-6 por região), conectados por rede de baixa latência. Falha em uma AZ não afeta as outras.'},
+{d:'D1',q:'O que é elasticidade na computação em nuvem?',o:['Backup automático de dados','Capacidade de aumentar e diminuir recursos automaticamente conforme a demanda','Alta disponibilidade em múltiplas regiões','Migração de dados para a nuvem'],a:1,e:'Elasticidade permite escalar recursos para cima (picos de demanda) e para baixo (períodos de baixo uso) automaticamente. Você paga apenas pelo que usa, sem provisionar excesso.'},
+{d:'D1',q:'Qual é a diferença entre IaaS, PaaS e SaaS?',o:['São sinônimos no contexto AWS','IaaS: infraestrutura; PaaS: plataforma para desenvolver; SaaS: software pronto para uso','IaaS é mais caro; PaaS e SaaS são gratuitos','Apenas a AWS oferece IaaS'],a:1,e:'IaaS (EC2, VPC): você gerencia SO, apps. PaaS (Elastic Beanstalk, RDS): AWS gerencia SO, você gerencia só a app/dados. SaaS (WorkMail, Salesforce): você só usa o software, AWS gerencia tudo.'},
+{d:'D1',q:'Por que a AWS consegue oferecer preços mais baixos que data centers próprios?',o:['A AWS tem lucro zero','Economia de escala: custos distribuídos entre milhões de clientes','O hardware da AWS é mais barato','A AWS não paga impostos'],a:1,e:'A AWS compra hardware em escala massiva, negocia melhores preços e distribui custos de infraestrutura entre milhões de clientes. Quanto mais clientes, menores os preços (e AWS continua reduzindo).'},
+{d:'D1',q:'O que é o AWS Free Tier?',o:['Acesso ilimitado gratuito a todos os serviços','Nível de uso gratuito para experimentar serviços AWS (12 meses, sempre grátis ou trial)','Desconto de 50% para startups','Plano básico sem suporte'],a:1,e:'AWS Free Tier inclui: 12 meses (ex: 750h EC2 t2.micro, 5GB S3), sempre gratuito (Lambda 1M req/mês, DynamoDB 25GB) e trials de tempo limitado. Ideal para aprender e experimentar.'},
+{d:'D1',q:'Qual pilar do AWS Well-Architected Framework foca em usar recursos de forma eficiente e melhorar continuamente os processos?',o:['Excelência Operacional','Segurança','Eficiência de Performance','Sustentabilidade'],a:0,e:'Excelência Operacional: executar cargas de trabalho de forma eficaz, ganhar insights sobre operações, melhorar continuamente processos e procedimentos. Inclui automation, IaC e revisões frequentes.'},
+{d:'D1',q:"O que significa 'pagar pelo que usa' na AWS?",o:['Assinatura fixa mensal','Você paga apenas pelos recursos consumidos, pelo tempo que os usa, sem custos mínimos','Desconto automático por volume','Cobrança antecipada por recursos reservados'],a:1,e:'Pay-as-you-go é o modelo fundamental da AWS: sem custos iniciais, sem compromissos, sem contratos mínimos (em On-Demand). Uma instância EC2 parada não cobra compute.'},
+{d:'D1',q:'Qual é a vantagem de alta disponibilidade (HA) na AWS vs on-premises?',o:['HA não existe na AWS','AWS fornece Multi-AZ e serviços gerenciados que tornam HA muito mais simples e barata de implementar','On-premises tem HA melhor','HA na AWS requer hardware especial'],a:1,e:'Na AWS, HA é construída nos serviços (RDS Multi-AZ, S3, DynamoDB são nativamente altamente disponíveis). On-premises requer comprar, instalar e gerenciar hardware redundante com alto custo.'},
+{d:'D2',q:'O que é o Shared Responsibility Model (Modelo de Responsabilidade Compartilhada)?',o:['AWS é responsável por tudo','Cliente é responsável por tudo','AWS cuida da segurança DA nuvem (infraestrutura); cliente cuida da segurança NA nuvem (dados, acessos, configs)','Os dois são igualmente responsáveis por tudo'],a:2,e:'AWS: hardware, data centers, rede, software de serviços gerenciados. Cliente: dados, criptografia, patches do SO (se EC2), controles de acesso, configurações de firewall, conformidade da aplicação.'},
+{d:'D2',q:'O que são usuários IAM e qual é a melhor prática?',o:['Usuários do banco de dados','Identidades da conta AWS com credenciais de longo prazo. Melhor prática: usar Roles em vez de Users para serviços','Usuários do sistema operacional','Admins automáticos da AWS'],a:1,e:'IAM Users têm credenciais permanentes (senha + access keys). Melhor prática: não usar root account, criar usuários individuais, usar Groups para permissões, preferir Roles para serviços AWS.'},
+{d:'D2',q:'O que é uma IAM Policy?',o:['Política de backup automático','Documento JSON que define permissões (Allow/Deny) para ações em recursos AWS','Regra de firewall de VPC','Configuração de autenticação multi-fator'],a:1,e:'IAM Policy é um JSON com: Effect (Allow/Deny), Action (ec2:StartInstances), Resource (arn:aws:ec2:*:*:instance/*) e Condition (opcional). Attach a users, groups ou roles.'},
+{d:'D2',q:'Qual serviço registra todas as chamadas de API feitas na conta AWS para auditoria?',o:['Amazon CloudWatch','AWS CloudTrail','AWS Config','Amazon GuardDuty'],a:1,e:'CloudTrail é o log de auditoria: registra quem fez o quê, qual serviço, quando e de onde. Essencial para detectar atividade suspeita, auditoria de conformidade e investigação de incidentes.'},
+{d:'D2',q:'Qual serviço protege aplicações web contra ataques como SQL injection?',o:['AWS Shield','AWS WAF','Amazon Inspector','AWS Config'],a:1,e:'WAF (Web Application Firewall) filtra requisições HTTP/HTTPS com regras para bloquear SQLi, XSS, bots maliciosos. Shield protege contra DDoS. Inspector avalia vulnerabilidades.'},
+{d:'D2',q:'Qual é a diferença entre AWS Shield Standard e Advanced?',o:['São equivalentes','Standard: gratuito e automático para todos; Advanced: pago, proteção reforçada contra DDoS com SLA e DRT','Standard é pago; Advanced é gratuito','Advanced só funciona com CloudFront'],a:1,e:'Shield Standard: gratuito, habilitado automaticamente, proteção básica DDoS. Shield Advanced: pago (~$3.000/mês), proteção reforçada, SLA garantido, acesso ao DDoS Response Team, reembolso de custos de escala.'},
+{d:'D2',q:'O que é MFA (Multi-Factor Authentication) e por que usar?',o:['Fazer backup em múltiplos locais','Segunda camada de segurança: além da senha, requer código temporário de dispositivo físico ou virtual','Autenticação de APIs','Criptografia de dados'],a:1,e:'MFA adiciona uma segunda camada: mesmo que a senha seja comprometida, o atacante precisaria do código temporário do dispositivo MFA. AWS recomenda fortemente MFA na conta root e admins.'},
+{d:'D2',q:'Qual serviço detecta automaticamente comportamento anômalo e ameaças usando machine learning?',o:['AWS Config','Amazon GuardDuty','AWS Security Hub','Amazon Inspector'],a:1,e:'GuardDuty analisa CloudTrail, VPC Flow Logs e DNS logs usando ML para detectar: credenciais comprometidas, mineração de criptomoeda, comunicação com IPs maliciosos e chamadas de API anômalas.'},
+{d:'D2',q:'O que é conformidade na AWS e como o AWS Artifact ajuda?',o:['Conformidade é apenas responsabilidade do cliente','AWS Artifact fornece acesso a relatórios de conformidade (SOC, ISO, PCI DSS) e acordos de conformidade da AWS','Conformidade é automática na AWS','Artifact substitui auditores de segurança'],a:1,e:'AWS Artifact é um portal self-service para baixar relatórios de auditoria (SOC 1/2/3, ISO 27001, PCI DSS) e gerenciar acordos como o BAA (Business Associate Agreement) para HIPAA.'},
+{d:'D2',q:'Qual serviço avalia se os recursos AWS estão configurados de acordo com as melhores práticas de segurança?',o:['CloudTrail','AWS Config','GuardDuty','Trusted Advisor'],a:1,e:"AWS Config monitora e registra configurações de recursos ao longo do tempo, avaliando conformidade com regras (ex: 'bucket S3 não deve ser público', 'MFA deve estar habilitado')."},
+{d:'D2',q:'O que é o princípio de menor privilégio (Least Privilege)?',o:['Conceder o máximo de permissões para evitar bloqueios','Conceder apenas as permissões mínimas necessárias para realizar uma tarefa','Permitir apenas root a fazer tudo','Negar todas as permissões por padrão'],a:1,e:'Least Privilege é um princípio fundamental de segurança: usuários e sistemas devem ter acesso apenas ao que precisam para sua função. Reduz a superfície de ataque se credenciais forem comprometidas.'},
+{d:'D3',q:'O que é Amazon EC2?',o:['Armazenamento de objetos na nuvem','Servidores virtuais redimensionáveis na nuvem com controle total sobre OS e configurações','Banco de dados gerenciado','Serviço de entrega de conteúdo'],a:1,e:'EC2 (Elastic Compute Cloud) são instâncias virtuais de computação. Você escolhe tipo (CPU/RAM), SO, armazenamento e rede. Escala em minutos. Paga por segundo (Linux) ou hora (Windows).'},
+{d:'D3',q:'O que é Amazon S3?',o:['Banco de dados relacional','Sistema de arquivos para EC2','Armazenamento de objetos com durabilidade de 11 noves, acesso via URL','Cache in-memory'],a:2,e:'S3 (Simple Storage Service) armazena objetos (arquivos) de qualquer tipo e tamanho. Durabilidade 99,999999999%, disponibilidade 99,99%, acesso via URL. Ideal para backup, mídia, data lakes, sites estáticos.'},
+{d:'D3',q:'O que é Amazon RDS?',o:['Armazenamento de objetos','Serviço de bancos de dados relacionais totalmente gerenciado (MySQL, PostgreSQL, Oracle, SQL Server, Aurora)','Cache em memória','Filas de mensagens'],a:1,e:'RDS (Relational Database Service) gerencia patches, backups, Multi-AZ, Read Replicas. Você gerencia apenas os dados. Suporta MySQL, PostgreSQL, MariaDB, Oracle, SQL Server e Amazon Aurora.'},
+{d:'D3',q:'O que é AWS Lambda?',o:['Servidor virtual como EC2','Computação serverless: execute código sem gerenciar servidores, pague por execução','Banco de dados NoSQL','Serviço de email'],a:1,e:'Lambda executa funções em resposta a eventos (API Gateway, S3, SQS) sem provisionar servidores. Escala automaticamente. Paga por req e duração (ms). Suporta Python, Node.js, Java, Go, .NET e mais.'},
+{d:'D3',q:'O que é Amazon VPC?',o:['Sistema de versionamento de código','Rede virtual privada e isolada na AWS onde você lança recursos com controle total de IP, subnets e roteamento','Serviço de CDN','Banco de dados'],a:1,e:'VPC (Virtual Private Cloud) é sua rede virtual privada na AWS. Você controla: faixas de IP (CIDR), sub-redes públicas/privadas, tabelas de roteamento, gateways e regras de segurança.'},
+{d:'D3',q:'O que é Amazon CloudFront?',o:['Serviço de banco de dados','CDN (Content Delivery Network) com 450+ pontos de presença globais que reduz latência de conteúdo','Plataforma de machine learning','Serviço de chat'],a:1,e:'CloudFront faz cache de conteúdo (imagens, vídeos, HTML, APIs) nos edge locations mais próximos aos usuários globalmente. Reduz latência, carga na origem e custo de transferência.'},
+{d:'D3',q:'O que é Amazon DynamoDB?',o:['Banco relacional gerenciado','Banco NoSQL serverless com latência de ms, escala horizontal ilimitada e modelo key-value/document','Sistema de filas','Armazenamento de arquivos'],a:1,e:'DynamoDB é NoSQL totalmente gerenciado, serverless, com latência consistente de milissegundo. Sem limite de escala. Paga por throughput e storage. Ideal para apps web/mobile, gaming, IoT.'},
+{d:'D3',q:'O que é AWS Elastic Beanstalk?',o:['Serviço de banco de dados elástico','Plataforma como Serviço (PaaS) que faz deploy de aplicações web automaticamente gerenciando EC2, ELB e Auto Scaling','Sistema de monitoramento','Ferramenta de migração'],a:1,e:'Elastic Beanstalk é PaaS: você envia o código (ZIP, WAR, Docker) e a AWS provisiona automaticamente EC2, ELB, Auto Scaling, RDS e monitoramento. Você foca no código, AWS na infraestrutura.'},
+{d:'D3',q:'Qual serviço AWS gerencia o DNS (Domain Name System)?',o:['Amazon CloudFront','Amazon Route 53','AWS Direct Connect','Amazon VPC'],a:1,e:'Route 53 é o serviço de DNS gerenciado altamente disponível da AWS. Registra domínios, resolve nomes para IPs e oferece políticas de roteamento: simples, ponderado, latência, failover, geolocalização.'},
+{d:'D3',q:'Qual serviço AWS enfileira mensagens para comunicação assíncrona entre serviços?',o:['Amazon SNS','Amazon SQS','AWS Lambda','Amazon Kinesis'],a:1,e:'SQS (Simple Queue Service) é uma fila de mensagens gerenciada. Desacopla produtores de consumidores. Garantia de entrega pelo menos uma vez (Standard) ou exatamente uma vez (FIFO).'},
+{d:'D3',q:'O que é Amazon ECS (Elastic Container Service)?',o:['Armazenamento elástico','Serviço para executar containers Docker totalmente gerenciado pela AWS','Banco de dados elástico','Cache distribuído'],a:1,e:'ECS executa e gerencia containers Docker na AWS. Pode usar EC2 (você gerencia as instâncias) ou AWS Fargate (serverless, sem gerenciar servidores). Ideal para microsserviços com containers.'},
+{d:'D3',q:'O que diferencia Amazon SNS de Amazon SQS?',o:['São equivalentes','SNS é pub/sub (push para múltiplos subscribers simultâneos); SQS é fila (pull por um consumer de cada vez)','SQS é mais caro','SNS não integra com Lambda'],a:1,e:'SNS: um para muitos (fan-out). Publicou → todos os subscribers recebem (Lambda, SQS, email, HTTP). SQS: fila para processamento assíncrono por um consumer. Use SNS para notificações, SQS para workloads.'},
+{d:'D3',q:'Qual serviço AWS permite executar código sem provisionar servidores e pagar apenas por execução?',o:['Amazon EC2','AWS Lambda','Amazon ECS','AWS Elastic Beanstalk'],a:1,e:'Lambda é serverless: zero servidores para gerenciar, escala automática de 0 a milhares. Paga por 1M de requisições gratuitas/mês e duração em ms. Ideal para backends de APIs, processamento de eventos.'},
+{d:'D4',q:'Qual é o modelo de preços predominante na AWS para serviços como EC2 On-Demand?',o:['Assinatura anual fixa','Pay-as-you-go: pague pelo que usar, sem compromisso','Taxa única de adesão','Cobrança por usuário por mês'],a:1,e:'Pay-as-you-go: pague por hora ou segundo de uso, sem contratos ou compromissos mínimos. Sem custos iniciais. Se você para a instância, não paga por compute. Flexibilidade máxima.'},
+{d:'D4',q:'Qual serviço exibe o custo AWS por serviço, região e tag ao longo do tempo?',o:['AWS Budgets','AWS Cost Explorer','Billing Dashboard','Trusted Advisor'],a:1,e:'Cost Explorer oferece visualizações interativas de custos históricos e previsões, com filtros por serviço, conta, região e tags. Identifica quais serviços mais custam.'},
+{d:'D4',q:'Uma empresa quer receber alerta quando o gasto AWS exceder $500. O que configurar?',o:['CloudWatch com threshold','AWS Budgets com alerta de custo','Cost Explorer automático','Trusted Advisor'],a:1,e:'AWS Budgets permite criar alertas (email, SNS) quando custo real ou previsto exceder o threshold definido. Pode alertar por custo, uso, cobertura de RI/SP e recomendações de rightsizing.'},
+{d:'D4',q:'Qual modelo de compra EC2 oferece desconto de até 90% para workloads tolerantes a interrupção?',o:['On-Demand','Reserved Instances','Spot Instances','Dedicated Hosts'],a:2,e:'Spot Instances usam capacidade EC2 ociosa com até 90% de desconto. Podem ser interrompidas com 2 min de aviso quando a AWS precisar da capacidade. Use para batch, ML training, renderização.'},
+{d:'D4',q:'Qual plano de suporte AWS oferece acesso 24/7 a engenheiros de suporte via telefone com SLA para casos críticos?',o:['Basic','Developer','Business','Enterprise'],a:2,e:'Business inclui: suporte 24/7 por telefone/chat/email, SLA de 1h para sistemas críticos, acesso ao Trusted Advisor completo. Developer: apenas email, horário comercial. Basic: sem suporte de engenheiro.'},
+{d:'D4',q:'O que o AWS Trusted Advisor analisa gratuitamente para todos os clientes?',o:['Apenas custo','Segurança, custo, performance, tolerância a falhas e service quotas (com acesso completo para Business/Enterprise)','Apenas segurança','Código da aplicação'],a:1,e:'Trusted Advisor analisa a conta em 5 categorias. Gratuito para todos: 6 checks de segurança e service quotas. Business/Enterprise: todos os checks incluindo custo e performance.'},
+{d:'D4',q:'Uma empresa quer calcular o custo ESTIMADO de uma nova arquitetura AWS antes de implementar. O que usar?',o:['AWS Cost Explorer','AWS Pricing Calculator','AWS Budgets','Billing Dashboard'],a:1,e:'AWS Pricing Calculator (calculator.aws) modela arquiteturas e estima custos mensais. Suporta todos os serviços AWS com configurações detalhadas. Não requer conta AWS.'},
+{d:'D4',q:'Qual opção de compra EC2 é ideal para workloads estáveis e previsíveis rodando 24/7 com compromisso de 1 ano?',o:['On-Demand','Reserved Instances','Spot Instances','Dedicated Instances'],a:1,e:'Reserved Instances oferecem até 72% de desconto para workloads com uso previsível de 1 ou 3 anos. On-Demand é para uso imprevisível. Spot para tolerante a interrupção.'},
+{d:'D4',q:'O que é consolidação de faturamento no AWS Organizations?',o:['Pagar de múltiplas formas','Uma única fatura para todas as contas da organização, com descontos por volume agregado','Desconto automático para todas as contas','Transferência de créditos entre contas'],a:1,e:'Organizations consolida o faturamento de todas as contas-membro em uma única fatura. O uso de todas as contas é somado para descontos por volume de S3, EC2 e outros serviços.'},
+{d:'D1',q:'Qual é o principal benefício do modelo de nuvem em relação ao provisionamento de capacidade?',o:['Você ainda precisa adivinhar a capacidade necessária','Você provisiona exatamente o que precisa, quando precisa, sem super ou sub-provisionar','Precisa comprar 3x mais que o necessário','Não há limite de capacidade'],a:1,e:'Na nuvem, você pode escalar para cima e para baixo em minutos. Sem data center próprio, não precisa comprar capacidade antecipada para picos que ocorrem raramente.'},
+{d:'D2',q:'O que faz o Amazon Inspector?',o:['Monitora custos da conta','Avalia automaticamente vulnerabilidades de segurança em instâncias EC2 e containers ECR','Detecta ameaças de rede','Gerencia certificados SSL'],a:1,e:'Inspector analisa instâncias EC2 e imagens de container (ECR) em busca de vulnerabilidades de software (CVEs) e desvios das melhores práticas de segurança. Gera findings priorizados por severidade.'},
+{d:'D3',q:'O que é Amazon ElastiCache?',o:['Armazenamento de objetos com cache','Serviço de cache in-memory gerenciado (Redis ou Memcached) que reduz latência de banco de dados','Banco de dados relacional com cache','CDN para conteúdo dinâmico'],a:1,e:'ElastiCache é um cache in-memory totalmente gerenciado. Serve dados frequentemente acessados com latência de microsegundos em vez de milissegundos do banco. Suporta Redis e Memcached.'},
+{d:'D3',q:'O que é AWS Direct Connect?',o:['Conexão VPN via internet','Conexão de rede dedicada e privada entre o data center on-premises e a AWS, sem passar pela internet','Serviço de CDN','Ferramenta de migração de banco de dados'],a:1,e:'Direct Connect é uma conexão física dedicada entre on-premises e AWS. Oferece largura de banda consistente (1-100 Gbps), menor latência e menor custo de transferência vs VPN pela internet.'},
+{d:'D4',q:'Qual plano de suporte AWS inclui um Technical Account Manager (TAM) dedicado?',o:['Basic','Business','Enterprise On-Ramp','Enterprise'],a:3,e:'Enterprise Support é o nível mais alto: TAM dedicado, SLA de 15 min para sistemas críticos, acesso a infraestrutura event management e consultoria proativa. Enterprise On-Ramp tem pool de TAMs (não dedicado).'},
+{d:'D1',q:'Qual serviço AWS permite implantar infraestrutura usando código (Infrastructure as Code)?',o:['AWS CodeDeploy','AWS CloudFormation','AWS OpsWorks','AWS Systems Manager'],a:1,e:'CloudFormation permite descrever e provisionar infraestrutura AWS usando templates YAML/JSON. IaC garante consistência, repetibilidade e versionamento da infraestrutura.'},
+{d:'D2',q:'O que é criptografia em repouso (at rest) no contexto AWS?',o:['Criptografar dados enquanto são transferidos','Criptografar dados armazenados no disco, banco ou S3 usando chaves gerenciadas','Proteger APIs com HTTPS','Usar VPN para conexões'],a:1,e:'Encryption at rest protege dados armazenados com criptografia. S3 suporta SSE-S3, SSE-KMS, SSE-C. RDS tem encryption nativa com KMS. A AWS gerencia a criptografia transparentemente.'},
+{d:'D3',q:'O que é Amazon Redshift?',o:['Banco relacional para OLTP','Data warehouse colunar totalmente gerenciado para analytics em TB a PB com SQL padrão','Cache de banco de dados','Banco de dados de grafo'],a:1,e:'Redshift é um data warehouse MPP (Massively Parallel Processing) com storage colunar. Ideal para BI e analytics com queries complexas sobre grandes volumes. Integra com Tableau, QuickSight.'},
+{d:'D3',q:'O que é Amazon SageMaker?',o:['Serviço de storage para ML models','Plataforma totalmente gerenciada para construir, treinar e implantar modelos de Machine Learning','Banco de dados para AI','Serviço de análise de logs'],a:1,e:'SageMaker é a plataforma ML end-to-end da AWS: notebooks Jupyter gerenciados, treino distribuído, otimização de hiperparâmetros, deployment gerenciado e monitoramento de modelos em produção.'},
+{d:'D4',q:'O que são Savings Plans na AWS?',o:['Planos de backup automático','Compromisso de gasto mínimo por hora (1-3 anos) em troca de desconto de até 72% em EC2, Lambda e Fargate','Descontos sazonais da AWS','Planos de suporte com desconto'],a:1,e:'Savings Plans: comprometa-se com X $/hora por 1-3 anos e receba desconto de até 72%. Compute SP: EC2 + Fargate + Lambda, qualquer região/família. EC2 SP: família específica em uma região.'},
+];
+
+const EL=EXAM.length;
+let eQ=[],eIdx=0,eAns={},eFlags=new Set(),eTi=null,eSec=90*60,eDone=false;
+window.startExam=function(){
+  eQ=[...EXAM].sort(()=>Math.random()-.5).map(q=>{const n=q.o.length,ix=[...Array(n).keys()].sort(()=>Math.random()-.5);return{...q,o:ix.map(i=>q.o[i]),a:ix.indexOf(q.a)};});eIdx=0;eAns={};eFlags=new Set();eDone=false;
+  document.getElementById('exam-start').style.display='none';
+  document.getElementById('exam-body').style.display='block';
+  document.getElementById('exam-result').style.display='none';
+  eSec=90*60;if(eTi)clearInterval(eTi);
+  eTi=setInterval(()=>{eSec--;const m=Math.floor(eSec/60),s=eSec%60;
+    const cl=document.getElementById('exam-clock');
+    cl.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    cl.style.color=eSec<600?'var(--red)':'var(--yellow)';
+    if(eSec<=0){clearInterval(eTi);finishExam();}},1000);
+  renderExamQ();
+};
+function renderExamQ(){
+  const q=eQ[eIdx];
+  document.getElementById('exam-qnum').textContent='Questão '+(eIdx+1)+' de '+EL;
+  document.getElementById('exam-bf').style.width=((eIdx+1)/EL*100)+'%';
+  document.getElementById('exam-domain').textContent=q.d;
+  document.getElementById('exam-q').textContent=q.q;
+  document.getElementById('exam-score-live').textContent='Respondidas: '+Object.keys(eAns).length+' | Marcadas: '+eFlags.size;
+  const sel=eAns[eIdx];
+  document.getElementById('exam-opts').innerHTML=q.o.map((o,i)=>
+    `<button class="qo${sel===i?' correct':''}" onclick="eSelect(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('');
+  document.getElementById('exam-dots').innerHTML=eQ.map((_,i)=>
+    `<div style="width:18px;height:18px;border-radius:4px;cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center;color:var(--text3);background:${eAns[i]!==undefined?'var(--green)':eFlags.has(i)?'var(--yellow)':i===eIdx?'var(--accent)':'var(--bg3)'};border:1px solid var(--border)" onclick="eGoto(${i})">${i+1}</div>`).join('');
+}
+window.eSelect=function(i){if(eDone)return;eAns[eIdx]=i;renderExamQ();};
+window.eGoto=function(i){eIdx=i;renderExamQ();};
+window.examNav=function(d){eIdx=Math.max(0,Math.min(EL-1,eIdx+d));renderExamQ();};
+window.examFlag=function(){if(eFlags.has(eIdx))eFlags.delete(eIdx);else eFlags.add(eIdx);renderExamQ();};
+window.finishExam=function(){
+  clearInterval(eTi);eDone=true;
+  let correct=0;const domCnt={},domCorr={};
+  eQ.forEach((q,i)=>{domCnt[q.d]=(domCnt[q.d]||0)+1;if(eAns[i]===q.a){correct++;domCorr[q.d]=(domCorr[q.d]||0)+1;}});
+  const pct=Math.round(correct/EL*100);const scaled=Math.round(correct/EL*1000);
+  const pass=scaled>=700;
+  const domHtml=Object.keys(domCnt).sort().map(d=>{
+    const p=Math.round((domCorr[d]||0)/domCnt[d]*100);
+    return `<div class="rcard ${p>=72?'rc':'rw'}"><strong>${d}</strong>: ${domCorr[d]||0}/${domCnt[d]} (${p}%)<div class="result-bar"><div class="result-fill" style="width:${p}%;background:${p>=72?'var(--green)':'var(--red)'}"></div></div></div>`;
+  }).join('');
+  document.getElementById('exam-body').style.display='none';
+  document.getElementById('exam-result').style.display='block';
+  document.getElementById('exam-result-card').innerHTML=`
+<div style="text-align:center;padding:20px 0 28px">
+<div style="font-size:64px;font-weight:800;color:${pass?'var(--green)':'var(--red)'}">${scaled}</div>
+<div style="color:var(--text2);margin-bottom:8px">pontos · ${correct}/${EL} corretas (${pct}%)</div>
+<div style="display:inline-block;padding:8px 24px;border-radius:99px;font-weight:700;background:${pass?'rgba(52,211,153,.15)':'rgba(248,113,113,.15)'};color:${pass?'var(--green)':'var(--red)'};border:1px solid ${pass?'var(--green)':'var(--red)'}">
+${pass?'✅ APROVADO — Parabéns!':'❌ Abaixo de 700 — Continue praticando'}
+</div>
+</div>
+<h3 style="font-size:15px;margin-bottom:12px">Por Domínio</h3>${domHtml}
+<div style="margin-top:20px;display:flex;gap:10px">
+<button class="btn bp" onclick="document.getElementById('exam-start').style.display='block';document.getElementById('exam-result').style.display='none'">↺ Refazer</button>
+<button class="btn bg" onclick="P('home',document.getElementById('nhome'))">← Dashboard</button>
+</div>`;
+};
+const FCS=[
+{d:'D1',f:'O que é computação em nuvem?',b:'Acesso sob demanda a recursos de TI (servidores, storage, banco de dados, rede, software) pela internet, com pagamento pelo uso e sem necessidade de gerenciar hardware físico.'},
+{d:'D1',f:'3 modelos de serviço cloud',b:'IaaS (Infrastructure as a Service): EC2, VPC — você gerencia SO e apps. PaaS (Platform): Elastic Beanstalk, RDS — você gerencia apenas a app. SaaS (Software): Gmail, Salesforce — você só usa.'},
+{d:'D1',f:'3 modelos de implantação de nuvem',b:'Pública (AWS/Azure/GCP): recursos compartilhados via internet. Privada: infra exclusiva on-premises. Híbrida: combina pública e privada. AWS suporta todos os modelos.'},
+{d:'D1',f:'Região vs Zona de Disponibilidade vs Edge Location',b:'Região: área geográfica (us-east-1, sa-east-1). AZ: 1+ data centers em uma região, isolados fisicamente. Edge Location: ponto de presença do CloudFront para baixa latência de conteúdo.'},
+{d:'D1',f:'CapEx vs OpEx',b:'CapEx (Capital Expenditure): compra de hardware antecipado, alto investimento inicial, deprecia. OpEx (Operational Expenditure): pagamento pelo uso, sem capital inicial. Nuvem = OpEx.'},
+{d:'D1',f:'Benefícios da computação em nuvem',b:'1. Trocar CapEx por OpEx. 2. Economia de escala. 3. Sem necessidade de adivinhar capacidade. 4. Velocidade e agilidade. 5. Focar no negócio. 6. Alcance global em minutos.'},
+{d:'D1',f:'O que é elasticidade vs escalabilidade?',b:'Escalabilidade: capacidade de crescer conforme demanda (escalar para cima). Elasticidade: crescer E diminuir automaticamente conforme demanda (escala bidirecional). Elasticidade inclui escalabilidade.'},
+{d:'D1',f:'AWS Well-Architected Framework: 6 pilares',b:'1. Excelência Operacional. 2. Segurança. 3. Confiabilidade. 4. Eficiência de Performance. 5. Otimização de Custo. 6. Sustentabilidade. Cada pilar tem boas práticas e perguntas de revisão.'},
+{d:'D2',f:'Shared Responsibility Model',b:'AWS (security OF the cloud): hardware, rede, data centers, software de serviços gerenciados, AZs. Cliente (security IN the cloud): dados, SO (se EC2), patches, configurações, acessos, criptografia.'},
+{d:'D2',f:'IAM: componentes principais',b:'User: identidade permanente com senha/access keys. Group: conjunto de users com mesma policy. Role: identidade temporária para serviços/apps. Policy: JSON com Allow/Deny de ações.'},
+{d:'D2',f:'MFA (Multi-Factor Authentication)',b:'Segunda camada de segurança: senha + código temporário de dispositivo virtual (Google Auth) ou hardware. AWS recomenda fortemente MFA na conta root e para todos os usuários IAM com privilégios.'},
+{d:'D2',f:'AWS CloudTrail',b:'Registra todas as chamadas de API da conta AWS: quem fez, qual ação, em qual serviço, quando, de qual IP. Logs armazenados em S3. Ativo por padrão por 90 dias; Trail permanente requer configuração.'},
+{d:'D2',f:'AWS WAF vs AWS Shield',b:'WAF: filtra tráfego HTTP/HTTPS na camada 7 (SQLi, XSS, bots). Shield Standard: proteção gratuita e automática contra DDoS L3/4. Shield Advanced: pago, proteção reforçada DDoS, SLA, DRT.'},
+{d:'D2',f:'Amazon GuardDuty',b:'Serviço de detecção de ameaças usando ML. Analisa CloudTrail, VPC Flow Logs, DNS Logs. Detecta: credenciais comprometidas, mineração de criptomoeda, IPs maliciosos, comportamento anômalo.'},
+{d:'D2',f:'AWS Config',b:"Monitora e registra configurações de recursos AWS ao longo do tempo. Avalia conformidade com regras (ex: 'S3 não pode ser público'). Diferente do CloudTrail (que registra ações), Config registra estados."},
+{d:'D3',f:'Amazon EC2: tipos de instância',b:'T (burstable): dev/test barato. M (geral): apps web. C (compute): HPC, encoding. R (memory): bancos in-memory. I (storage): IOPS alto. G/P (GPU): ML, gaming. Graviton (A): ARM, custo-benefício.'},
+{d:'D3',f:'Amazon S3: casos de uso e storage classes',b:'Use S3 para: backup, data lake, site estático, mídia. Classes: Standard (frequente), Standard-IA (mensal), One Zone-IA (reproduzível), Intelligent-Tiering (padrão variável), Glacier (arquivo).'},
+{d:'D3',f:'Amazon RDS: bancos suportados',b:'MySQL, PostgreSQL, MariaDB, Oracle, Microsoft SQL Server e Amazon Aurora. AWS gerencia: patches, backups automáticos, Multi-AZ, Read Replicas. Você gerencia apenas os dados e schema.'},
+{d:'D3',f:'AWS Lambda: quando usar',b:'Use Lambda para: processamento de eventos (S3, API Gateway, SQS, DynamoDB Streams), backends de APIs sem estado, automações, ETL. Limite de 15 min por execução. Paga por ms de execução.'},
+{d:'D3',f:'Amazon VPC: componentes',b:'Subnet pública: acesso à internet via Internet Gateway. Subnet privada: sem acesso direto à internet (usa NAT Gateway para saída). Route Table: define roteamento. Security Group: firewall de instância.'},
+{d:'D3',f:'Quando usar SQS vs SNS?',b:'SQS: fila para desacoplar e processar workloads de forma assíncrona. Um consumer por vez. SNS: pub/sub para notificar múltiplos subscribers simultaneamente (fan-out). Pode usar ambos: SNS → múltiplos SQS.'},
+{d:'D3',f:'Amazon CloudFront vs Route 53',b:'CloudFront: CDN que cacheia conteúdo em 450+ edge locations para baixa latência. Route 53: DNS gerenciado para resolver nomes de domínio para IPs, com políticas de roteamento inteligente.'},
+{d:'D4',f:'On-Demand vs Reserved vs Spot — resumo',b:'On-Demand: máxima flexibilidade, maior preço. Reserved (1-3 anos): desconto até 72%, comprometimento. Spot: capacidade ociosa, desconto até 90%, pode ser interrompido. Savings Plans: flexibilidade com desconto RI.'},
+{d:'D4',f:'AWS Trusted Advisor — 5 categorias',b:'1. Otimização de Custo. 2. Performance. 3. Segurança (MFA root, portas abertas). 4. Tolerância a Falhas (Multi-AZ, backups). 5. Service Quotas. Business/Enterprise: acesso completo.'},
+{d:'D4',f:'Planos de Suporte AWS',b:'Basic: gratuito, documentação, fóruns, 6 checks Trusted Advisor. Developer: email, 1 usuário, ~$29/mês. Business: 24/7 telefone/chat, todos os checks TA, ~$100/mês. Enterprise: TAM, ~$15K/mês.'},
+{d:'D4',f:'AWS Budgets vs Cost Explorer',b:'Cost Explorer: análise histórica e previsão de custos com gráficos interativos. Budgets: alertas proativos ANTES de gastar demais (email/SNS quando custo real ou previsto excede threshold).'},
+{d:'D4',f:'AWS Free Tier — 3 tipos',b:'12 meses gratuitos: 750h EC2 t3.micro, 5GB S3. Sempre gratuito: Lambda 1M req/mês, DynamoDB 25GB, CloudWatch 10 metrics. Trials: serviços específicos por 30-90 dias.'},
+{d:'D1',f:'Infraestrutura Global AWS',b:'33 regiões geográficas. 105+ Zonas de Disponibilidade. 450+ Edge Locations para CloudFront. Backbone de rede privado conecta tudo. Dados em uma região não saem dela por padrão (data sovereignty).'},
+{d:'D2',f:'Amazon Macie',b:'Serviço de segurança que usa ML para descobrir, classificar e proteger dados sensíveis (PII, dados financeiros, credenciais) armazenados no S3. Gera findings quando encontra exposições.'},
+{d:'D3',f:'AWS Elastic Beanstalk vs EC2 vs Lambda',b:'EC2: máximo controle, gerencia tudo. Beanstalk: PaaS, você envia código, AWS provisiona infra. Lambda: serverless, zero gestão de infra, paga por execução. Quanto mais gerenciado, menos controle.'},
+{d:'D4',f:'AWS Organizations',b:'Gerencia múltiplas contas AWS: faturamento consolidado (1 fatura, descontos por volume), SCPs (guardrails de permissão), hierarquia de OUs, criação centralizada de contas.'},
+{d:'D3',f:'Amazon DynamoDB vs RDS',b:'DynamoDB: NoSQL, serverless, latência ms constante em qualquer escala, sem schema fixo, ideal para apps de alta escala. RDS: SQL relacional, transações ACID, joins, ideal para apps tradicionais com dados estruturados.'},
+];
+
+let fcIdx=0,fcFilt=[...FCS];
+function renderFCTags(){
+  const doms=[...new Set(FCS.map(f=>f.d))];
+  document.getElementById('fc-tags').innerHTML=
+    '<button class="btn bp" style="font-size:12px;padding:5px 12px" onclick="setFCDom(null,this)">Todos</button>'+
+    doms.map(d=>`<button class="btn bg" style="font-size:12px;padding:5px 12px" onclick="setFCDom('${d}',this)">${d}</button>`).join('');
+}
+function setFCDom(d,btn){
+  fcFilt=d?FCS.filter(f=>f.d===d):[...FCS];fcIdx=0;
+  document.querySelectorAll('#fc-tags button').forEach(b=>b.className='btn bg');
+  btn.className='btn bp';renderFC();
+}
+function renderFC(){
+  if(!fcFilt.length)return;
+  const c=fcFilt[fcIdx];
+  document.getElementById('fc-dom').textContent=c.d;
+  document.getElementById('fc-dom2').textContent=c.d;
+  document.getElementById('fc-front').textContent=c.f;
+  document.getElementById('fc-back').textContent=c.b;
+  document.getElementById('fc-ctr').textContent=(fcIdx+1)+' / '+fcFilt.length;
+  document.getElementById('fc-card').classList.remove('flipped');
+}
+window.flipFC=function(){document.getElementById('fc-card').classList.toggle('flipped');};
+window.fcNav=function(d){fcIdx=(fcIdx+d+fcFilt.length)%fcFilt.length;renderFC();};
+window.shuffleFC=function(){fcFilt=[...fcFilt].sort(()=>Math.random()-.5);fcIdx=0;renderFC();};
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('page-flashcards').classList.contains('active')){
+    if(e.key==='ArrowLeft')fcNav(-1);
+    if(e.key==='ArrowRight')fcNav(1);
+    if(e.key===' '){e.preventDefault();flipFC();}
+  }
+});
+renderFCTags();renderFC();
+const CKKEY='clf_c02_study.html_ck';
+const ckState=JSON.parse(localStorage.getItem(CKKEY)||'{}');
+function toggleChi(i){
+  ckState[i]=!ckState[i];localStorage.setItem(CKKEY,JSON.stringify(ckState));
+  const el=document.getElementById('chi'+i);
+  if(ckState[i])el.classList.add('ck');else el.classList.remove('ck');
+  updateCP();
+}
+function updateCP(){
+  const total=45;const done=Object.values(ckState).filter(Boolean).length;
+  document.getElementById('cpf').style.width=(done/total*100)+'%';
+  document.getElementById('cp-txt').textContent=done+' / '+total+' concluídos';
+  document.getElementById('ptext').textContent=done+' / '+total+' itens';
+  document.getElementById('gpbar').style.width=(done/total*100)+'%';
+}
+Object.keys(ckState).forEach(i=>{if(ckState[i])document.getElementById('chi'+i)?.classList.add('ck');});
+updateCP();
+let pSec=25*60,pTotal=25*60,pRun=false,pTi=null,pSess=0;
+window.pToggle=function(){
+  if(pRun){clearInterval(pTi);pRun=false;document.getElementById('pbtn').textContent='▶ Continuar';}
+  else{pRun=true;document.getElementById('pbtn').textContent='⏸ Pausar';
+    pTi=setInterval(()=>{pSec--;
+      const m=Math.floor(pSec/60),s=pSec%60;
+      document.getElementById('ptimer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+      if(pSec<=0){clearInterval(pTi);pRun=false;pSess++;
+        document.getElementById('psess').textContent=pSess;
+        document.getElementById('pbtn').textContent='▶ Iniciar';
+        document.getElementById('pmode').textContent='☕ Pausa!';
+      }},1000);
+  }
+};
+window.pReset=function(){clearInterval(pTi);pRun=false;pSec=pTotal;
+  const m=Math.floor(pSec/60);
+  document.getElementById('ptimer').textContent=(m<10?'0':'')+m+':00';
+  document.getElementById('pbtn').textContent='▶ Iniciar';
+  document.getElementById('pmode').textContent='Foco';
+};
+window.pSet=function(w,b){pTotal=w*60;pSec=w*60;pReset();};
+</script></body></html>

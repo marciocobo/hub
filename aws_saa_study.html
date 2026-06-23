@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>AWS SAA-C03 — Guia de Estudos</title>
+<style>
+:root{--bg:#0f1117;--bg2:#1a1d27;--bg3:#22263a;--border:#2e3250;--accent:#3b82f6;--accent2:#60a5fa;--green:#34d399;--yellow:#fbbf24;--red:#f87171;--blue:#60a5fa;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--r:10px;}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:15px;line-height:1.7;display:flex;min-height:100vh;}
+#sidebar{width:260px;min-width:260px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
+#sh{padding:20px 16px 12px;border-bottom:1px solid var(--border);}
+#sh h1{font-size:15px;font-weight:700;color:var(--accent2);}
+#sh p{font-size:11px;color:var(--text3);margin-top:2px;}
+.ns{padding:10px 8px 4px;}
+.nst{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;padding:0 8px 6px;}
+.ni{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text2);transition:all .15s;}
+.ni:hover{background:var(--bg3);color:var(--text);}
+.ni.active{background:rgba(59,130,246,.18);color:var(--accent2);font-weight:600;}
+.ni .dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;}
+.nb{margin-left:auto;font-size:10px;background:var(--bg3);padding:1px 6px;border-radius:99px;color:var(--text3);}
+#main{flex:1;overflow-y:auto;}
+#topbar{position:sticky;top:0;z-index:50;background:rgba(15,17,23,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 28px;display:flex;align-items:center;gap:16px;}
+#topbar h2{font-size:14px;font-weight:600;}
+.pp{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);}
+.pbw{width:120px;height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;}
+.pbf{height:100%;background:var(--accent);border-radius:99px;transition:width .4s;}
+#content{padding:28px 32px;max-width:900px;}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;}
+.ct{font-size:17px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:10px;}
+.cs{font-size:13px;color:var(--text2);margin-bottom:16px;}
+.hero{background:linear-gradient(135deg,rgba(59,130,246,.15),rgba(96,165,250,.08));border:1px solid rgba(59,130,246,.3);border-radius:var(--r);padding:28px;margin-bottom:24px;}
+.hero h1{font-size:22px;font-weight:800;background:linear-gradient(90deg,var(--accent2),#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero p{color:var(--text2);margin-top:6px;font-size:14px;}
+.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:16px 0;}
+.ii{background:var(--bg3);border-radius:8px;padding:14px;}
+.ii .lb{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:600;}
+.ii .vl{font-size:16px;font-weight:700;color:var(--text);margin-top:4px;}
+.dbi{margin-bottom:14px;}
+.dbh{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
+.dbt{height:10px;background:var(--bg3);border-radius:99px;overflow:hidden;}
+.dbf{height:100%;border-radius:99px;transition:width 1s .2s;}
+.al{border-radius:8px;padding:12px 16px;margin:12px 0;font-size:13.5px;border-left:3px solid;}
+.aw{background:rgba(251,191,36,.08);border-color:var(--yellow);color:#fde68a;}
+.at{background:rgba(52,211,153,.08);border-color:var(--green);color:#a7f3d0;}
+.ai{background:rgba(96,165,250,.08);border-color:var(--blue);color:#bfdbfe;}
+table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
+th{background:var(--bg3);color:var(--text2);font-weight:600;text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);}
+td{padding:8px 12px;border-bottom:1px solid rgba(46,50,80,.5);}
+tr:last-child td{border-bottom:none;}
+.qo{padding:11px 16px;border-radius:8px;cursor:pointer;font-size:13.5px;border:1px solid var(--border);background:var(--bg3);color:var(--text);transition:all .15s;text-align:left;width:100%;margin-bottom:8px;}
+.qo:hover:not(.correct):not(.wrong){border-color:var(--accent);background:rgba(59,130,246,.1);}
+.qo.correct{background:rgba(52,211,153,.15);border-color:var(--green);color:#a7f3d0;}
+.qo.wrong{background:rgba(248,113,113,.15);border-color:var(--red);color:#fecaca;}
+.qfb{margin-top:14px;padding:12px 16px;border-radius:8px;font-size:13.5px;display:none;}
+.qfb.show{display:block;}
+.qfb.ok{background:rgba(52,211,153,.1);color:#a7f3d0;border:1px solid rgba(52,211,153,.3);}
+.qfb.bad{background:rgba(248,113,113,.1);color:#fecaca;border:1px solid rgba(248,113,113,.3);}
+.qnav{display:flex;align-items:center;gap:10px;margin-top:16px;}
+.btn{padding:8px 18px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;}
+.bp{background:var(--accent);color:#fff;}
+.bp:hover{opacity:.9;}
+.bg{background:var(--bg3);color:var(--text2);border:1px solid var(--border);}
+.bg:hover{background:var(--border);color:var(--text);}
+.qc{font-size:12px;color:var(--text3);margin-left:auto;}
+.fcw{perspective:1000px;height:200px;cursor:pointer;margin-bottom:16px;}
+.fc{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s;border-radius:var(--r);}
+.fc.flipped{transform:rotateY(180deg);}
+.cf{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--r);display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;border:1px solid var(--border);flex-direction:column;}
+.cf.front{background:var(--bg2);}
+.cf.back{background:linear-gradient(135deg,rgba(59,130,246,.12),rgba(96,165,250,.08));transform:rotateY(180deg);}
+.cf .hint{position:absolute;bottom:10px;right:14px;font-size:11px;color:var(--text3);}
+.chi{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(46,50,80,.4);cursor:pointer;}
+.chi:last-child{border-bottom:none;}
+.chb{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;font-size:12px;transition:all .15s;color:transparent;}
+.chi.ck .chb{background:var(--green);border-color:var(--green);color:#fff;}
+.chi.ck .cht{text-decoration:line-through;color:var(--text3);}
+.cht{font-size:13.5px;}
+.cp{height:8px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:16px 0 8px;}
+.cpf{height:100%;background:var(--green);border-radius:99px;transition:width .4s;}
+.td{font-size:52px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-2px;color:var(--accent2);text-align:center;margin:10px 0;}
+.page{display:none;}
+.page.active{display:block;}
+h2.sh{font-size:20px;font-weight:700;margin-bottom:6px;}
+h3.sbh{font-size:15px;font-weight:700;color:var(--accent2);margin:18px 0 8px;}
+p{margin-bottom:10px;color:var(--text2);}
+.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;}
+.exam-header{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;}
+.exam-timer{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--yellow);}
+.exam-prog{flex:1;}
+.exam-qnum{font-size:13px;color:var(--text3);margin-bottom:4px;}
+.exam-bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;}
+.exam-bf{height:100%;background:var(--accent);border-radius:99px;transition:width .3s;}
+.exam-q{font-size:15px;font-weight:600;margin-bottom:16px;line-height:1.6;}
+.exam-domain{font-size:11px;color:var(--text3);margin-bottom:8px;}
+.exam-nav{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
+.exam-flag{padding:6px 14px;border-radius:7px;font-size:12px;cursor:pointer;border:1px solid var(--yellow);background:rgba(251,191,36,.08);color:var(--yellow);}
+.result-bar{height:16px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:8px 0;}
+.result-fill{height:100%;border-radius:99px;transition:width 1s;}
+.rcard{background:var(--bg3);border-radius:8px;padding:12px 16px;margin-bottom:8px;font-size:13px;border-left:3px solid var(--border);}
+.rcard.rc{border-color:var(--green);}
+.rcard.rw{border-color:var(--red);}
+::-webkit-scrollbar{width:6px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+.td1{background:rgba(59,130,246,.2);color:#3b82f6;}
+.td2{background:rgba(52,211,153,.2);color:#34d399;}
+.td3{background:rgba(251,191,36,.2);color:#fbbf24;}
+.td4{background:rgba(167,139,250,.2);color:#a78bfa;}
+
+</style>
+</head>
+<body>
+<nav id="sidebar">
+<div id="sh"><h1>AWS SAA-C03</h1><p>Solutions Architect Associate</p></div>
+<div class="ns">
+<div class="nst">Visão Geral</div>
+<div class="ni active" id="nhome" onclick="P('home',this)">🏠 Dashboard</div>
+<div class="ni" onclick="P('simulado',this)">📝 Simulado (65q)</div>
+<div class="ni" onclick="P('checklist',this)">✅ Checklist</div>
+<div class="ni" onclick="P('timer',this)">⏱️ Pomodoro</div>
+</div>
+<div class="ns">
+<div class="nst">Estudo por Domínio</div>
+<div class="ni" id="nw1" onclick="P('w1',this)"><span class="dot"></span>S1 — Segurança<span class="nb">D1</span></div>
+<div class="ni" id="nw2" onclick="P('w2',this)"><span class="dot"></span>S2 — Resiliência<span class="nb">D2</span></div>
+<div class="ni" id="nw3" onclick="P('w3',this)"><span class="dot"></span>S3 — Performance<span class="nb">D3</span></div>
+<div class="ni" id="nw4" onclick="P('w4',this)"><span class="dot"></span>S4 — Custo<span class="nb">D4</span></div>
+</div>
+<div class="ns">
+<div class="nst">Referência</div>
+<div class="ni" onclick="P('flashcards',this)">🃏 Flashcards (34)</div>
+<div class="ni" onclick="P('resources',this)">📚 Recursos</div>
+</div>
+</nav>
+<div id="main">
+<div id="topbar"><h2 id="tbtitle">Dashboard</h2>
+<div class="pp"><span id="ptext">0 itens</span><div class="pbw"><div class="pbf" id="gpbar" style="width:0%"></div></div></div>
+</div>
+<div id="content">
+<div id="page-home" class="page active">
+<div class="hero"><h1>🏆 AWS SAA-C03</h1><p>Solutions Architect Associate — Guia completo e interativo. Tudo que você precisa.</p></div>
+<div class="ig">
+<div class="ii"><div class="lb">Questões</div><div class="vl">65</div></div>
+<div class="ii"><div class="lb">Tempo</div><div class="vl">130 min</div></div>
+<div class="ii"><div class="lb">Nota mín.</div><div class="vl">720/1000</div></div>
+<div class="ii"><div class="lb">Custo</div><div class="vl">USD 300</div></div>
+<div class="ii"><div class="lb">Plataforma</div><div class="vl">Pearson VUE</div></div>
+</div>
+<div class="card"><div class="ct">📊 Distribuição dos Domínios</div><div class="dbi"><div class="dbh"><span><span class="tag td1">D1</span> Arquiteturas Seguras</span><strong>30%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#3b82f6" data-t="30"></div></div></div>
+<div class="dbi"><div class="dbh"><span><span class="tag td2">D2</span> Arquiteturas Resilientes</span><strong>26%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#34d399" data-t="26"></div></div></div>
+<div class="dbi"><div class="dbh"><span><span class="tag td3">D3</span> Alta Performance</span><strong>24%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#fbbf24" data-t="24"></div></div></div>
+<div class="dbi"><div class="dbh"><span><span class="tag td4">D4</span> Custo Otimizado</span><strong>20%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#a78bfa" data-t="20"></div></div></div>
+</div>
+<div class="card"><div class="ct">🗺️ Estudo por Domínio</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:8px"><div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w1',document.getElementById('nw1'))"><strong style="font-size:13px">S1 — Segurança</strong><br><span style="font-size:12px;color:var(--text3)">IAM, KMS, Shield, WAF, VPC, GuardDuty</span></div>
+<div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w2',document.getElementById('nw2'))"><strong style="font-size:13px">S2 — Resiliência</strong><br><span style="font-size:12px;color:var(--text3)">Multi-AZ, Auto Scaling, S3, Route 53</span></div>
+<div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w3',document.getElementById('nw3'))"><strong style="font-size:13px">S3 — Performance</strong><br><span style="font-size:12px;color:var(--text3)">ElastiCache, CloudFront, RDS, DynamoDB</span></div>
+<div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w4',document.getElementById('nw4'))"><strong style="font-size:13px">S4 — Custo</strong><br><span style="font-size:12px;color:var(--text3)">Reserved, Spot, S3 Tiers, Trusted Advisor</span></div>
+</div>
+</div>
+</div>
+<div id="page-simulado" class="page">
+<h2 class="sh">📝 Simulado — AWS SAA-C03</h2>
+<p style="margin-bottom:20px">65 questões · 130 min · Mínimo: 720/1000</p>
+<div id="exam-start">
+<div class="card" style="max-width:520px">
+<div style="font-size:48px;text-align:center;margin-bottom:12px">🎓</div>
+<div class="ct" style="justify-content:center">Pronto para o simulado?</div>
+<p>Simula o exame real com questões embaralhadas e timer.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0"><div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D1</strong> — ~20q (30%)</div>
+<div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D2</strong> — ~17q (26%)</div>
+<div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D3</strong> — ~16q (24%)</div>
+<div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D4</strong> — ~13q (20%)</div>
+</div>
+<button class="btn bp" style="font-size:15px;padding:12px 32px;width:100%;margin-top:8px" onclick="startExam()">▶ Iniciar Simulado</button>
+</div>
+</div>
+<div id="exam-body" style="display:none">
+<div class="exam-header">
+<div><div style="font-size:11px;color:var(--text3)">TEMPO</div><div class="exam-timer" id="exam-clock">130:00</div></div>
+<div class="exam-prog">
+<div class="exam-qnum" id="exam-qnum">Questão 1 de 65</div>
+<div class="exam-bar"><div class="exam-bf" id="exam-bf" style="width:1%"></div></div>
+<div style="font-size:11px;color:var(--text3);margin-top:4px" id="exam-score-live">Respondidas: 0 | Marcadas: 0</div>
+</div>
+</div>
+<div class="card">
+<div class="exam-domain" id="exam-domain"></div>
+<div class="exam-q" id="exam-q"></div>
+<div id="exam-opts"></div>
+<div class="exam-nav">
+<button class="btn bg" onclick="examNav(-1)">← Anterior</button>
+<button class="exam-flag" onclick="examFlag()">🚩 Marcar</button>
+<button class="btn bp" onclick="examNav(1)" style="margin-left:auto">Próxima →</button>
+</div>
+<div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap" id="exam-dots"></div>
+</div>
+<button class="btn" onclick="finishExam()" style="background:#f87171;color:#fff;margin-top:4px">⏹ Encerrar</button>
+</div>
+<div id="exam-result" style="display:none"><div class="card" id="exam-result-card"></div></div>
+</div>
+<div id="page-w1" class="page">
+<h2 class="sh">S1 — Segurança</h2><p style="margin-bottom:20px">IAM, KMS, Shield, WAF, VPC, GuardDuty</p>
+<div class="card"><div class="ct">🧠 Quiz — S1 — Segurança</div><div id="qw1"></div></div>
+</div>
+<div id="page-w2" class="page">
+<h2 class="sh">S2 — Resiliência</h2><p style="margin-bottom:20px">Multi-AZ, Auto Scaling, S3, Route 53</p>
+<div class="card"><div class="ct">🧠 Quiz — S2 — Resiliência</div><div id="qw2"></div></div>
+</div>
+<div id="page-w3" class="page">
+<h2 class="sh">S3 — Performance</h2><p style="margin-bottom:20px">ElastiCache, CloudFront, RDS, DynamoDB</p>
+<div class="card"><div class="ct">🧠 Quiz — S3 — Performance</div><div id="qw3"></div></div>
+</div>
+<div id="page-w4" class="page">
+<h2 class="sh">S4 — Custo</h2><p style="margin-bottom:20px">Reserved, Spot, S3 Tiers, Trusted Advisor</p>
+<div class="card"><div class="ct">🧠 Quiz — S4 — Custo</div><div id="qw4"></div></div>
+</div>
+<div id="page-flashcards" class="page">
+<h2 class="sh">🃏 Flashcards (34 cards)</h2>
+<p>Clique no card para revelar. Use setas ou teclado ← → para navegar, Espaço para virar.</p>
+<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap" id="fc-tags"></div>
+<div class="fcw" onclick="flipFC()">
+<div class="fc" id="fc-card">
+<div class="cf front"><div style="font-size:12px;color:var(--accent2);margin-bottom:10px" id="fc-dom"></div><div style="font-size:16px;font-weight:600;line-height:1.5" id="fc-front"></div><div class="hint">clique para revelar →</div></div>
+<div class="cf back"><div style="font-size:12px;color:var(--green);margin-bottom:10px" id="fc-dom2"></div><div style="font-size:14px;line-height:1.6;color:var(--text)" id="fc-back"></div></div>
+</div>
+</div>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+<button class="btn bg" onclick="fcNav(-1)">← Anterior</button>
+<span style="font-size:13px;color:var(--text3)" id="fc-ctr">1 / 34</span>
+<button class="btn bg" onclick="fcNav(1)">Próximo →</button>
+<button class="btn bp" onclick="shuffleFC()" style="margin-left:auto">🔀 Embaralhar</button>
+</div>
+</div>
+<div id="page-checklist" class="page">
+<h2 class="sh">✅ Checklist de Prontidão</h2>
+<p>Marque os tópicos que você já domina. Progresso salvo automaticamente.</p>
+<div class="cp"><div class="cpf" id="cpf" style="width:0%"></div></div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:20px" id="cp-txt">0 / 53 concluídos</div>
+<div style="font-size:14px;font-weight:700;color:var(--accent2);margin:20px 0 10px;padding-top:12px;border-top:1px solid var(--border)">🔐 D1: Segurança (30%)</div>
+<div class="chi" id="chi0" onclick="toggleChi(0)"><div class="chb" id="chb0">✓</div><div class="cht">Entender IAM: users, groups, roles, policies (inline vs managed)</div></div>
+<div class="chi" id="chi1" onclick="toggleChi(1)"><div class="chb" id="chb1">✓</div><div class="cht">Saber quando usar IAM Role vs User vs federação SAML</div></div>
+<div class="chi" id="chi2" onclick="toggleChi(2)"><div class="chb" id="chb2">✓</div><div class="cht">Configurar MFA para root account e usuários IAM críticos</div></div>
+<div class="chi" id="chi3" onclick="toggleChi(3)"><div class="chb" id="chb3">✓</div><div class="cht">Entender VPC: subnets, route tables, IGW, NAT Gateway</div></div>
+<div class="chi" id="chi4" onclick="toggleChi(4)"><div class="chb" id="chb4">✓</div><div class="cht">Diferenciar Security Groups (stateful) de NACLs (stateless)</div></div>
+<div class="chi" id="chi5" onclick="toggleChi(5)"><div class="chb" id="chb5">✓</div><div class="cht">Saber VPC Endpoint Gateway (S3/DynamoDB) vs Interface (PrivateLink)</div></div>
+<div class="chi" id="chi6" onclick="toggleChi(6)"><div class="chb" id="chb6">✓</div><div class="cht">Entender AWS KMS: CMK, data keys, envelope encryption</div></div>
+<div class="chi" id="chi7" onclick="toggleChi(7)"><div class="chb" id="chb7">✓</div><div class="cht">Saber o que AWS CloudTrail registra e por quanto tempo</div></div>
+<div class="chi" id="chi8" onclick="toggleChi(8)"><div class="chb" id="chb8">✓</div><div class="cht">Diferenciar GuardDuty, Inspector, Macie, Security Hub</div></div>
+<div class="chi" id="chi9" onclick="toggleChi(9)"><div class="chb" id="chb9">✓</div><div class="cht">Entender AWS WAF: WebACLs, regras managed, rate limiting</div></div>
+<div class="chi" id="chi10" onclick="toggleChi(10)"><div class="chb" id="chb10">✓</div><div class="cht">Shield Standard (gratuito, automático) vs Advanced (pago)</div></div>
+<div class="chi" id="chi11" onclick="toggleChi(11)"><div class="chb" id="chb11">✓</div><div class="cht">Amazon Cognito: User Pools (auth) vs Identity Pools (AuthZ AWS)</div></div>
+<div class="chi" id="chi12" onclick="toggleChi(12)"><div class="chb" id="chb12">✓</div><div class="cht">Shared Responsibility Model: AWS vs cliente para EC2, RDS, Lambda, S3</div></div>
+<div class="chi" id="chi13" onclick="toggleChi(13)"><div class="chb" id="chb13">✓</div><div class="cht">SCPs no Organizations: guardrails para múltiplas contas</div></div>
+<div class="chi" id="chi14" onclick="toggleChi(14)"><div class="chb" id="chb14">✓</div><div class="cht">Criptografia em repouso: S3 SSE-S3/SSE-KMS/SSE-C, RDS encryption</div></div>
+<div style="font-size:14px;font-weight:700;color:var(--accent2);margin:20px 0 10px;padding-top:12px;border-top:1px solid var(--border)">🏗️ D2: Resiliência (26%)</div>
+<div class="chi" id="chi15" onclick="toggleChi(15)"><div class="chb" id="chb15">✓</div><div class="cht">Entender RTO vs RPO e as 4 estratégias de DR com seus trade-offs</div></div>
+<div class="chi" id="chi16" onclick="toggleChi(16)"><div class="chb" id="chb16">✓</div><div class="cht">Saber Multi-AZ vs Read Replica: síncrono vs assíncrono, casos de uso</div></div>
+<div class="chi" id="chi17" onclick="toggleChi(17)"><div class="chb" id="chb17">✓</div><div class="cht">Configurar Auto Scaling Groups com launch templates</div></div>
+<div class="chi" id="chi18" onclick="toggleChi(18)"><div class="chb" id="chb18">✓</div><div class="cht">Diferenciar ALB (L7, path-based) de NLB (L4, IP estático, baixa latência)</div></div>
+<div class="chi" id="chi19" onclick="toggleChi(19)"><div class="chb" id="chb19">✓</div><div class="cht">S3 durabilidade (11 noves) vs disponibilidade e classes de storage</div></div>
+<div class="chi" id="chi20" onclick="toggleChi(20)"><div class="chb" id="chb20">✓</div><div class="cht">SQS Standard vs FIFO: throughput, garantias de entrega e ordem</div></div>
+<div class="chi" id="chi21" onclick="toggleChi(21)"><div class="chb" id="chb21">✓</div><div class="cht">SNS pub/sub fan-out: múltiplos subscribers de um tópico</div></div>
+<div class="chi" id="chi22" onclick="toggleChi(22)"><div class="chb" id="chb22">✓</div><div class="cht">Route 53: weighted, latency, failover, geolocation, geoproximity</div></div>
+<div class="chi" id="chi23" onclick="toggleChi(23)"><div class="chb" id="chb23">✓</div><div class="cht">S3 CRR e SRR: quando replicar e requisitos de versionamento</div></div>
+<div class="chi" id="chi24" onclick="toggleChi(24)"><div class="chb" id="chb24">✓</div><div class="cht">EventBridge vs SQS vs SNS: qual usar para qual padrão de integração</div></div>
+<div class="chi" id="chi25" onclick="toggleChi(25)"><div class="chb" id="chb25">✓</div><div class="cht">Lambda: cold start, concorrência provisionada, DLQ, layers</div></div>
+<div class="chi" id="chi26" onclick="toggleChi(26)"><div class="chb" id="chb26">✓</div><div class="cht">RDS Proxy: pooling de conexões para Lambda com RDS</div></div>
+<div class="chi" id="chi27" onclick="toggleChi(27)"><div class="chb" id="chb27">✓</div><div class="cht">Praticar: desenhar arquitetura multi-AZ para aplicação web 3-tier</div></div>
+<div style="font-size:14px;font-weight:700;color:var(--accent2);margin:20px 0 10px;padding-top:12px;border-top:1px solid var(--border)">⚡ D3: Performance (24%)</div>
+<div class="chi" id="chi28" onclick="toggleChi(28)"><div class="chb" id="chb28">✓</div><div class="cht">ElastiCache Redis (HA, Pub/Sub, structures) vs Memcached (simples, multi-thread)</div></div>
+<div class="chi" id="chi29" onclick="toggleChi(29)"><div class="chb" id="chb29">✓</div><div class="cht">DynamoDB: partition key, sort key, GSI, LSI, capacidade provisionada vs on-demand</div></div>
+<div class="chi" id="chi30" onclick="toggleChi(30)"><div class="chb" id="chb30">✓</div><div class="cht">DAX: latência µs, drop-in para DynamoDB, quando usar (hot keys)</div></div>
+<div class="chi" id="chi31" onclick="toggleChi(31)"><div class="chb" id="chb31">✓</div><div class="cht">CloudFront: edge locations, behaviors, TTL, Origin Shield, Lambda@Edge</div></div>
+<div class="chi" id="chi32" onclick="toggleChi(32)"><div class="chb" id="chb32">✓</div><div class="cht">Aurora vs RDS MySQL: storage distribuído, failover, performance</div></div>
+<div class="chi" id="chi33" onclick="toggleChi(33)"><div class="chb" id="chb33">✓</div><div class="cht">Famílias EC2: C (HPC), R (memory), I (storage IOPS), G/P (GPU)</div></div>
+<div class="chi" id="chi34" onclick="toggleChi(34)"><div class="chb" id="chb34">✓</div><div class="cht">EBS vs EFS vs S3: block vs file vs object storage, casos de uso</div></div>
+<div class="chi" id="chi35" onclick="toggleChi(35)"><div class="chb" id="chb35">✓</div><div class="cht">Kinesis Data Streams (ingestão) vs Firehose (entrega) vs Analytics (SQL)</div></div>
+<div class="chi" id="chi36" onclick="toggleChi(36)"><div class="chb" id="chb36">✓</div><div class="cht">Redshift: data warehouse colunar, MPP, OLAP vs OLTP</div></div>
+<div class="chi" id="chi37" onclick="toggleChi(37)"><div class="chb" id="chb37">✓</div><div class="cht">Auto Scaling: target tracking (recomendado), step, scheduled</div></div>
+<div class="chi" id="chi38" onclick="toggleChi(38)"><div class="chb" id="chb38">✓</div><div class="cht">Global Accelerator (TCP/UDP anycast) vs CloudFront (HTTP cache CDN)</div></div>
+<div class="chi" id="chi39" onclick="toggleChi(39)"><div class="chb" id="chb39">✓</div><div class="cht">Praticar: identificar gargalo e recomendar solução de performance</div></div>
+<div style="font-size:14px;font-weight:700;color:var(--accent2);margin:20px 0 10px;padding-top:12px;border-top:1px solid var(--border)">💰 D4: Custo (20%)</div>
+<div class="chi" id="chi40" onclick="toggleChi(40)"><div class="chb" id="chb40">✓</div><div class="cht">On-Demand vs Reserved (1-3 anos, Standard vs Convertible) vs Spot (interruptível)</div></div>
+<div class="chi" id="chi41" onclick="toggleChi(41)"><div class="chb" id="chb41">✓</div><div class="cht">Savings Plans: Compute (flexível, 66%) vs EC2 (específico, 72%)</div></div>
+<div class="chi" id="chi42" onclick="toggleChi(42)"><div class="chb" id="chb42">✓</div><div class="cht">Spot Instance: casos ideais (batch, ML training, rendering) e não ideais</div></div>
+<div class="chi" id="chi43" onclick="toggleChi(43)"><div class="chb" id="chb43">✓</div><div class="cht">S3 Lifecycle Policies: transição automática entre classes por idade</div></div>
+<div class="chi" id="chi44" onclick="toggleChi(44)"><div class="chb" id="chb44">✓</div><div class="cht">S3 Intelligent-Tiering: para padrão de acesso imprevisível</div></div>
+<div class="chi" id="chi45" onclick="toggleChi(45)"><div class="chb" id="chb45">✓</div><div class="cht">Classes S3: Standard, Standard-IA, One Zone-IA, Glacier Instant, Flexible, Deep Archive</div></div>
+<div class="chi" id="chi46" onclick="toggleChi(46)"><div class="chb" id="chb46">✓</div><div class="cht">AWS Cost Explorer: análise histórica, previsão, filtros por serviço/tag</div></div>
+<div class="chi" id="chi47" onclick="toggleChi(47)"><div class="chb" id="chb47">✓</div><div class="cht">AWS Budgets: alertas proativos de custo/uso/reservas</div></div>
+<div class="chi" id="chi48" onclick="toggleChi(48)"><div class="chb" id="chb48">✓</div><div class="cht">Trusted Advisor: 5 categorias, recomendações de custo e segurança</div></div>
+<div class="chi" id="chi49" onclick="toggleChi(49)"><div class="chb" id="chb49">✓</div><div class="cht">Compute Optimizer: sizing ideal de EC2/ECS/Lambda/EBS via ML</div></div>
+<div class="chi" id="chi50" onclick="toggleChi(50)"><div class="chb" id="chb50">✓</div><div class="cht">Tarifação: transferência inter-AZ (~$0.02/GB), internet (varia), intra-AZ (grátis)</div></div>
+<div class="chi" id="chi51" onclick="toggleChi(51)"><div class="chb" id="chb51">✓</div><div class="cht">Start/stop scheduling: economizar em ambientes não-produção</div></div>
+<div class="chi" id="chi52" onclick="toggleChi(52)"><div class="chb" id="chb52">✓</div><div class="cht">Praticar: dado um cenário, escolher estratégia de compra mais eficiente</div></div>
+
+</div>
+<div id="page-timer" class="page">
+<h2 class="sh">⏱️ Pomodoro Timer</h2>
+<p>Estude em blocos focados com pausas estratégicas.</p>
+<div class="card" style="max-width:380px;text-align:center">
+<div class="td" id="ptimer">25:00</div>
+<div style="font-size:14px;color:var(--text2);margin-bottom:20px" id="pmode">Foco</div>
+<div style="display:flex;gap:10px;justify-content:center;margin-bottom:16px">
+<button class="btn bp" id="pbtn" onclick="pToggle()">▶ Iniciar</button>
+<button class="btn bg" onclick="pReset()">↺ Resetar</button>
+</div>
+<div style="display:flex;gap:8px;justify-content:center">
+<button class="btn bg" onclick="pSet(25,5)" style="border-color:var(--accent)">25 min</button>
+<button class="btn bg" onclick="pSet(50,10)">50 min</button>
+<button class="btn bg" onclick="pSet(5,0)">5 min</button>
+</div>
+<div style="font-size:13px;color:var(--text3);margin-top:16px">Sessões concluídas: <strong id="psess">0</strong></div>
+</div>
+</div>
+<div id="page-resources" class="page">
+<h2 class="sh">📚 Recursos & Links</h2>
+<div class="card"><a href="https://aws.amazon.com/certification/certified-solutions-architect-associate/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📘 AWS Certified Solutions Architect Associate (Página oficial)</a>
+<a href="https://explore.skillbuilder.aws/learn/course/external/view/elearning/9541/aws-certified-solutions-architect-associate-official-practice-question-set" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🎓 AWS Skill Builder — SAA-C03 Practice Questions</a>
+<a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📄 AWS Well-Architected Framework</a>
+<a href="https://aws.amazon.com/architecture/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🏗️ AWS Architecture Center</a>
+<a href="https://aws.amazon.com/whitepapers/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📝 AWS Whitepapers — Security e Cost Optimization</a>
+<a href="https://www.youtube.com/watch?v=c3Cn4xYfxJY" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🎥 AWS SAA-C03 Full Course — FreeCodeCamp</a>
+<a href="https://tutorialsdojo.com/aws-certified-solutions-architect-associate/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📊 TutorialsDojo — SAA Practice Exams</a>
+<a href="https://www.udemy.com/course/aws-certified-solutions-architect-associate-saa-c03/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">⚡ Stephane Maarek — AWS SAA Udemy</a>
+<a href="https://aws.amazon.com/free/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🔧 AWS Free Tier — Pratique gratuitamente</a>
+<a href="https://docs.aws.amazon.com/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📖 AWS Services Documentation</a>
+</div>
+</div></div></div>
+<script>
+const TITLES={'home':'Dashboard','simulado':'Simulado Completo','flashcards':'Flashcards','checklist':'Checklist','timer':'Pomodoro','resources':'Recursos','w1':'S1 — Segurança','w2':'S2 — Resiliência','w3':'S3 — Performance','w4':'S4 — Custo',};
+
+function P(id,el){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById('page-'+id).classList.add('active');
+  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
+  if(el)el.classList.add('active');
+  document.getElementById('tbtitle').textContent=TITLES[id]||id;
+  document.getElementById('main').scrollTo(0,0);
+  if(id==='home')setTimeout(animBars,150);
+}
+function animBars(){document.querySelectorAll('.dbf[data-t]').forEach(e=>{e.style.width=e.dataset.t+'%';});}
+setTimeout(animBars,300);
+const QD={
+w1:[
+{q:'Uma instância EC2 precisa acessar DynamoDB. O que é mais seguro?',o:['Access key no código','IAM Role na instância','Variável de ambiente','Bucket S3 público'],a:1,e:'IAM Roles fornecem credenciais temporárias automaticamente via IMDS. Sem credenciais permanentes no código ou ambiente.'},
+{q:'Qual serviço registra TODAS as chamadas de API na conta AWS?',o:['CloudWatch','CloudTrail','Config','GuardDuty'],a:1,e:'CloudTrail é o log de auditoria de todas as chamadas de API: quem, o quê, quando, de onde. Essencial para auditoria e incident response.'},
+{q:'O que diferencia Security Groups de NACLs?',o:['SGs são para VPCs, NACLs para subnets','SGs são stateful (nível de instância); NACLs são stateless (nível de subnet)','São equivalentes','NACLs são mais seguros'],a:1,e:'SG stateful = resposta automática, nível de instância, apenas allow. NACL stateless = regras bidirecionais, nível de subnet, allow e deny.'},
+{q:'Qual VPC Endpoint é gratuito e usado para S3?',o:['Interface Endpoint','Gateway Endpoint','NAT Endpoint','Transit Endpoint'],a:1,e:'Gateway Endpoints para S3 e DynamoDB são gratuitos e não requerem NAT Gateway para acesso privado a esses serviços.'},
+{q:'Uma empresa detectou acesso não autorizado a dados PII no S3. Qual serviço poderia ter alertado antes?',o:['GuardDuty','Amazon Macie','AWS Config','Inspector'],a:1,e:'Macie usa ML para identificar e classificar dados sensíveis (PII, financeiros) no S3 e alerta sobre exposições.'},
+{q:'Uma empresa quer bloquear um IP específico de acessar sua VPC. O que usar?',o:['Security Group com Deny','Network ACL com Deny','Route Table','Internet Gateway'],a:1,e:'NACLs suportam regras Deny. Security Groups só têm Allow. Para bloquear IPs específicos, use NACL Deny com número de regra baixo.'},
+{q:'Qual serviço gerencia certificados SSL para ALB sem custo?',o:['AWS KMS','AWS Certificate Manager','AWS CloudHSM',"Let's Encrypt via EC2"],a:1,e:'ACM provisiona e renova certificados SSL/TLS gratuitamente para uso com ALB, CloudFront e API Gateway.'},
+{q:'O que é o AWS Shared Responsibility Model?',o:['AWS é responsável por tudo','Cliente é responsável por tudo','AWS cuida da infraestrutura; cliente cuida dos dados e configurações','Responsabilidade compartilhada igualmente'],a:2,e:'AWS: hardware, rede, datacenters, serviços gerenciados. Cliente: SO (se EC2), dados, criptografia, acessos, configurações de aplicação.'},
+{q:'Qual serviço detecta atividade maliciosa como mineração de criptomoeda via ML?',o:['AWS Config','GuardDuty','Security Hub','Inspector'],a:1,e:'GuardDuty analisa CloudTrail, VPC Flow Logs e DNS logs com ML para detectar comportamento anômalo e ameaças.'},
+{q:'Uma empresa quer que usuários corporativos (AD) acessem AWS sem criar usuários IAM. O que configurar?',o:['IAM Users para cada funcionário','Federação SAML 2.0','Cognito User Pools','AWS SSO sem AD'],a:1,e:'Federação SAML 2.0 com IAM permite SSO: usuários autenticam no AD corporativo e assumem IAM Roles temporariamente via STS.'},
+],
+w2:[
+{q:'O que é RTO?',o:['Máximo de dados que pode perder','Tempo máximo para restaurar o serviço','Taxa de transferência de objetos','Recovery Token Object'],a:1,e:'RTO (Recovery Time Objective): quanto tempo o sistema pode ficar offline. Menor RTO = mais caro. Multi-Site tem RTO próximo de zero.'},
+{q:'RDS Multi-AZ é usado para:',o:['Escalar leitura','Alta disponibilidade com failover automático','Reduzir custo','Backup incremental'],a:1,e:'Multi-AZ cria réplica síncrona em outra AZ. Failover automático em ~1-2 min sem intervenção. NÃO serve para escalar leitura.'},
+{q:'Qual S3 storage class tem 11 noves de durabilidade e replicação em 3+ AZs?',o:['S3 Standard-IA','S3 One Zone-IA','S3 Standard','S3 Glacier'],a:2,e:'S3 Standard replica em mínimo 3 AZs com 99,999999999% de durabilidade. One Zone-IA usa apenas 1 AZ (menor custo, menor resiliência).'},
+{q:'Qual política Route 53 redireciona para secundário quando primário falha?',o:['Weighted','Latency','Failover','Geolocation'],a:2,e:'Failover routing usa health checks. Se o primário falha no health check, Route 53 redireciona automaticamente para o endpoint secundário.'},
+{q:'Qual fila garante que mensagens financeiras sejam processadas exatamente uma vez e em ordem?',o:['SQS Standard','SQS FIFO','SNS','EventBridge'],a:1,e:'SQS FIFO: First-In-First-Out garantido e exactly-once processing com deduplicação. Essencial para transações onde ordem e unicidade importam.'},
+{q:'Uma empresa quer receber notificações por email e Lambda quando evento S3 ocorrer. O que usar?',o:['SQS','SNS com múltiplos subscribers','EventBridge','CloudWatch Events'],a:1,e:'SNS pub/sub pode ter múltiplos subscribers: email, Lambda, SQS, HTTP. Publicar um evento notifica todos os subscribers simultaneamente (fan-out).'},
+{q:'O que é uma Dead Letter Queue (DLQ)?',o:['Fila prioritária','Fila para mensagens que falharam repetidamente','Fila de backup','Fila FIFO'],a:1,e:"DLQ recebe mensagens após excederem maxReceiveCount. Evita mensagens 'venenosas' ficarem em loop. Permite investigação e reprocessamento posterior."},
+{q:'Uma empresa quer distribuir tráfego: 70% para v1 e 30% para v2 da aplicação. Qual Route 53 policy?',o:['Latency','Failover','Weighted','Geolocation'],a:2,e:'Weighted routing distribui tráfego em percentuais definidos. Ideal para canary deployments, A/B testing e migração gradual entre versões.'},
+{q:'O que acontece com mensagens SQS se o Lambda consumidor falhar?',o:['Mensagem é perdida','SQS reencaminha após visibility timeout','SNS é notificado','CloudWatch recria a mensagem'],a:1,e:'SQS mantém mensagem invisível durante visibility timeout. Se o Lambda não deleta após processar, a mensagem fica visível novamente para outro consumer processar.'},
+{q:'Qual Auto Scaling policy escala preventivamente antes de um pico previsível?',o:['Target Tracking','Step Scaling','Scheduled Scaling','Simple Scaling'],a:2,e:'Scheduled Scaling define ações em horários específicos. Ideal para picos previsíveis (horário comercial, eventos, promoções). Evita lag das políticas reativas.'},
+],
+w3:[
+{q:'O que é DynamoDB DAX?',o:['Replicação global','Cache in-memory para DynamoDB com latência de microsegundos','Índice secundário global','Modo serverless'],a:1,e:'DAX é um cache in-memory para DynamoDB totalmente gerenciado pela AWS, compatível com a API do DynamoDB. Reduz latência de ms para µs para leituras frequentes.'},
+{q:'Uma empresa tem 90% de tráfego em leitura com latência alta no RDS. O que implementar?',o:['RDS Multi-AZ','ElastiCache Redis na frente do RDS','Mais Read Replicas','Upgrade de instância RDS'],a:1,e:'ElastiCache Redis serve dados frequentes da memória em microsegundos, eliminando queries ao banco. Reduz latência e carga no RDS drasticamente.'},
+{q:'Qual serviço é ideal para data warehouse analytics em petabytes?',o:['Amazon RDS','DynamoDB','Amazon Redshift','Amazon Neptune'],a:2,e:'Redshift é um data warehouse colunar MPP para queries OLAP em TB-PB de dados. Integra com BI tools. NÃO use para OLTP ou leituras por chave.'},
+{q:'CloudFront reduz latência de qual forma?',o:['Aumenta bandwidth da origem','Serve conteúdo de edge locations próximas ao usuário','Comprime dados na origem','Usa UDP em vez de TCP'],a:1,e:'CloudFront tem 450+ edge locations. Serve conteúdo do cache mais próximo ao usuário. Reduz latência, carga na origem e custo de transferência.'},
+{q:'Qual família EC2 é ideal para banco de dados in-memory como Redis?',o:['C (Compute)','T (Burstable)','R (Memory Optimized)','I (Storage Optimized)'],a:2,e:'Instâncias R (r6i, r6g) têm alto ratio de RAM, ideal para Redis, SAP HANA, MongoDB e aplicações que processam grandes datasets em memória.'},
+{q:'Amazon Aurora tem qual vantagem sobre RDS MySQL standard?',o:['É mais barato','Até 5x mais rápido, 6 cópias em 3 AZs, failover em ~30s','Suporta mais engines','Tem Multi-AZ automático sem configuração'],a:1,e:'Aurora usa storage distribuído com 6 cópias automáticas em 3 AZs, failover em ~30s (vs ~1-2min do RDS), até 5x mais rápido e storage auto-scaling até 128TB.'},
+{q:'Qual serviço processa streams de IoT em tempo real?',o:['S3 + Athena','Kinesis Data Streams','SQS FIFO','DynamoDB Streams'],a:1,e:'Kinesis Data Streams ingere dados em tempo real com shards, retention de 1-365 dias e múltiplos consumers simultâneos. Lambda pode processar automaticamente.'},
+{q:'O que é Amazon EFS?',o:['Block storage para EC2','NFS gerenciado acessível por múltiplas EC2','Object storage como S3','Cache in-memory'],a:1,e:'EFS é um NFS gerenciado que pode ser montado por centenas de instâncias EC2 simultaneamente, escala automaticamente e cobra apenas pelo uso.'},
+{q:'Qual é o principal caso de uso do Target Tracking Auto Scaling?',o:['Escala em horários fixos','Mantém automaticamente uma métrica (ex: CPU 60%) no valor-alvo','Escala apenas para cima','Requer alarmes CloudWatch manuais'],a:1,e:'Target Tracking é a política mais simples e recomendada. Define o valor-alvo de uma métrica (CPU, requests por target) e Auto Scaling ajusta continuamente a capacidade.'},
+{q:'Qual é o benefício do Amazon Global Accelerator vs CloudFront?',o:['Global Accelerator tem cache de conteúdo','Global Accelerator usa anycast IP estático e backbone AWS para tráfego TCP/UDP sem cache','São equivalentes','CloudFront é mais rápido para TCP'],a:1,e:'GA usa anycast (mesmo IP, múltiplas regiões) e roteia pelo backbone privado da AWS. Ideal para TCP/UDP sem cache (APIs, jogos, IoT). CloudFront é para HTTP com cache.'},
+],
+w4:[
+{q:'Qual compra EC2 tem menor custo para workload 24/7 por 1 ano?',o:['On-Demand','Reserved Instances 1 ano','Spot Instances','Dedicated Hosts'],a:1,e:'Reserved Instances 1 ano oferecem até 72% de desconto para workloads contínuos. Spot não é adequado para 24/7 pois pode ser interrompido.'},
+{q:'Uma empresa quer processar batch com maior desconto. O workload tolera interrupções de 2 minutos. O que usar?',o:['On-Demand','Reserved Instances','Spot Instances','Savings Plans'],a:2,e:'Spot Instances oferecem até 90% de desconto usando capacidade ociosa. Com 2 min de aviso, aplique checkpointing para retomar de onde parou.'},
+{q:'O que o Compute Savings Plans cobre que o EC2 Savings Plans não cobre?',o:['Reservar mais instâncias','Fargate e Lambda além de EC2','Instâncias em mais regiões','Dedicated Hosts'],a:1,e:'Compute SP cobre EC2 (qualquer família/região), AWS Fargate e Lambda. EC2 SP cobre apenas uma família de instância em uma região específica.'},
+{q:'Uma empresa quer mover logs S3 de Standard para Glacier após 90 dias automaticamente. O que configurar?',o:['S3 Versioning','S3 Lifecycle Policy','S3 Intelligent-Tiering','S3 Replication'],a:1,e:'S3 Lifecycle Policies definem regras para transição automática entre classes. Configure: após 90 dias → Glacier Flexible Retrieval. Totalmente gerenciado.'},
+{q:'Qual serviço mostra visualmente quanto cada serviço AWS custou nos últimos meses?',o:['AWS Budgets','AWS Cost Explorer','Trusted Advisor','Billing Dashboard'],a:1,e:'Cost Explorer oferece gráficos interativos de custos históricos filtrados por serviço, conta, região, tag. Também fornece previsões de custo.'},
+{q:'Para um servidor web de desenvolvimento que roda apenas de seg-sex, 9h-18h, qual é mais eficiente?',o:['Reserved Instance','Savings Plan','On-Demand com start/stop automático','Spot Instance'],a:2,e:'On-Demand com stop automático reduz ~77% do uso. De ~730h/mês → ~168h/mês. EventBridge + Lambda automatiza. Reserved/Savings cobrariam mesmo parado.'},
+{q:'O que é S3 Intelligent-Tiering?',o:['Move objetos para Glacier automaticamente','Move automaticamente entre tiers baseado em acesso sem taxas de retrieval','Versão mais inteligente do Standard','Replica em 3 regiões'],a:1,e:'Intelligent-Tiering monitora acesso e move objetos: Frequent Access → Infrequent → Archive. Sem taxa de retrieval. Cobra pequena taxa de monitoramento (~$0.0025/1000 objetos).'},
+{q:'Qual é a principal diferença entre Reserved Instances Standard e Convertible?',o:['Convertible é mais barato','Standard permite mudar família; Convertible não','Convertible permite mudar família, tamanho e SO em troca de menor desconto','Standard tem prazo de 6 meses'],a:2,e:'Convertible RI: pode trocar família, SO, tenancy durante o compromisso. Desconto de até 54% vs 72% do Standard. Escolha Convertible quando não tem certeza do tipo de instância.'},
+{q:'Uma empresa tem instâncias EC2 rodando com uso médio de CPU de 8%. O que o Trusted Advisor recomendaria?',o:['Upgrade para instâncias maiores','Usar Multi-AZ','Redimensionar ou terminar instâncias subutilizadas','Migrar para Lambda'],a:2,e:'Trusted Advisor identifica instâncias subutilizadas (CPU <10%) e recomenda redimensionamento para tipos menores ou conversão para Reserved. Economia direta de custo.'},
+{q:'Qual S3 storage class é mais barata para arquivos raramente acessados em uma única AZ?',o:['Standard-IA','One Zone-IA','Glacier Flexible','S3 Intelligent-Tiering'],a:1,e:'One Zone-IA armazena em apenas 1 AZ, sendo ~20% mais barato que Standard-IA. Para dados que podem ser perdidos se a AZ falhar (ex: dados reproduzíveis, thumbnails).'},
+],
+};
+
+function buildQ(cid,qs){
+  const el=document.getElementById(cid);if(!el)return;
+  const sq=qs.map(q=>{const n=q.o.length,ix=[...Array(n).keys()].sort(()=>Math.random()-.5);return{...q,o:ix.map(i=>q.o[i]),a:ix.indexOf(q.a)};});const st={qs:sq,cur:0,score:0,ans:false};window['_q'+cid]=st;renderQ(el,st);
+}
+function renderQ(el,st){
+  const q=st.qs[st.cur];
+  el.innerHTML=`<div style="font-size:15px;font-weight:600;margin-bottom:14px;line-height:1.5">${st.cur+1}. ${q.q}</div>
+${q.o.map((o,i)=>`<button class="qo" onclick="pickQ(this,${i},'_q${el.id}')">${o}</button>`).join('')}
+<div class="qfb" id="fb_${el.id}"></div>
+<div class="qnav">
+${st.cur>0?`<button class="btn bg" onclick="navQ('${el.id}',-1)">← Ant.</button>`:''}
+<span class="qc">${st.cur+1}/${st.qs.length} · Acertos: ${st.score}</span>
+${st.cur<st.qs.length-1?`<button class="btn bp" onclick="navQ('${el.id}',1)" style="margin-left:auto">Próx. →</button>`:`<button class="btn bp" onclick="finQ('${el.id}')" style="margin-left:auto">Ver resultado</button>`}
+</div>`;
+}
+window.pickQ=function(btn,idx,stk){
+  const st=window[stk];if(st.ans)return;st.ans=true;
+  const q=st.qs[st.cur];
+  btn.closest('[id]').querySelectorAll('.qo').forEach((o,i)=>{
+    if(i===q.a)o.classList.add('correct');
+    else if(i===idx&&idx!==q.a)o.classList.add('wrong');
+    o.disabled=true;
+  });
+  if(idx===q.a)st.score++;
+  const fbid='fb_'+stk.replace('_q','');
+  const fb=document.getElementById(fbid);
+  if(fb){fb.textContent=(idx===q.a?'✅ Correto! ':'❌ Incorreto. ')+q.e;fb.className='qfb show '+(idx===q.a?'ok':'bad');}
+};
+window.navQ=function(eid,dir){
+  const st=window['_q'+eid];st.cur=Math.max(0,Math.min(st.qs.length-1,st.cur+dir));st.ans=false;renderQ(document.getElementById(eid),st);
+};
+window.finQ=function(eid){
+  const st=window['_q'+eid];const pct=Math.round((st.score/st.qs.length)*100);
+  const col=pct>=72?'#34d399':pct>=50?'#fbbf24':'#f87171';
+  document.getElementById(eid).innerHTML=`<div style="text-align:center;padding:20px"><div style="font-size:48px;font-weight:800;color:${col}">${pct}%</div><div style="font-size:16px;font-weight:600;margin:8px 0">${st.score}/${st.qs.length} corretas</div><div style="color:var(--text2);font-size:14px;margin-bottom:20px">${pct>=72?'🏆 Aprovado!':pct>=50?'📚 Quase lá!':'🔁 Continue estudando.'}</div><button class="btn bp" onclick="restQ('${eid}')">↺ Refazer</button></div>`;
+};
+window.restQ=function(eid){const st=window['_q'+eid];st.cur=0;st.score=0;st.ans=false;renderQ(document.getElementById(eid),st);};
+Object.keys(QD).forEach(k=>buildQ('q'+k,QD[k]));
+const EXAM=[
+{d:'D1',q:'Uma empresa quer garantir que instâncias EC2 acessem S3 sem credenciais expostas no código. Qual é a melhor prática?',o:['Hardcode de access keys','Variáveis de ambiente com credenciais','IAM Role associada às instâncias EC2','Bucket S3 público'],a:2,e:'IAM Roles fornecem credenciais temporárias automaticamente rotacionadas via Instance Metadata Service. Nunca use access keys no código.'},
+{d:'D1',q:'Qual serviço filtra tráfego HTTP/HTTPS malicioso como SQL injection e XSS?',o:['AWS Shield','AWS WAF','Amazon Inspector','AWS Config'],a:1,e:'AWS WAF opera na camada 7 filtrando requisições HTTP/HTTPS. Shield protege contra DDoS. Inspector avalia vulnerabilidades.'},
+{d:'D1',q:'Uma empresa quer gerenciar chaves de criptografia com controle granular de acesso. Qual serviço usar?',o:['AWS Secrets Manager','AWS KMS','AWS Certificate Manager','Parameter Store'],a:1,e:'AWS KMS gerencia chaves de criptografia com políticas IAM e de chave. Secrets Manager gerencia segredos/senhas. ACM gerencia certificados SSL.'},
+{d:'D1',q:'Qual é a diferença entre Security Groups e Network ACLs?',o:['Security Groups são stateless; NACLs são stateful','Security Groups são stateful e no nível de instância; NACLs são stateless e no nível de subnet','São equivalentes, apenas nomenclaturas diferentes','NACLs são mais seguros que Security Groups'],a:1,e:'Security Groups: stateful (resposta automática), nível de instância, apenas allow. NACLs: stateless (precisa de regra bidirecional), nível de subnet, allow e deny.'},
+{d:'D1',q:'Uma empresa quer detectar ameaças como mineração de criptomoeda e IPs maliciosos usando ML. Qual serviço?',o:['AWS Config','Amazon GuardDuty','AWS Security Hub','Amazon Inspector'],a:1,e:'GuardDuty usa ML para detectar comportamento anômalo: chamadas de API suspeitas, IPs maliciosos, mineração, credenciais comprometidas.'},
+{d:'D1',q:'Qual tipo de VPC Endpoint é gratuito e usado para acessar S3 e DynamoDB sem internet?',o:['Interface Endpoint','Gateway Endpoint','Transit Endpoint','NAT Endpoint'],a:1,e:'Gateway Endpoints para S3 e DynamoDB são gratuitos e adicionados às tabelas de roteamento da VPC. Interface Endpoints usam PrivateLink e têm custo.'},
+{d:'D1',q:'Uma empresa precisa auditar todas as chamadas de API na conta AWS. Qual serviço ativar?',o:['Amazon CloudWatch','AWS CloudTrail','AWS Config','Amazon GuardDuty'],a:1,e:'CloudTrail registra todas as chamadas de API: quem, o quê, quando e de onde. Essencial para auditoria e conformidade.'},
+{d:'D1',q:'Qual serviço detecta dados sensíveis (PII) armazenados em buckets S3 usando ML?',o:['GuardDuty','Amazon Macie','AWS Inspector','AWS Config'],a:1,e:'Amazon Macie usa ML para descobrir e classificar dados sensíveis (PII, dados financeiros) no S3. GuardDuty detecta ameaças de acesso.'},
+{d:'D1',q:'Uma aplicação web precisa autenticar usuários via Google e Facebook. Qual serviço AWS usar?',o:['IAM Users','Amazon Cognito','AWS SSO','AWS Directory Service'],a:1,e:'Amazon Cognito fornece autenticação de usuários com suporte a provedores de identidade social (Google, Facebook) via OIDC. IAM é para usuários da conta AWS.'},
+{d:'D1',q:'Qual serviço protege contra DDoS volumétrico automaticamente sem custo adicional?',o:['AWS Shield Advanced','AWS Shield Standard','AWS WAF','CloudFront'],a:1,e:'AWS Shield Standard é habilitado automaticamente para todos os clientes sem custo adicional, oferecendo proteção básica contra DDoS volumétrico.'},
+{d:'D1',q:'Uma empresa quer aplicar políticas de segurança em todas as contas de uma Organization. O que usar?',o:['IAM Policies','Service Control Policies (SCPs)','AWS Config Rules','CloudTrail'],a:1,e:'SCPs no AWS Organizations definem permissões máximas para contas-membro. Mesmo que o IAM permita, o SCP pode bloquear. São guardrails organizacionais.'},
+{d:'D1',q:'Qual serviço centraliza findings de segurança do GuardDuty, Inspector e Macie?',o:['AWS Config','AWS Security Hub','Amazon Detective','AWS Artifact'],a:1,e:'AWS Security Hub agrega, organiza e prioriza findings de múltiplos serviços de segurança em uma visão unificada.'},
+{d:'D2',q:'Uma empresa quer que a aplicação continue disponível se uma AZ falhar completamente. Qual arquitetura usar?',o:['Instância EC2 grande em uma AZ','EC2 em múltiplas AZs com Load Balancer','S3 para hospedar a aplicação','Backup manual em outra AZ'],a:1,e:'Distribuir EC2 em múltiplas AZs com ALB garante alta disponibilidade. Falha de uma AZ não afeta as outras.'},
+{d:'D2',q:'Qual estratégia de DR tem menor RTO e RPO mas maior custo?',o:['Backup and Restore','Pilot Light','Warm Standby','Multi-Site Active-Active'],a:3,e:'Multi-Site Active-Active mantém ambientes completos em múltiplas regiões simultaneamente. RTO/RPO próximo de zero. É a estratégia mais cara.'},
+{d:'D2',q:'O que configura para que o RDS faça failover automático em caso de falha da instância primária?',o:['Read Replica','Multi-AZ','RDS Proxy','Enhanced Monitoring'],a:1,e:'RDS Multi-AZ cria réplica síncrona em outra AZ. Failover automático em ~1-2 minutos sem intervenção manual. Read Replicas não têm failover automático.'},
+{d:'D2',q:'Qual política de roteamento do Route 53 redireciona para endpoint secundário quando o primário falha?',o:['Weighted','Latency','Failover','Geolocation'],a:2,e:'Failover routing monitora saúde dos endpoints via health checks e redireciona automaticamente para o secundário quando o primário falha.'},
+{d:'D2',q:'Uma empresa quer replicar objetos S3 para outra região para DR. O que configurar?',o:['S3 Transfer Acceleration','S3 Cross-Region Replication','AWS DataSync','AWS Backup'],a:1,e:'S3 CRR replica automaticamente objetos para um bucket em outra região. Suporta replicação de todos os objetos ou com filtros por prefixo/tag.'},
+{d:'D2',q:'Qual é a durabilidade garantida do Amazon S3?',o:['99,9%','99,99%','99,999999999%','100%'],a:2,e:'S3 Standard garante 11 noves de durabilidade replicando em mínimo 3 AZs. Praticamente impossível perder dados por falha da infraestrutura.'},
+{d:'D2',q:'Uma fila SQS processa pagamentos. O que garante que cada pagamento seja processado exatamente uma vez?',o:['SQS Standard','SQS FIFO com deduplicação','SNS FIFO','EventBridge'],a:1,e:'SQS FIFO garante exatamente uma vez com deduplicação por MessageDeduplicationId. Standard garante pelo menos uma vez e pode duplicar.'},
+{d:'D2',q:'Qual Auto Scaling policy substitui automaticamente instâncias EC2 não saudáveis?',o:['Apenas CloudWatch faz isso','Auto Scaling com health check do EC2','ELB faz a substituição','Systems Manager'],a:1,e:'Auto Scaling Groups verificam saúde das instâncias e automaticamente terminam as não saudáveis e lançam novas. ELB detecta mas não substitui.'},
+{d:'D2',q:'Uma empresa quer desacoplar componentes de uma aplicação para aumentar resiliência. Qual serviço usar?',o:['RDS entre os componentes','Amazon SQS como fila entre componentes','Direct Connect','VPC Peering'],a:1,e:'SQS desacopla produtores de consumidores. Se o consumidor falhar, mensagens ficam na fila. Aumenta resiliência e permite escalonamento independente.'},
+{d:'D2',q:'Qual serviço AWS executa código sem servidores com escalabilidade automática de 0 a milhares?',o:['Amazon EC2','AWS Elastic Beanstalk','AWS Lambda','Amazon ECS'],a:2,e:'Lambda executa código sem provisionar servidores. Escala automaticamente baseado em triggers (API Gateway, SQS, S3). Paga por execução.'},
+{d:'D2',q:'Uma empresa quer distribuir tráfego entre 3 regiões com 50% na us-east-1, 30% na eu-west-1 e 20% na ap-southeast-1. Qual routing policy do Route 53 usar?',o:['Latency','Geolocation','Failover','Weighted'],a:3,e:'Weighted routing permite distribuir tráfego em percentuais definidos entre múltiplos endpoints. Ideal para deploys graduais, testes A/B e distribuição multi-região.'},
+{d:'D3',q:'Uma aplicação tem 80% de leitura com alta latência no banco de dados. Qual é a solução mais eficiente?',o:['Aumentar instância RDS','Adicionar Read Replicas','Usar ElastiCache na frente do banco','Ativar Multi-AZ'],a:2,e:'ElastiCache (Redis/Memcached) serve dados frequentes da memória em microsegundos. Reduz carga no banco e melhora latência drasticamente para padrões de acesso repetitivos.'},
+{d:'D3',q:'Qual serviço AWS entrega conteúdo estático globalmente com baixa latência usando pontos de presença?',o:['S3 Transfer Acceleration','Amazon CloudFront','AWS Global Accelerator','ELB'],a:1,e:'CloudFront é uma CDN com 450+ edge locations. Serve conteúdo do cache mais próximo ao usuário, reduzindo latência e carga na origem.'},
+{d:'D3',q:'Qual banco de dados NoSQL gerenciado pela AWS oferece latência de milissegundo único e escala ilimitada?',o:['Amazon RDS','Amazon DynamoDB','Amazon Redshift','Amazon Neptune'],a:1,e:'DynamoDB é serverless, NoSQL, com latência consistente de ms em qualquer escala. Escala automaticamente throughput e storage. Ideal para apps de alta escala.'},
+{d:'D3',q:'Qual instância EC2 é mais adequada para treinar modelos de machine learning com GPU?',o:['C-series','M-series','R-series','P-series ou G-series'],a:3,e:'Instâncias P (NVIDIA A100/V100) e G (NVIDIA T4) são otimizadas para ML training e inference com GPUs dedicadas. C é para compute CPU. M é general purpose.'},
+{d:'D3',q:'Uma empresa armazena dados de sessão de usuários em RDS, causando gargalo. O que fazer?',o:['Aumentar RDS','Mover sessões para ElastiCache Redis','Usar S3 para sessões','Criar Read Replicas'],a:1,e:'ElastiCache Redis é ideal para sessões: in-memory (microsegundos), TTL nativo, estruturas de dados, persistência opcional e suporte a clustering.'},
+{d:'D3',q:'Qual serviço AWS é usado para análise de dados em petabytes com queries SQL otimizadas (OLAP)?',o:['Amazon RDS','Amazon DynamoDB','Amazon Redshift','Amazon EMR'],a:2,e:'Redshift é um data warehouse colunar otimizado para OLAP com compressão, paralelismo massivo (MPP) e integração com BI tools. RDS e DynamoDB são para OLTP.'},
+{d:'D3',q:'O que é DynamoDB DAX e quando usar?',o:['Replicação global do DynamoDB','Cache in-memory que reduz latência de ms para microsegundos','Versão serverless do DynamoDB','Ferramenta de análise do DynamoDB'],a:1,e:'DAX é um cache in-memory totalmente gerenciado para DynamoDB. Use quando a aplicação lê os mesmos itens frequentemente (hot keys) e precisa de latência sub-milissegundo.'},
+{d:'D3',q:'Qual configuração do Auto Scaling responde melhor a picos imprevisíveis mantendo CPU em 60%?',o:['Scheduled Scaling','Simple Scaling','Step Scaling','Target Tracking Scaling'],a:3,e:'Target Tracking mantém uma métrica no valor-alvo automaticamente. Ajusta capacidade continuamente conforme a carga sobe ou desce. Mais simples e responsivo que Step Scaling.'},
+{d:'D3',q:'Uma empresa quer processar um stream de eventos de IoT em tempo real. Qual serviço usar?',o:['SQS + EC2','Kinesis Data Streams + Lambda','S3 + Athena','DynamoDB Streams'],a:1,e:'Kinesis Data Streams ingere streams de dados em tempo real com múltiplos shards. Lambda processa cada shard automaticamente. Ideal para IoT, logs e eventos em tempo real.'},
+{d:'D3',q:'Qual é o benefício do Amazon Aurora vs RDS MySQL padrão?',o:['Aurora é mais barato','Aurora tem armazenamento separado do compute com 6 cópias em 3 AZs e até 5x mais performance','Aurora não suporta MySQL','Aurora não tem Multi-AZ'],a:1,e:'Aurora usa arquitetura de storage distribuído (6 cópias, 3 AZs), failover em ~30s, até 5x mais rápido que MySQL, e storage cresce automaticamente até 128TB.'},
+{d:'D4',q:'Qual modelo de compra EC2 oferece até 72% de desconto em troca de compromisso por 1 ou 3 anos?',o:['On-Demand','Reserved Instances','Spot Instances','Savings Plans'],a:1,e:'Reserved Instances garantem desconto de até 72% vs On-Demand em troca de compromisso de 1 ou 3 anos. Ideal para workloads com uso previsível e constante.'},
+{d:'D4',q:'Uma empresa quer executar processamento de imagens batch com maior desconto possível. O workload tolera interrupções. Qual usar?',o:['On-Demand','Reserved Instances','Spot Instances','Dedicated Hosts'],a:2,e:'Spot Instances usam capacidade EC2 ociosa com até 90% de desconto. Podem ser interrompidas com 2 min de aviso. Perfeitas para batch tolerante a falhas.'},
+{d:'D4',q:'Qual ferramenta fornece recomendações em custo, segurança, performance e tolerância a falhas?',o:['AWS Cost Explorer','AWS Budgets','AWS Trusted Advisor','AWS Compute Optimizer'],a:2,e:'Trusted Advisor analisa a conta e fornece recomendações nas 5 categorias. Cost Explorer analisa custos históricos. Compute Optimizer foca em sizing de instâncias.'},
+{d:'D4',q:'Logs de sistema precisam ser mantidos por 30 dias com acesso frequente e depois raramente acessados. Qual storage class S3 usar após os 30 dias?',o:['S3 Standard','S3 Standard-IA','S3 Glacier Deep Archive','S3 Intelligent-Tiering'],a:1,e:'S3 Standard-IA custa ~58% menos que Standard para armazenamento, mas cobra por retrieval. Ideal para dados acessados mensalmente. Deep Archive para acesso raramente e com delay.'},
+{d:'D4',q:'Uma startup quer maximizar flexibilidade com desconto por compromisso de uso de compute (EC2, Fargate e Lambda). O que usar?',o:['Reserved Instances Standard','Reserved Instances Convertible','Compute Savings Plans','EC2 Savings Plans'],a:2,e:'Compute Savings Plans dão até 66% de desconto com máxima flexibilidade: qualquer família EC2, região, Fargate e Lambda. EC2 Savings Plans são restritos a uma família.'},
+{d:'D4',q:'Como reduzir custo de um banco de dados de desenvolvimento que só roda em horário comercial?',o:['Migrar para Spot Instance','Usar Reserved Instance menor','Agendar start/stop automático fora do horário','Usar DynamoDB no lugar do RDS'],a:2,e:'Instâncias On-Demand só cobram quando rodando. Start/stop agendado (EventBridge + Lambda ou Instance Scheduler) reduz uso de 730h para ~168h/mês (~77% de economia).'},
+{d:'D4',q:'Qual classe S3 automaticamente move objetos entre camadas baseado em padrões de acesso sem intervenção manual?',o:['S3 Lifecycle Policies','S3 Intelligent-Tiering','S3 One Zone-IA','S3 Standard-IA'],a:1,e:'Intelligent-Tiering monitora acesso e move objetos entre Frequent Access, Infrequent Access e Archive automaticamente. Sem taxa de retrieval. Ideal quando o padrão é imprevisível.'},
+{d:'D4',q:'Qual serviço analisa métricas históricas e recomenda sizing ideal de instâncias EC2 para equilibrar custo e performance?',o:['Trusted Advisor','Cost Explorer','AWS Compute Optimizer','AWS Budgets'],a:2,e:'Compute Optimizer usa ML para analisar CloudWatch metrics e recomendar o tipo/tamanho ideal de EC2, ECS tasks, Lambda e EBS volumes baseado em uso real.'},
+{d:'D1',q:'Uma empresa quer que usuários on-premises acessem recursos AWS usando suas credenciais corporativas (Active Directory). O que configurar?',o:['Criar usuários IAM para cada funcionário','Configurar federação SAML 2.0 com IAM','Usar Amazon Cognito User Pools','Criar VPN e NACLs'],a:1,e:'Federação SAML 2.0 permite que usuários do AD corporativo assumam roles IAM sem criar usuários IAM individuais. Reduz administração e usa SSO corporativo existente.'},
+{d:'D2',q:'Uma empresa quer que sua API continue funcionando durante manutenção do banco de dados com zero impacto nas conexões. O que usar?',o:['Multi-AZ RDS','RDS Proxy','Read Replicas','Connection pooling na aplicação'],a:1,e:'RDS Proxy mantém um pool de conexões entre a aplicação e o RDS. Durante failover, o Proxy reconecta automaticamente sem que a aplicação perceba. Reduz também sobrecarga de conexões.'},
+{d:'D3',q:'Qual é o principal uso do Amazon ElastiCache Redis diferente do Memcached?',o:['Redis é mais simples','Redis suporta persistência, replicação, Pub/Sub e estruturas de dados avançadas','Memcached tem melhor performance','Redis não suporta clustering'],a:1,e:'Redis suporta: persistência em disco, replicação Multi-AZ, Pub/Sub, Sorted Sets, Geo, Streams e Lua scripts. Memcached é simples e multi-thread. Para HA e features avançadas, use Redis.'},
+{d:'D4',q:'Uma empresa tem 5 servidores web que rodam 24/7 há 2 anos e planeja mantê-los por mais 1 ano. Qual compra é mais eficiente?',o:['On-Demand para flexibilidade','Reserved Instances 1 ano','Savings Plans 1 ano','Spot Instances'],a:1,e:'Para workloads 24/7 com 1 ano de compromisso restante, Reserved Instances oferecem até 72% de desconto. Savings Plans são equivalentes mas mais flexíveis se planeja mudar tipos.'},
+{d:'D1',q:'Qual é o objetivo principal do AWS Shared Responsibility Model?',o:['Dividir custos entre AWS e cliente','Definir quem é responsável por segurança: AWS cuida da infraestrutura (security OF the cloud), cliente cuida dos dados e acessos (security IN the cloud)','Garantir conformidade automática','Eliminar necessidade de segurança do cliente'],a:1,e:'AWS: segurança da infraestrutura física, redes, hipervisor, e serviços gerenciados. Cliente: SO, patches, configurações, dados, criptografia, controles de acesso e configurações de rede.'},
+{d:'D2',q:'Qual é o benefício principal de usar Amazon SQS entre uma API e um processador de pedidos?',o:['Reduz custo de EC2','Desacopla os componentes: API pode receber pedidos mesmo se o processador estiver sobrecarregado ou offline','Criptografa os dados automaticamente','Elimina necessidade de banco de dados'],a:1,e:'Desacoplamento via fila garante que pedidos não sejam perdidos se o processador estiver lento ou indisponível. A fila absorve picos e permite escalonamento independente.'},
+{d:'D3',q:'Uma empresa quer processar arquivos de vídeo de 1GB cada, com duração de processamento de 20 minutos. Qual abordagem usar?',o:['Lambda com timeout de 15 min','EC2 em Auto Scaling Group consumindo SQS','API Gateway + Lambda síncrono','RDS para armazenar e processar'],a:1,e:'EC2 com SQS é ideal para processamento longo (>15 min) e pesado. Lambda tem timeout de 15 min. SQS garante que nenhum arquivo seja perdido. EC2 escala conforme a fila cresce.'},
+{d:'D4',q:'Qual é a principal vantagem do S3 One Zone-IA em relação ao S3 Standard-IA?',o:['Maior durabilidade','Maior disponibilidade','Aproximadamente 20% mais barato por armazenar em apenas uma AZ','Retrieval mais rápido'],a:2,e:'One Zone-IA armazena em apenas 1 AZ (vs 3 do Standard-IA), sendo ~20% mais barato. Disponibilidade 99,5% vs 99,9%. Use para dados que podem ser reproduzidos se a AZ falhar.'},
+{d:'D1',q:'Uma empresa quer criptografar dados de clientes no RDS. Qual é a forma mais simples?',o:['Criptografar no código da aplicação','Habilitar encryption at rest no RDS com KMS','Usar SSL/TLS nas conexões','Criar VPN para o banco'],a:1,e:'RDS suporta encryption at rest nativa usando KMS com um único clique na criação da instância. Criptografa storage, backups, snapshots e Read Replicas automaticamente.'},
+{d:'D2',q:'Uma empresa quer garantir que mensagens críticas de um sistema legado sejam processadas mesmo durante falhas temporárias. Qual arquitetura?',o:['Chamadas síncronas diretas','SQS com Dead Letter Queue','Lambda com retry','EC2 com múltiplas threads'],a:1,e:'SQS com DLQ garante que mensagens que falharam várias vezes sejam movidas para a DLQ para análise posterior, sem perda de dados. Permite retry automático e isolamento de mensagens problemáticas.'},
+{d:'D3',q:'Qual serviço AWS melhora performance de aplicações globais acelerando tráfego TCP/UDP via backbone AWS?',o:['Amazon CloudFront','AWS Global Accelerator','Amazon Route 53','Elastic Load Balancing'],a:1,e:'Global Accelerator usa anycast IP estático e roteia tráfego pelo backbone privado da AWS (mais estável que internet pública), reduzindo latência e jitter para aplicações TCP/UDP globais.'},
+{d:'D4',q:'Uma empresa quer reduzir custos de armazenamento de logs que crescem 100GB/mês. Os logs mais antigos que 90 dias raramente são acessados. O que fazer?',o:['Deletar logs após 30 dias','Mover para S3 Glacier após 90 dias via Lifecycle Policy','Comprimir os logs','Usar EBS ao invés de S3'],a:1,e:'S3 Lifecycle Policy move objetos automaticamente entre classes baseado na idade. Após 90 dias → Glacier Flexible (muito mais barato). Totalmente automático sem gerenciamento manual.'},
+];
+
+const EL=EXAM.length;
+let eQ=[],eIdx=0,eAns={},eFlags=new Set(),eTi=null,eSec=130*60,eDone=false;
+window.startExam=function(){
+  eQ=[...EXAM].sort(()=>Math.random()-.5).map(q=>{const n=q.o.length,ix=[...Array(n).keys()].sort(()=>Math.random()-.5);return{...q,o:ix.map(i=>q.o[i]),a:ix.indexOf(q.a)};});eIdx=0;eAns={};eFlags=new Set();eDone=false;
+  document.getElementById('exam-start').style.display='none';
+  document.getElementById('exam-body').style.display='block';
+  document.getElementById('exam-result').style.display='none';
+  eSec=130*60;if(eTi)clearInterval(eTi);
+  eTi=setInterval(()=>{eSec--;const m=Math.floor(eSec/60),s=eSec%60;
+    const cl=document.getElementById('exam-clock');
+    cl.textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+    cl.style.color=eSec<600?'var(--red)':'var(--yellow)';
+    if(eSec<=0){clearInterval(eTi);finishExam();}},1000);
+  renderExamQ();
+};
+function renderExamQ(){
+  const q=eQ[eIdx];
+  document.getElementById('exam-qnum').textContent='Questão '+(eIdx+1)+' de '+EL;
+  document.getElementById('exam-bf').style.width=((eIdx+1)/EL*100)+'%';
+  document.getElementById('exam-domain').textContent=q.d;
+  document.getElementById('exam-q').textContent=q.q;
+  document.getElementById('exam-score-live').textContent='Respondidas: '+Object.keys(eAns).length+' | Marcadas: '+eFlags.size;
+  const sel=eAns[eIdx];
+  document.getElementById('exam-opts').innerHTML=q.o.map((o,i)=>
+    `<button class="qo${sel===i?' correct':''}" onclick="eSelect(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('');
+  document.getElementById('exam-dots').innerHTML=eQ.map((_,i)=>
+    `<div style="width:18px;height:18px;border-radius:4px;cursor:pointer;font-size:9px;display:flex;align-items:center;justify-content:center;color:var(--text3);background:${eAns[i]!==undefined?'var(--green)':eFlags.has(i)?'var(--yellow)':i===eIdx?'var(--accent)':'var(--bg3)'};border:1px solid var(--border)" onclick="eGoto(${i})">${i+1}</div>`).join('');
+}
+window.eSelect=function(i){if(eDone)return;eAns[eIdx]=i;renderExamQ();};
+window.eGoto=function(i){eIdx=i;renderExamQ();};
+window.examNav=function(d){eIdx=Math.max(0,Math.min(EL-1,eIdx+d));renderExamQ();};
+window.examFlag=function(){if(eFlags.has(eIdx))eFlags.delete(eIdx);else eFlags.add(eIdx);renderExamQ();};
+window.finishExam=function(){
+  clearInterval(eTi);eDone=true;
+  let correct=0;const domCnt={},domCorr={};
+  eQ.forEach((q,i)=>{domCnt[q.d]=(domCnt[q.d]||0)+1;if(eAns[i]===q.a){correct++;domCorr[q.d]=(domCorr[q.d]||0)+1;}});
+  const pct=Math.round(correct/EL*100);const scaled=Math.round(correct/EL*1000);
+  const pass=scaled>=720;
+  const domHtml=Object.keys(domCnt).sort().map(d=>{
+    const p=Math.round((domCorr[d]||0)/domCnt[d]*100);
+    return `<div class="rcard ${p>=72?'rc':'rw'}"><strong>${d}</strong>: ${domCorr[d]||0}/${domCnt[d]} (${p}%)<div class="result-bar"><div class="result-fill" style="width:${p}%;background:${p>=72?'var(--green)':'var(--red)'}"></div></div></div>`;
+  }).join('');
+  document.getElementById('exam-body').style.display='none';
+  document.getElementById('exam-result').style.display='block';
+  document.getElementById('exam-result-card').innerHTML=`
+<div style="text-align:center;padding:20px 0 28px">
+<div style="font-size:64px;font-weight:800;color:${pass?'var(--green)':'var(--red)'}">${scaled}</div>
+<div style="color:var(--text2);margin-bottom:8px">pontos · ${correct}/${EL} corretas (${pct}%)</div>
+<div style="display:inline-block;padding:8px 24px;border-radius:99px;font-weight:700;background:${pass?'rgba(52,211,153,.15)':'rgba(248,113,113,.15)'};color:${pass?'var(--green)':'var(--red)'};border:1px solid ${pass?'var(--green)':'var(--red)'}">
+${pass?'✅ APROVADO — Parabéns!':'❌ Abaixo de 720 — Continue praticando'}
+</div>
+</div>
+<h3 style="font-size:15px;margin-bottom:12px">Por Domínio</h3>${domHtml}
+<div style="margin-top:20px;display:flex;gap:10px">
+<button class="btn bp" onclick="document.getElementById('exam-start').style.display='block';document.getElementById('exam-result').style.display='none'">↺ Refazer</button>
+<button class="btn bg" onclick="P('home',document.getElementById('nhome'))">← Dashboard</button>
+</div>`;
+};
+const FCS=[
+{d:'D1',f:'Diferença: IAM User vs IAM Role',b:'User: identidade permanente com credenciais de longo prazo. Role: identidade temporária assumida por serviços, apps ou usuários federados. Sempre prefira Roles para EC2 e Lambda.'},
+{d:'D1',f:'O que o AWS CloudTrail registra?',b:'Todas as chamadas de API da conta: quem chamou (user/role), qual serviço, qual ação, quando, de qual IP, e se foi bem-sucedida. Retém 90 dias por padrão (Trails mantêm indefinidamente).'},
+{d:'D1',f:'Security Groups vs NACLs',b:'SG: stateful, nível de instância, apenas Allow, avaliados como conjunto. NACL: stateless, nível de subnet, Allow e Deny, regras numeradas em ordem. Para bloqueio de IP: use NACL Deny.'},
+{d:'D1',f:'AWS KMS: envelope encryption',b:'KMS gera uma Data Key que criptografa seus dados. A Data Key é criptografada pela CMK (Customer Master Key). Apenas o KMS pode descriptografar a Data Key. Dados nunca deixam o KMS em plaintext.'},
+{d:'D1',f:'Quando usar VPC Gateway Endpoint vs Interface Endpoint?',b:'Gateway (gratuito): S3 e DynamoDB via rota na tabela de roteamento. Interface (PrivateLink, pago): todos os outros serviços AWS e parceiros. Gateway é sempre preferível para S3/DynamoDB.'},
+{d:'D1',f:'Amazon Cognito: User Pools vs Identity Pools',b:'User Pools: autenticação (sign-up/sign-in), JWT tokens, suporta social login. Identity Pools: federação de identidade, troca tokens por credenciais AWS temporárias via STS.'},
+{d:'D1',f:'Shared Responsibility Model: AWS vs Cliente',b:'AWS (OF the cloud): data centers, hardware, rede, hipervisor, serviços gerenciados. Cliente (IN the cloud): SO, patches, aplicação, dados, criptografia, configuração de rede e controles de acesso.'},
+{d:'D1',f:'O que é AWS Organizations e SCPs?',b:'Organizations: gerencia múltiplas contas com faturamento consolidado. SCPs (Service Control Policies): definem permissões máximas para contas-membro. Mesmo Admin não pode exceder o SCP.'},
+{d:'D2',f:'RPO vs RTO — definições e trade-offs',b:'RPO: quanto de dados pode perder (Recovery Point Objective). RTO: quanto tempo pode ficar offline (Recovery Time Objective). Menor RPO/RTO = maior custo. Backup&Restore: alto ambos. Multi-Site: próximo de zero.'},
+{d:'D2',f:'4 Estratégias de Disaster Recovery',b:'1. Backup & Restore: backup automático + restauração manual. 2. Pilot Light: mínimo rodando (ex: só BD). 3. Warm Standby: ambiente reduzido ativo. 4. Multi-Site Active-Active: tudo rodando em 2+ regiões.'},
+{d:'D2',f:'RDS Multi-AZ vs Read Replica',b:'Multi-AZ: replicação SÍNCRONA, failover automático (~1-2min), HA. Read Replica: replicação ASSÍNCRONA, para escala de leitura, pode ser cross-region, promoção manual apenas.'},
+{d:'D2',f:'SQS Standard vs FIFO',b:'Standard: alta throughput ilimitada, pelo menos uma vez, ordem best-effort. FIFO: exatamente uma vez, FIFO garantido, 3.000 msg/s (300 sem batching). FIFO para transações financeiras e pedidos.'},
+{d:'D2',f:'Amazon Route 53: Routing Policies',b:'Simple: um endpoint. Weighted: percentual entre N. Latency: menor latência. Failover: primary/secondary com health check. Geolocation: por país/continente. Geoproximity: por proximidade ajustável. Multivalue: múltiplos saudáveis.'},
+{d:'D2',f:'ALB vs NLB — quando usar cada um',b:'ALB (Layer 7): HTTP/HTTPS, roteamento por path/header/query, WebSockets, ideal para apps web e microsserviços. NLB (Layer 4): TCP/UDP/TLS, ultra baixa latência (<1ms), IP estático/Elastic IP, milhões de req/s.'},
+{d:'D2',f:'Amazon S3: durabilidade e disponibilidade',b:'Durabilidade: 99,999999999% (11 noves) — S3 replica em ≥3 AZs. Disponibilidade: 99,99% (Standard). Standard-IA: 99,9%. One Zone-IA: 99,5%. Durabilidade não é disponibilidade!'},
+{d:'D3',f:'ElastiCache Redis vs Memcached',b:'Redis: persistência, Multi-AZ, Pub/Sub, estruturas avançadas (Sorted Sets, Geo, Streams), Lua. Memcached: simples, multi-thread (melhor para cache puro). Para HA e features: Redis. Para simples e rápido: Memcached.'},
+{d:'D3',f:'DynamoDB: Partition Key vs Sort Key vs GSI',b:'Partition Key: distribui dados entre partições. Sort Key: ordena itens na mesma partição. GSI: índice com partition key diferente para queries alternativas. LSI: índice com mesma partition key, sort key diferente.'},
+{d:'D3',f:'CloudFront vs S3 Transfer Acceleration vs Global Accelerator',b:'CloudFront: CDN para leitura, cache de conteúdo, reduz latência e custo. S3 TA: acelera uploads para S3 via edge. Global Accelerator: anycast IP, backbone AWS para TCP/UDP globais, sem cache.'},
+{d:'D3',f:'Amazon Aurora vs RDS MySQL',b:'Aurora: 6 cópias em 3 AZs automático, storage auto-scale (até 128TB), failover em ~30s, 5x mais rápido, 15 Read Replicas. RDS MySQL: engine MySQL padrão, 5 Read Replicas, failover em ~1-2min.'},
+{d:'D3',f:'Famílias de instâncias EC2 e casos de uso',b:'T: burstable (dev/test). M: geral (apps web). C: compute-intensive (HPC, video encoding). R/X: memory (SAP, Redis, ML). I/D: storage IOPS (NoSQL, data warehouse). G/P: GPU (ML, gaming). A: ARM Graviton (custo-benefício).'},
+{d:'D3',f:'Amazon Kinesis: família de serviços',b:'Data Streams: ingestão real-time, múltiplos consumers, retention 1-365 dias. Firehose: carrega em S3/Redshift/OpenSearch sem código consumer. Analytics: SQL real-time sobre streams. Video Streams: vídeo ao vivo.'},
+{d:'D3',f:'Quando usar Amazon Redshift?',b:'Data warehouse para analytics OLAP com dados de TB a PB. Storage colunar + MPP. NÃO use para: OLTP transacional (use RDS), leituras por chave (DynamoDB), streaming real-time (Kinesis).'},
+{d:'D4',f:'On-Demand vs Reserved vs Spot vs Savings Plans',b:'On-Demand: sem compromisso, maior preço. Reserved (1-3 anos): até 72%. Spot: capacidade ociosa, até 90%, pode ser interrompido. Savings Plans: flexível como SP mas com desconto de RI. Dedicated: servidor físico dedicado.'},
+{d:'D4',f:'Quando usar Spot Instances?',b:'✅ Use: batch jobs, ML training, renderização, análise de dados, CI/CD, HPC. ❌ Não use: bancos de dados, jobs críticos sem retry, aplicações stateful sem checkpoint, onde 2 min de aviso é insuficiente.'},
+{d:'D4',f:'S3 Storage Classes: quando usar cada uma',b:'Standard: acesso frequente. Standard-IA: acesso mensal, cobra retrieval. One Zone-IA: dados reproduzíveis, 20% mais barato. Intelligent-Tiering: padrão imprevisível. Glacier Instant: ms retrieval. Glacier Flexible: 1-12h. Deep Archive: 12-48h, mais barato.'},
+{d:'D4',f:'AWS Trusted Advisor: 5 categorias',b:'1. Otimização de Custo (instâncias subutilizadas, RIs idle). 2. Performance (cache, throughput). 3. Segurança (MFA, portas abertas). 4. Tolerância a Falhas (Multi-AZ, backups). 5. Service Quotas (limites). Business/Enterprise: acesso completo.'},
+{d:'D4',f:'Compute Savings Plans vs EC2 Savings Plans',b:'Compute SP: qualquer família, tamanho, região, OS, EC2+Fargate+Lambda, até 66% desconto. EC2 SP: uma família específica em uma região, até 72%. Se precisar mudar tipos: Compute. Se família fixa: EC2.'},
+{d:'D1',f:'AWS Certificate Manager (ACM)',b:'Provisiona e renova automaticamente certificados SSL/TLS GRATUITOS para uso com ALB, CloudFront, API Gateway. NÃO pode exportar a chave privada. Para exportar: use Certificate Manager + importação manual.'},
+{d:'D2',f:'Amazon EventBridge vs SNS vs SQS',b:'EventBridge: event bus, regras de filtragem, 20+ AWS sources, parceiros, schema registry. SNS: pub/sub, fanout para múltiplos subscribers. SQS: fila, processamento assíncrono, deduplicação. Use: EventBridge para eventos, SNS para notificações, SQS para tasks.'},
+{d:'D3',f:'EBS vs EFS vs S3',b:'EBS: block storage, attach a 1 EC2 (exceto io1 Multi-Attach), AZ-specific, SSD/HDD. EFS: NFS gerenciado, múltiplas EC2 simultaneamente, auto-scale, regiao-wide. S3: object storage, global, custo mais baixo, sem mount direto (exceto S3 Fuse).'},
+{d:'D4',f:'S3 Lifecycle Policies',b:'Automatizam transição entre classes (ex: Standard → IA após 30 dias → Glacier após 90 → delete após 365). Reduz custo sem intervenção manual. Configure por prefixo, tag ou todo o bucket.'},
+{d:'D1',f:'Amazon GuardDuty: fontes de dados',b:'Analisa: CloudTrail Events (chamadas de API), VPC Flow Logs (tráfego de rede), DNS Logs (consultas DNS), S3 Logs e Kubernetes Audit Logs. Usa ML e threat intelligence para detectar anomalias.'},
+{d:'D2',f:'Auto Scaling: 3 tipos de scaling policies',b:'Target Tracking: mantém métrica em valor alvo (mais simples, recomendado). Step Scaling: escala em degraus baseado em alarmes CloudWatch. Scheduled: escala em horários definidos para picos previsíveis.'},
+{d:'D3',f:'DynamoDB DAX vs ElastiCache',b:'DAX: cache EXCLUSIVO para DynamoDB, API idêntica (drop-in), gerenciado pela AWS, microsegundos. ElastiCache: cache de propósito geral para qualquer banco/computação, requer mudança no código, mais flexível.'},
+];
+
+let fcIdx=0,fcFilt=[...FCS];
+function renderFCTags(){
+  const doms=[...new Set(FCS.map(f=>f.d))];
+  document.getElementById('fc-tags').innerHTML=
+    '<button class="btn bp" style="font-size:12px;padding:5px 12px" onclick="setFCDom(null,this)">Todos</button>'+
+    doms.map(d=>`<button class="btn bg" style="font-size:12px;padding:5px 12px" onclick="setFCDom('${d}',this)">${d}</button>`).join('');
+}
+function setFCDom(d,btn){
+  fcFilt=d?FCS.filter(f=>f.d===d):[...FCS];fcIdx=0;
+  document.querySelectorAll('#fc-tags button').forEach(b=>b.className='btn bg');
+  btn.className='btn bp';renderFC();
+}
+function renderFC(){
+  if(!fcFilt.length)return;
+  const c=fcFilt[fcIdx];
+  document.getElementById('fc-dom').textContent=c.d;
+  document.getElementById('fc-dom2').textContent=c.d;
+  document.getElementById('fc-front').textContent=c.f;
+  document.getElementById('fc-back').textContent=c.b;
+  document.getElementById('fc-ctr').textContent=(fcIdx+1)+' / '+fcFilt.length;
+  document.getElementById('fc-card').classList.remove('flipped');
+}
+window.flipFC=function(){document.getElementById('fc-card').classList.toggle('flipped');};
+window.fcNav=function(d){fcIdx=(fcIdx+d+fcFilt.length)%fcFilt.length;renderFC();};
+window.shuffleFC=function(){fcFilt=[...fcFilt].sort(()=>Math.random()-.5);fcIdx=0;renderFC();};
+document.addEventListener('keydown',e=>{
+  if(document.getElementById('page-flashcards').classList.contains('active')){
+    if(e.key==='ArrowLeft')fcNav(-1);
+    if(e.key==='ArrowRight')fcNav(1);
+    if(e.key===' '){e.preventDefault();flipFC();}
+  }
+});
+renderFCTags();renderFC();
+const CKKEY='aws_saa_study.html_ck';
+const ckState=JSON.parse(localStorage.getItem(CKKEY)||'{}');
+function toggleChi(i){
+  ckState[i]=!ckState[i];localStorage.setItem(CKKEY,JSON.stringify(ckState));
+  const el=document.getElementById('chi'+i);
+  if(ckState[i])el.classList.add('ck');else el.classList.remove('ck');
+  updateCP();
+}
+function updateCP(){
+  const total=53;const done=Object.values(ckState).filter(Boolean).length;
+  document.getElementById('cpf').style.width=(done/total*100)+'%';
+  document.getElementById('cp-txt').textContent=done+' / '+total+' concluídos';
+  document.getElementById('ptext').textContent=done+' / '+total+' itens';
+  document.getElementById('gpbar').style.width=(done/total*100)+'%';
+}
+Object.keys(ckState).forEach(i=>{if(ckState[i])document.getElementById('chi'+i)?.classList.add('ck');});
+updateCP();
+let pSec=25*60,pTotal=25*60,pRun=false,pTi=null,pSess=0;
+window.pToggle=function(){
+  if(pRun){clearInterval(pTi);pRun=false;document.getElementById('pbtn').textContent='▶ Continuar';}
+  else{pRun=true;document.getElementById('pbtn').textContent='⏸ Pausar';
+    pTi=setInterval(()=>{pSec--;
+      const m=Math.floor(pSec/60),s=pSec%60;
+      document.getElementById('ptimer').textContent=(m<10?'0':'')+m+':'+(s<10?'0':'')+s;
+      if(pSec<=0){clearInterval(pTi);pRun=false;pSess++;
+        document.getElementById('psess').textContent=pSess;
+        document.getElementById('pbtn').textContent='▶ Iniciar';
+        document.getElementById('pmode').textContent='☕ Pausa!';
+      }},1000);
+  }
+};
+window.pReset=function(){clearInterval(pTi);pRun=false;pSec=pTotal;
+  const m=Math.floor(pSec/60);
+  document.getElementById('ptimer').textContent=(m<10?'0':'')+m+':00';
+  document.getElementById('pbtn').textContent='▶ Iniciar';
+  document.getElementById('pmode').textContent='Foco';
+};
+window.pSet=function(w,b){pTotal=w*60;pSec=w*60;pReset();};
+</script></body></html>
