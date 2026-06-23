@@ -170,7 +170,7 @@ p{margin-bottom:10px;color:var(--text2);}
 <body>
 <div id="overlay"></div>
 <nav id="sidebar">
-<div id="sh"><h1>AWS CLF-C02</h1><p>Cloud Practitioner</p></div>
+<div id="sh" onclick="P('home',document.getElementById('nhome'))" style="cursor:pointer"><h1>AWS CLF-C02</h1><p>Cloud Practitioner</p></div>
 <div class="ns">
 <div class="nst">Visão Geral</div>
 <div class="ni active" id="nhome" onclick="P('home',this)">🏠 Dashboard</div>
@@ -191,7 +191,7 @@ p{margin-bottom:10px;color:var(--text2);}
 </div>
 </nav>
 <div id="main">
-<div id="topbar"><button id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button><h2 id="tbtitle">Dashboard</h2>
+<div id="topbar"><button id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button><h2 id="tbtitle" onclick="P('home',document.getElementById('nhome'))" style="cursor:pointer" title="Voltar ao Dashboard">Dashboard</h2>
 <div class="pp"><span id="ptext">0 itens</span><div class="pbw"><div class="pbf" id="gpbar" style="width:0%"></div></div></div>
 </div>
 <div id="content">
@@ -379,7 +379,7 @@ function P(id,el){
   document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
   if(el)el.classList.add('active');
   document.getElementById('tbtitle').textContent=TITLES[id]||id;
-  document.getElementById('main').scrollTo(0,0);
+  document.getElementById('main').scrollTo(0,0);window.scrollTo(0,0);
   if(id==='home')setTimeout(animBars,150);
 }
 function animBars(){document.querySelectorAll('.dbf[data-t]').forEach(e=>{e.style.width=e.dataset.t+'%';});}
