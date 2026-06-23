@@ -1388,6 +1388,24 @@ function renderCL(){
 }
 window.tck=function(i){const x=saved.indexOf(i);if(x===-1)saved.push(i);else saved.splice(x,1);localStorage.setItem('ccaf_ck',JSON.stringify(saved));renderCL();};
 renderCL();
+
+// ── SIDEBAR MOBILE ────────────────────────────────────
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+document.getElementById('overlay').addEventListener('click',function(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+});
+document.querySelectorAll('.ni').forEach(function(ni){
+  ni.addEventListener('click',function(){
+    if(window.innerWidth<=768){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('open');
+    }
+  });
+});
 </script>
 </body>
 </html>

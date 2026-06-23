@@ -759,4 +759,22 @@ window.pReset=function(){clearInterval(pTi);pRun=false;pSec=pTotal;
   document.getElementById('pmode').textContent='Foco';
 };
 window.pSet=function(w,b){pTotal=w*60;pSec=w*60;pReset();};
+
+// ── SIDEBAR MOBILE ────────────────────────────────────
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+document.getElementById('overlay').addEventListener('click',function(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+});
+document.querySelectorAll('.ni').forEach(function(ni){
+  ni.addEventListener('click',function(){
+    if(window.innerWidth<=768){
+      document.getElementById('sidebar').classList.remove('open');
+      document.getElementById('overlay').classList.remove('open');
+    }
+  });
+});
 </script></body></html>
