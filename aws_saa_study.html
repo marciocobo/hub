@@ -108,9 +108,67 @@ p{margin-bottom:10px;color:var(--text2);}
 .td3{background:rgba(251,191,36,.2);color:#fbbf24;}
 .td4{background:rgba(167,139,250,.2);color:#a78bfa;}
 
+
+/* ── RESPONSIVE ─────────────────────────────────────── */
+#hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px 10px;border-radius:6px;color:var(--text);font-size:22px;line-height:1;flex-shrink:0;}
+#hamburger:hover{background:var(--bg3);}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:98;}
+#overlay.open{display:block;}
+@media(max-width:768px){
+  body{display:block;}
+  #sidebar{position:fixed!important;left:-290px;top:0;height:100%!important;width:270px!important;min-width:0!important;z-index:99;transition:left .28s ease;box-shadow:6px 0 32px rgba(0,0,0,.5);overflow-y:auto;}
+  #sidebar.open{left:0!important;}
+  #hamburger{display:inline-flex!important;align-items:center;justify-content:center;}
+  #main{width:100%;overflow-x:hidden;}
+  #topbar{padding:10px 12px;gap:8px;}
+  #topbar h2{font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .pp{display:none!important;}
+  #content{padding:14px 12px!important;max-width:100%!important;box-sizing:border-box;}
+  .card{padding:14px 12px;margin-bottom:14px;}
+  .hero{padding:18px 14px;}
+  .hero h1{font-size:18px;}
+  .hero p{font-size:13px;}
+  .ig{grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0;}
+  .ii{padding:10px 12px;}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:13px;}
+  .qo{padding:11px 12px;font-size:14px;}
+  .qt{font-size:15px;}
+  .fcw{height:200px;}
+  .cf.front .fq{font-size:15px;padding:16px;}
+  .cf.back{font-size:13px;padding:14px;}
+  .fcc{flex-wrap:wrap;gap:6px;justify-content:center;}
+  .fbt{min-width:80px;}
+  .fdom{flex-wrap:wrap;gap:6px;}
+  .etime{font-size:20px;}
+  .eqn{font-size:12px;}
+  .eco{padding:9px 10px;font-size:13px;}
+  .epb{width:28px;height:28px;font-size:11px;}
+  .chi{padding:9px 10px;gap:8px;font-size:13.5px;}
+  .chb{width:18px;height:18px;min-width:18px;}
+  .certsafari-card{padding:14px 16px;gap:12px;}
+  .certsafari-icon{font-size:28px;}
+  .certsafari-text h3{font-size:14px;}
+  .certsafari-text p{font-size:12px;}
+}
+@media(max-width:480px){
+  .ig{grid-template-columns:1fr;}
+  .hero h1{font-size:16px;}
+  #content{padding:12px 10px!important;}
+  .qo{font-size:13px;}
+  .eco{font-size:12px;}
+}
+
+/* CertSafari card */
+.certsafari-card{background:linear-gradient(135deg,rgba(251,191,36,.12),rgba(248,113,113,.08));border:1px solid rgba(251,191,36,.3);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;text-decoration:none;cursor:pointer;transition:all .2s;}
+.certsafari-card:hover{border-color:rgba(251,191,36,.6);background:linear-gradient(135deg,rgba(251,191,36,.18),rgba(248,113,113,.12));}
+.certsafari-icon{font-size:36px;flex-shrink:0;}
+.certsafari-text h3{font-size:16px;font-weight:700;color:var(--yellow);margin-bottom:4px;}
+.certsafari-text p{font-size:13px;color:var(--text2);line-height:1.5;}
+.certsafari-arrow{margin-left:auto;font-size:20px;color:var(--yellow);flex-shrink:0;}
 </style>
 </head>
 <body>
+<div id="overlay"></div>
 <nav id="sidebar">
 <div id="sh"><h1>AWS SAA-C03</h1><p>Solutions Architect Associate</p></div>
 <div class="ns">
@@ -118,7 +176,6 @@ p{margin-bottom:10px;color:var(--text2);}
 <div class="ni active" id="nhome" onclick="P('home',this)">🏠 Dashboard</div>
 <div class="ni" onclick="P('simulado',this)">📝 Simulado (65q)</div>
 <div class="ni" onclick="P('checklist',this)">✅ Checklist</div>
-<div class="ni" onclick="P('timer',this)">⏱️ Pomodoro</div>
 </div>
 <div class="ns">
 <div class="nst">Estudo por Domínio</div>
@@ -129,12 +186,12 @@ p{margin-bottom:10px;color:var(--text2);}
 </div>
 <div class="ns">
 <div class="nst">Referência</div>
-<div class="ni" onclick="P('flashcards',this)">🃏 Flashcards (34)</div>
+<div class="ni" onclick="P('flashcards',this)">🃏 Flashcards (50)</div>
 <div class="ni" onclick="P('resources',this)">📚 Recursos</div>
 </div>
 </nav>
 <div id="main">
-<div id="topbar"><h2 id="tbtitle">Dashboard</h2>
+<div id="topbar"><button id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button><h2 id="tbtitle">Dashboard</h2>
 <div class="pp"><span id="ptext">0 itens</span><div class="pbw"><div class="pbf" id="gpbar" style="width:0%"></div></div></div>
 </div>
 <div id="content">
@@ -297,26 +354,18 @@ p{margin-bottom:10px;color:var(--text2);}
 <div class="chi" id="chi52" onclick="toggleChi(52)"><div class="chb" id="chb52">✓</div><div class="cht">Praticar: dado um cenário, escolher estratégia de compra mais eficiente</div></div>
 
 </div>
-<div id="page-timer" class="page">
-<h2 class="sh">⏱️ Pomodoro Timer</h2>
-<p>Estude em blocos focados com pausas estratégicas.</p>
-<div class="card" style="max-width:380px;text-align:center">
-<div class="td" id="ptimer">25:00</div>
-<div style="font-size:14px;color:var(--text2);margin-bottom:20px" id="pmode">Foco</div>
-<div style="display:flex;gap:10px;justify-content:center;margin-bottom:16px">
-<button class="btn bp" id="pbtn" onclick="pToggle()">▶ Iniciar</button>
-<button class="btn bg" onclick="pReset()">↺ Resetar</button>
-</div>
-<div style="display:flex;gap:8px;justify-content:center">
-<button class="btn bg" onclick="pSet(25,5)" style="border-color:var(--accent)">25 min</button>
-<button class="btn bg" onclick="pSet(50,10)">50 min</button>
-<button class="btn bg" onclick="pSet(5,0)">5 min</button>
-</div>
-<div style="font-size:13px;color:var(--text3);margin-top:16px">Sessões concluídas: <strong id="psess">0</strong></div>
-</div>
-</div>
+
 <div id="page-resources" class="page">
 <h2 class="sh">📚 Recursos & Links</h2>
+<a class="certsafari-card" href="https://www.certsafari.com/aws/solutions-architect-associate" target="_blank">
+    <div class="certsafari-icon">🎯</div>
+    <div class="certsafari-text">
+      <h3>CertSafari — Banco de Questões SAA-C03</h3>
+      <p>349 questões de prática do AWS Solutions Architect Associate. Gratuito, sem cadastro, sem anúncios.</p>
+    </div>
+    <div class="certsafari-arrow">→</div>
+  </a>
+
 <div class="card"><a href="https://aws.amazon.com/certification/certified-solutions-architect-associate/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📘 AWS Certified Solutions Architect Associate (Página oficial)</a>
 <a href="https://explore.skillbuilder.aws/learn/course/external/view/elearning/9541/aws-certified-solutions-architect-associate-official-practice-question-set" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🎓 AWS Skill Builder — SAA-C03 Practice Questions</a>
 <a href="https://docs.aws.amazon.com/wellarchitected/latest/framework/welcome.html" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📄 AWS Well-Architected Framework</a>
@@ -355,6 +404,16 @@ w1:[
 {q:'O que é o AWS Shared Responsibility Model?',o:['AWS é responsável por tudo','Cliente é responsável por tudo','AWS cuida da infraestrutura; cliente cuida dos dados e configurações','Responsabilidade compartilhada igualmente'],a:2,e:'AWS: hardware, rede, datacenters, serviços gerenciados. Cliente: SO (se EC2), dados, criptografia, acessos, configurações de aplicação.'},
 {q:'Qual serviço detecta atividade maliciosa como mineração de criptomoeda via ML?',o:['AWS Config','GuardDuty','Security Hub','Inspector'],a:1,e:'GuardDuty analisa CloudTrail, VPC Flow Logs e DNS logs com ML para detectar comportamento anômalo e ameaças.'},
 {q:'Uma empresa quer que usuários corporativos (AD) acessem AWS sem criar usuários IAM. O que configurar?',o:['IAM Users para cada funcionário','Federação SAML 2.0','Cognito User Pools','AWS SSO sem AD'],a:1,e:'Federação SAML 2.0 com IAM permite SSO: usuários autenticam no AD corporativo e assumem IAM Roles temporariamente via STS.'},
+  {q:'Qual é a melhor forma de compartilhar recursos entre contas AWS de forma segura?',o:['Criar usuários IAM em cada conta','AWS Resource Access Manager (RAM)','Copiar recursos manualmente','VPN entre contas'],a:1,e:'AWS RAM permite compartilhar recursos (Transit Gateways, subnets, License Manager) entre contas sem duplicar. Mais seguro e econômico que criar usuários cross-account.'},
+  {q:'Uma empresa quer que apenas instâncias EC2 em uma subnet específica acessem o RDS. O que usar?',o:['Security Group referenciando outro Security Group','Política de recurso do RDS','NACL com IP range','Route Table filter'],a:0,e:'Security Groups podem referenciar outros SGs como source/destination. Crie um SG para o RDS que permite tráfego apenas do SG da aplicação — mais seguro e dinâmico que usar IPs.'},
+  {q:'O que é o AWS IAM Access Analyzer?',o:['Analisa custos de IAM','Identifica recursos compartilhados externamente (fora da conta/org) que podem ser exposições','Otimiza políticas IAM automaticamente','Detecta usuários inativos'],a:1,e:'IAM Access Analyzer analisa políticas de recursos (S3, KMS, SQS, Lambda, etc.) e alerta quando recursos são acessíveis por entidades externas à conta ou organização.'},
+  {q:'Qual é a diferença entre autenticação e autorização no contexto IAM?',o:['São sinônimos','Autenticação: quem você é (credenciais). Autorização: o que pode fazer (políticas)','Autenticação é para usuários; autorização é para roles','Apenas autorização existe no IAM'],a:1,e:'Autenticação (AuthN): verificar identidade via credenciais (senha, MFA, keys). Autorização (AuthZ): verificar permissões via políticas IAM. IAM gerencia ambos.'},
+  {q:'Uma empresa quer auditar quem deletou um bucket S3 há 2 semanas. Qual serviço consultar?',o:['S3 Access Logs','AWS CloudTrail','VPC Flow Logs','AWS Config'],a:1,e:'CloudTrail registra todas as chamadas de API incluindo s3:DeleteBucket, com timestamp e identidade. Trails persistem indefinidamente em S3. Event History padrão é 90 dias.'},
+  {q:'Qual serviço AWS detecta instâncias EC2 com vulnerabilidades de software (CVEs)?',o:['GuardDuty','Amazon Inspector','AWS Config','Security Hub'],a:1,e:'Amazon Inspector escaneia instâncias EC2 e imagens ECR em busca de CVEs conhecidos e desvios de boas práticas. Gera findings priorizados por score CVSS.'},
+  {q:'Uma VPN Site-to-Site AWS falhou. Qual é a alternativa de alta disponibilidade recomendada?',o:['Segundo túnel VPN (ativo/passivo já incluído)','AWS Direct Connect como backup','Transit Gateway com múltiplos VPNs','Peering de VPC'],a:0,e:'AWS VPN Site-to-Site já inclui 2 túneis ativo/passivo para HA por padrão. Se um túnel falha, o tráfego automaticamente usa o segundo. Para maior HA, combine VPN + Direct Connect.'},
+  {q:'O que é AWS PrivateLink e quando usar?',o:['VPN privada entre escritórios','Expõe serviços de uma VPC para outros consumidores sem tráfego pela internet ou peering completo','Conexão direta com on-premises','CDN privado da AWS'],a:1,e:'PrivateLink (Interface VPC Endpoint) cria um endpoint privado para um serviço sem expor a VPC inteira. Ideal para SaaS multi-tenant onde o provedor não precisa ver toda a rede do cliente.'},
+  {q:'Qual é o propósito do AWS Secrets Manager vs Parameter Store?',o:['São equivalentes','Secrets Manager: rotação automática e suporte a DB, preço maior. Parameter Store: configs gerais e segredos simples, mais barato','Parameter Store é mais seguro','Secrets Manager não suporta rotação'],a:1,e:'Secrets Manager: rotação automática de credenciais (RDS, Redshift, DocumentDB), audit trail, preço por segredo (~$0.40/mês). Parameter Store: hierarquia de configurações, tiers gratuito (standard) e pago (advanced).'},
+  {q:'Uma aplicação Lambda precisa acessar um RDS em subnet privada. O que configurar?',o:['Lambda não pode acessar RDS privado','Associar Lambda à VPC com subnet privada e Security Group que permita acesso ao RDS','Tornar o RDS público','Usar NAT Gateway apenas'],a:1,e:'Lambda pode ser associado a uma VPC. Configure a função Lambda na mesma VPC/subnet do RDS com um SG que permita a porta do banco. Use RDS Proxy para gerenciar conexões eficientemente.'},
 ],
 w2:[
 {q:'O que é RTO?',o:['Máximo de dados que pode perder','Tempo máximo para restaurar o serviço','Taxa de transferência de objetos','Recovery Token Object'],a:1,e:'RTO (Recovery Time Objective): quanto tempo o sistema pode ficar offline. Menor RTO = mais caro. Multi-Site tem RTO próximo de zero.'},
@@ -367,6 +426,16 @@ w2:[
 {q:'Uma empresa quer distribuir tráfego: 70% para v1 e 30% para v2 da aplicação. Qual Route 53 policy?',o:['Latency','Failover','Weighted','Geolocation'],a:2,e:'Weighted routing distribui tráfego em percentuais definidos. Ideal para canary deployments, A/B testing e migração gradual entre versões.'},
 {q:'O que acontece com mensagens SQS se o Lambda consumidor falhar?',o:['Mensagem é perdida','SQS reencaminha após visibility timeout','SNS é notificado','CloudWatch recria a mensagem'],a:1,e:'SQS mantém mensagem invisível durante visibility timeout. Se o Lambda não deleta após processar, a mensagem fica visível novamente para outro consumer processar.'},
 {q:'Qual Auto Scaling policy escala preventivamente antes de um pico previsível?',o:['Target Tracking','Step Scaling','Scheduled Scaling','Simple Scaling'],a:2,e:'Scheduled Scaling define ações em horários específicos. Ideal para picos previsíveis (horário comercial, eventos, promoções). Evita lag das políticas reativas.'},
+  {q:'Uma aplicação crítica precisa de 99,99% de disponibilidade. Quantas AZs no mínimo?',o:['1','2','3','4'],a:2,e:'Para 99,99% de disponibilidade (máximo 52 minutos de downtime/ano), distribua em pelo menos 3 AZs. Com 2 AZs, uma falha reduz capacidade a 50%. Com 3, a 66%, mantendo o serviço.'},
+  {q:'Qual serviço AWS armazena objetos com menor custo e permite acesso em milissegundos?',o:['S3 Glacier Instant Retrieval','S3 Standard-IA','S3 One Zone-IA','S3 Glacier Flexible Retrieval'],a:0,e:'S3 Glacier Instant Retrieval oferece retrieval em milissegundos com custo de storage ~68% menor que Standard. Ideal para dados acessados trimestralmente que precisam de acesso imediato.'},
+  {q:'Uma empresa precisa que sua aplicação serverless continue funcionando se uma região falhar. O que implementar?',o:['Multi-AZ Lambda','Lambda em múltiplas regiões com Route 53 Failover','Lambda não suporta DR','Mover para EC2'],a:1,e:'Deploy Lambda em múltiplas regiões com Route 53 Failover routing e health checks. Lambda com API Gateway pode ser replicado por região. DynamoDB Global Tables sincroniza os dados.'},
+  {q:'O que é Amazon EventBridge Scheduler?',o:['Scheduler para EC2','Agendamento de eventos em escala: cron, rate e one-time, invocando targets como Lambda, SQS, Step Functions','Scheduler de Auto Scaling','Ferramenta de CI/CD'],a:1,e:'EventBridge Scheduler substitui CloudWatch Events para agendamento: suporta fuso horário, flexível window, targets AWS diretos. Ideal para jobs periódicos sem precisar de EC2.'},
+  {q:'Qual é a diferença entre Amazon SQS e Amazon MQ?',o:['São idênticos','SQS: fila AWS nativa, serverless. Amazon MQ: broker gerenciado compatível com padrões abertos (AMQP, MQTT, OpenWire) para migrar apps existentes','Amazon MQ é mais barato','SQS suporta mais protocolos'],a:1,e:'SQS é nativo AWS, serverless e escalável. Amazon MQ é broker gerenciado (RabbitMQ/ActiveMQ) para migrar aplicações que dependem de protocolos de mensageria padrão. Use SQS para novas apps.'},
+  {q:'Uma empresa quer executar jobs ECS/Fargate programados (como um cron). O que usar?',o:['CloudWatch Events (EventBridge) com ECS Scheduled Tasks','EC2 com crontab','Lambda com timeout longo','ECS não suporta scheduled tasks'],a:0,e:'EventBridge (CloudWatch Events) pode acionar ECS Scheduled Tasks diretamente. Especifique task definition, cluster e schedule. Solução totalmente serverless para jobs containerizados.'},
+  {q:'O que é AWS Step Functions e quando usar?',o:['Alternativa ao Lambda','Orquestração de workflows com estados, retry automático, ramificações e integração nativa com 200+ serviços AWS','Banco de dados de estado','Fila de mensagens avançada'],a:1,e:'Step Functions orquestra workflows complexos como ETL pipelines, processamento de pedidos e workflows humanos. Suporta retry, catch de erros, paralelismo e integração direta com Lambda, ECS, SQS.'},
+  {q:'Qual serviço distribui tráfego globalmente em instâncias EC2 em múltiplas regiões com IP estático?',o:['CloudFront','Route 53','AWS Global Accelerator','ELB Global'],a:2,e:'Global Accelerator usa 2 IPs anycast estáticos e roteia tráfego pelo backbone AWS para o endpoint mais saudável e próximo. IP estático facilita whitelisting em firewalls.'},
+  {q:'Um e-commerce vai lançar uma promoção e espera 10x o tráfego normal por 2 horas. Como preparar o Auto Scaling?',o:['Aumentar manualmente antes da promoção','Usar Scheduled Scaling para escalar antes do pico','Usar Target Tracking apenas','Comprar Reserved Instances adicionais'],a:1,e:'Scheduled Scaling escala proativamente antes de picos conhecidos, evitando lag do scale-out reativo. Configure para escalar 15 min antes do evento e escalar de volta após. Combine com Target Tracking para ajustes finos.'},
+  {q:'O que é o AWS Well-Architected Framework Reliability Pillar?',o:['Apenas backup e restore','Capacidade de um workload executar sua função de forma correta e consistente, com recuperação automática de falhas','Apenas alta disponibilidade','Monitoramento de custos'],a:1,e:'Reliability cobre: fundamentos (cotas de serviço, topologia de rede), design de workloads (distributed systems), mudanças (IaC, monitoramento) e recuperação de falhas (backups, DR, testes de caos).'},
 ],
 w3:[
 {q:'O que é DynamoDB DAX?',o:['Replicação global','Cache in-memory para DynamoDB com latência de microsegundos','Índice secundário global','Modo serverless'],a:1,e:'DAX é um cache in-memory para DynamoDB totalmente gerenciado pela AWS, compatível com a API do DynamoDB. Reduz latência de ms para µs para leituras frequentes.'},
@@ -379,6 +448,16 @@ w3:[
 {q:'O que é Amazon EFS?',o:['Block storage para EC2','NFS gerenciado acessível por múltiplas EC2','Object storage como S3','Cache in-memory'],a:1,e:'EFS é um NFS gerenciado que pode ser montado por centenas de instâncias EC2 simultaneamente, escala automaticamente e cobra apenas pelo uso.'},
 {q:'Qual é o principal caso de uso do Target Tracking Auto Scaling?',o:['Escala em horários fixos','Mantém automaticamente uma métrica (ex: CPU 60%) no valor-alvo','Escala apenas para cima','Requer alarmes CloudWatch manuais'],a:1,e:'Target Tracking é a política mais simples e recomendada. Define o valor-alvo de uma métrica (CPU, requests por target) e Auto Scaling ajusta continuamente a capacidade.'},
 {q:'Qual é o benefício do Amazon Global Accelerator vs CloudFront?',o:['Global Accelerator tem cache de conteúdo','Global Accelerator usa anycast IP estático e backbone AWS para tráfego TCP/UDP sem cache','São equivalentes','CloudFront é mais rápido para TCP'],a:1,e:'GA usa anycast (mesmo IP, múltiplas regiões) e roteia pelo backbone privado da AWS. Ideal para TCP/UDP sem cache (APIs, jogos, IoT). CloudFront é para HTTP com cache.'},
+  {q:'Qual índice do DynamoDB permite queries em atributos que não são a partition key, sem afetar a tabela principal?',o:['Primary Index','Local Secondary Index','Global Secondary Index','Composite Index'],a:2,e:'GSI tem partition key e sort key diferentes da tabela. Suporta queries flexíveis em qualquer atributo projetado. LSI compartilha a partition key mas tem sort key diferente (criado apenas na criação da tabela).'},
+  {q:'Uma query RDS executa full table scan em uma tabela com 100 milhões de linhas. O que fazer?',o:['Adicionar mais RAM ao RDS','Criar índice na coluna usada no WHERE','Usar ElastiCache','Migrar para DynamoDB'],a:1,e:'Índice na coluna do WHERE reduz o full scan para index scan, de O(n) para O(log n). É a solução correta antes de caching, que resolve leituras repetidas mas não queries únicas.'},
+  {q:'Qual serviço AWS serve arquivos estáticos globalmente com menor latência e suporta Lambda@Edge?',o:['S3 com Transfer Acceleration','Amazon CloudFront','Global Accelerator','ELB com cross-region'],a:1,e:'CloudFront não apenas entrega conteúdo do cache — com Lambda@Edge você executa código JavaScript nos 450+ pontos de presença para personalizar respostas (auth, redirect, A/B testing) com latência ultra-baixa.'},
+  {q:'O que diferencia Amazon Aurora MySQL de RDS MySQL em termos de Read Replicas?',o:['São iguais','Aurora suporta até 15 Read Replicas com failover automático e lag inferior a 100ms vs 5 no RDS com failover manual','RDS tem mais replicas','Aurora não tem Read Replicas'],a:1,e:'Aurora: até 15 RR, failover automático para replica em ~30s, lag tipicamente <100ms devido ao storage compartilhado. RDS MySQL: até 5 RR, promoção manual, lag pode ser maior.'},
+  {q:'Uma empresa precisa analisar logs de 1TB por dia em tempo real com SQL. Qual arquitetura?',o:['S3 + Athena','Kinesis Firehose → S3 + Athena','Kinesis Data Streams → Lambda → OpenSearch','RDS com particionamento'],a:2,e:"Para análise em tempo real, Kinesis Data Streams ingere logs → Lambda processa → OpenSearch indexa e permite busca em tempo real. S3+Athena é batch (minutos). Depende se 'tempo real' significa segundos ou minutos."},
+  {q:'Qual serviço AWS processa e transforma dados em streaming antes de entregar ao destino?',o:['SQS','Kinesis Data Firehose com transformation Lambda','S3 Event Notifications','CloudWatch Logs'],a:1,e:'Kinesis Firehose com Lambda transformation permite transformar, filtrar e enriquecer dados em trânsito antes de entregar ao destino (S3, Redshift, OpenSearch). Serverless e totalmente gerenciado.'},
+  {q:'Uma aplicação React (SPA) é hospedada no S3 e precisa de URLs amigáveis com HTTPS. O que configurar?',o:['EC2 com nginx','CloudFront com S3 origin + ACM certificate + error document','API Gateway em frente ao S3','ELB com S3 target'],a:1,e:'CloudFront com S3 origin: distribui globalmente, adiciona HTTPS via ACM (gratuito), configura error document (index.html para SPA routing), adiciona compressão e headers de segurança.'},
+  {q:'O que é Amazon RDS Proxy e qual problema resolve?',o:['Proxy para múltiplos bancos de dados','Pool de conexões gerenciado: reduz overhead de conexões Lambda/serverless que abre/fecha conexões frequentemente','Criptografia do RDS','Read Replica automática'],a:1,e:'Lambda pode abrir milhares de conexões simultâneas ao RDS. RDS Proxy mantém um pool de conexões e as reutiliza, evitando sobrecarga. Essencial para arquiteturas serverless com bancos relacionais.'},
+  {q:'Qual é a diferença entre EBS gp3 e io2 Block Express?',o:['São equivalentes','gp3: SSD geral propósito, provisioning independente de IOPS/throughput, até 16k IOPS. io2: até 256k IOPS, latência sub-milissegundo, para bancos críticos','io2 é mais barato','gp3 tem maior throughput'],a:1,e:'gp3 é ideal para a maioria das cargas com custo-benefício. io2 Block Express (com nitro instances) oferece até 256k IOPS e 4k MB/s para bancos de dados críticos como SAP HANA e Oracle.'},
+  {q:'Uma empresa quer migrar 500 TB de dados on-premises para S3 em 2 semanas. Qual serviço usar?',o:['Direct Connect','S3 Transfer Acceleration','AWS Snowball Edge Storage Optimized','DataSync via internet'],a:2,e:'Snowball Edge Storage Optimized (80TB por dispositivo) permite transferir 500TB com ~7 dispositivos offline. Transferir 500TB via internet a 1Gbps levaria ~45 dias. Snowball chega em ~1 semana.'},
 ],
 w4:[
 {q:'Qual compra EC2 tem menor custo para workload 24/7 por 1 ano?',o:['On-Demand','Reserved Instances 1 ano','Spot Instances','Dedicated Hosts'],a:1,e:'Reserved Instances 1 ano oferecem até 72% de desconto para workloads contínuos. Spot não é adequado para 24/7 pois pode ser interrompido.'},
@@ -391,6 +470,16 @@ w4:[
 {q:'Qual é a principal diferença entre Reserved Instances Standard e Convertible?',o:['Convertible é mais barato','Standard permite mudar família; Convertible não','Convertible permite mudar família, tamanho e SO em troca de menor desconto','Standard tem prazo de 6 meses'],a:2,e:'Convertible RI: pode trocar família, SO, tenancy durante o compromisso. Desconto de até 54% vs 72% do Standard. Escolha Convertible quando não tem certeza do tipo de instância.'},
 {q:'Uma empresa tem instâncias EC2 rodando com uso médio de CPU de 8%. O que o Trusted Advisor recomendaria?',o:['Upgrade para instâncias maiores','Usar Multi-AZ','Redimensionar ou terminar instâncias subutilizadas','Migrar para Lambda'],a:2,e:'Trusted Advisor identifica instâncias subutilizadas (CPU <10%) e recomenda redimensionamento para tipos menores ou conversão para Reserved. Economia direta de custo.'},
 {q:'Qual S3 storage class é mais barata para arquivos raramente acessados em uma única AZ?',o:['Standard-IA','One Zone-IA','Glacier Flexible','S3 Intelligent-Tiering'],a:1,e:'One Zone-IA armazena em apenas 1 AZ, sendo ~20% mais barato que Standard-IA. Para dados que podem ser perdidos se a AZ falhar (ex: dados reproduzíveis, thumbnails).'},
+  {q:'Uma empresa quer reduzir custos de EC2 em 50% sem mudar a aplicação. Os servidores rodam 24/7 há 1 ano. Qual opção usar?',o:['Spot Instances','Reserved Instances Standard 1 ano','Savings Plans','Reduzir o tipo de instância'],a:1,e:'Reserved Instances 1 ano com pagamento adiantado total oferecem até 72% de desconto para workloads 24/7 conhecidos. Se não tem certeza do tipo exato, Compute Savings Plans são alternativos com ~66%.'},
+  {q:'Qual ferramenta AWS analisa padrões de uso e recomenda o tipo de instância ideal para uma workload?',o:['Trusted Advisor','AWS Compute Optimizer','Cost Explorer','AWS Config'],a:1,e:'Compute Optimizer usa ML para analisar CloudWatch metrics de CPU, rede e disco e recomendar o tipo/tamanho ideal de EC2, ECS tasks, Lambda e EBS com economia estimada.'},
+  {q:'Uma empresa usa NAT Gateway em cada AZ. Como reduzir custo sem perder resiliência?',o:['Usar apenas 1 NAT Gateway','Usar NAT Instance no lugar','Manter um por AZ (esta é a prática correta)','Usar VPC Peering'],a:2,e:'Um NAT Gateway por AZ é a melhor prática: evita custo de transferência inter-AZ e mantém resiliência. Usar apenas 1 cria SPOF. NAT Instances são legado e requerem gerenciamento.'},
+  {q:'Qual é o modelo de preços do AWS Lambda além do nível gratuito?',o:['Por hora de execução','Por número de requisições ($0.20/1M) + duração (GB-segundo)','Por instância como EC2','Por GB de memória alocada fixo'],a:1,e:'Lambda cobra: $0.20/1M requisições e $0.0000166667/GB-segundo. Ex: 1M requisições de 128MB por 100ms = $0.20 (req) + $0.21 (duração). Os primeiros 1M req e 400k GB-segundo são gratuitos por mês.'},
+  {q:'Uma empresa tem picos de tráfego imprevisíveis e workloads que duram 1-2 horas. Qual compra usar?',o:['Reserved Instances','Spot com Spot Fleet','On-Demand','Savings Plans'],a:2,e:'Para picos imprevisíveis de curta duração, On-Demand é mais adequado: sem compromisso, inicia imediatamente. Spot pode ser interrompido. RI não faz sentido para uso esporádico. Savings Plans precisam de compromisso.'},
+  {q:'Qual é o custo de transferência de dados de S3 para instâncias EC2 na mesma região?',o:['$0.09/GB','$0.01/GB','Gratuito','$0.02/GB'],a:2,e:'Transferência de dados entre S3 e EC2 na MESMA região é gratuita. Cobranças ocorrem para saída de dados para internet ($0.09/GB), cross-region e de outras fontes.'},
+  {q:'Uma startup usa RDS Aurora mas o banco fica idle 18h por dia (dev/test). Qual é a solução mais eficiente?',o:['Reserved Instance Aurora','Aurora Serverless v2','Stop/Start manual do cluster','Migrar para DynamoDB'],a:1,e:'Aurora Serverless v2 escala para 0 ACUs quando idle e cobra apenas pelo uso. Para clusters dev/test com longos períodos de inatividade, é até 90% mais barato que cluster provisionado 24/7.'},
+  {q:'O que é o AWS Cost Intelligence Dashboard?',o:['Dashboard no Cost Explorer','Ferramenta para criar dashboards customizados de custo com QuickSight e dados detalhados de billing','Monitor de performance','Substituto do Trusted Advisor'],a:1,e:'Cost Intelligence Dashboard usa QuickSight + dados de Cost and Usage Report para dashboards avançados de custo por conta, serviço, tag e tenant. Mais detalhado que Cost Explorer padrão.'},
+  {q:"Uma empresa quer garantir que novos recursos AWS sempre tenham tag obrigatória 'CostCenter'. O que usar?",o:['Trusted Advisor','AWS Config Rule + Service Control Policy','Billing Tags','Manual via console'],a:1,e:"SCP no Organizations pode bloquear criação de recursos sem tags obrigatórias. AWS Config Rule 'required-tags' identifica recursos não conformes. Juntos garantem compliance de tagging automaticamente."},
+  {q:'Qual classe S3 é mais adequada para backups que precisam ser restaurados em até 5 minutos?',o:['S3 Glacier Deep Archive','S3 Glacier Flexible Retrieval','S3 Glacier Instant Retrieval','S3 Standard-IA'],a:2,e:'Glacier Instant Retrieval oferece retrieval em milissegundos com custo ~68% menor que Standard. Para backups que precisam de restauração rápida (RTO de minutos), é a escolha certa vs Flexible (horas) ou Deep Archive (12-48h).'},
 ],
 };
 
@@ -581,6 +670,22 @@ const FCS=[
 {d:'D1',f:'Amazon GuardDuty: fontes de dados',b:'Analisa: CloudTrail Events (chamadas de API), VPC Flow Logs (tráfego de rede), DNS Logs (consultas DNS), S3 Logs e Kubernetes Audit Logs. Usa ML e threat intelligence para detectar anomalias.'},
 {d:'D2',f:'Auto Scaling: 3 tipos de scaling policies',b:'Target Tracking: mantém métrica em valor alvo (mais simples, recomendado). Step Scaling: escala em degraus baseado em alarmes CloudWatch. Scheduled: escala em horários definidos para picos previsíveis.'},
 {d:'D3',f:'DynamoDB DAX vs ElastiCache',b:'DAX: cache EXCLUSIVO para DynamoDB, API idêntica (drop-in), gerenciado pela AWS, microsegundos. ElastiCache: cache de propósito geral para qualquer banco/computação, requer mudança no código, mais flexível.'},
+  {d:'D1',f:'O que é AWS Resource Access Manager (RAM)?',b:'Permite compartilhar recursos AWS (subnets, Transit Gateways, Route 53 Resolver Rules, License Manager) entre contas AWS sem duplicar. Reduz custo e simplifica gerenciamento multi-conta.'},
+  {d:'D1',f:'IAM Permission Boundary',b:'Política que define o MÁXIMO de permissões que uma role ou user pode ter — mesmo que a policy principal permita mais. Usado para delegar criação de roles com limitações definidas.'},
+  {d:'D1',f:'AWS IAM Access Analyzer',b:'Identifica recursos (S3, KMS, SQS, Lambda, IAM roles) acessíveis por entidades externas à conta/org. Analisa políticas para encontrar exposições involuntárias de acesso.'},
+  {d:'D2',f:'Amazon EventBridge vs CloudWatch Events',b:'EventBridge é a evolução do CloudWatch Events: adiciona event bus de parceiros terceiros (Zendesk, Datadog), schema registry, pipes e scheduler. CloudWatch Events é legado mas ainda funciona.'},
+  {d:'D2',f:'AWS Step Functions: Standard vs Express',b:'Standard: até 1 ano de duração, exatamente uma vez, auditável, $0.025/1k transições. Express: até 5 min, pelo menos uma vez, alta throughput (100k/s), $0.001/1k execuções. Use Express para microserviços de alta freq.'},
+  {d:'D2',f:'Amazon SQS Visibility Timeout',b:'Tempo em que uma mensagem fica invisível após ser recebida (evita processamento duplo). Default 30s, max 12h. Se o consumer não deletar dentro do timeout, a mensagem fica visível novamente para outro consumer.'},
+  {d:'D3',f:'DynamoDB: Capacity Modes',b:'Provisioned: você define RCUs e WCUs, previsível, Auto Scaling disponível, mais barato para cargas estáveis. On-Demand: paga por request, sem planejamento, ideal para cargas imprevisíveis. Pode alternar 2x por dia.'},
+  {d:'D3',f:'Amazon CloudFront Behaviors',b:'Cache behaviors definem como o CloudFront trata requests por path (ex: /api/* sem cache, /images/* com cache 1 dia). Cada behavior tem TTL, allowed methods, origin e cache policies independentes.'},
+  {d:'D3',f:'Amazon Kinesis Data Firehose vs Streams',b:'Firehose: entrega gerenciada para S3/Redshift/OpenSearch, sem consumer code, bufferiza (60s ou 5MB), transformation via Lambda. Streams: múltiplos consumers simultâneos, retention configurável, consumer code obrigatório.'},
+  {d:'D3',f:'Amazon EBS: tipos principais',b:'gp3: SSD geral, 3k-16k IOPS, throughput configurável, mais barato. io2: SSD alto desempenho, até 256k IOPS para bancos críticos. st1: HDD throughput, Big Data/log/data warehouse. sc1: HDD frio, arquivos raramente acessados.'},
+  {d:'D4',f:'AWS Reserved Instances: Payment Options',b:'No Upfront: menor comprometimento, menor desconto (~36%). Partial Upfront: parte paga antecipado, desconto médio (~54%). All Upfront: tudo pago antecipado, maior desconto (~58%). O período de 3 anos aumenta os descontos.'},
+  {d:'D4',f:'AWS Well-Architected Tool',b:'Ferramenta gratuita no Console AWS que avalia arquiteturas contra os 6 pilares do Well-Architected Framework. Gera relatório com riscos identificados e recomendações priorizadas.'},
+  {d:'D1',f:'AWS Organizations: OUs (Organizational Units)',b:'OUs organizam contas em hierarquia. SCPs aplicadas a uma OU afetam todas as contas filhas. Ex: OU Produção com SCP que bloqueia deleção de recursos críticos. Contas herdam SCPs de todos os pais.'},
+  {d:'D2',f:'Amazon Route 53 Health Checks',b:'Monitora saúde de endpoints (HTTP/HTTPS/TCP) a cada 10-30s via checkers em múltiplas regiões. Alimenta Failover routing. Pode monitorar CloudWatch alarms para health checks de recursos internos.'},
+  {d:'D3',f:'Amazon RDS Multi-AZ vs Aurora Multi-Master',b:'RDS Multi-AZ: 1 escritor + 1 failover (standby não serve leitura). Aurora Multi-Master: múltiplos nós escritores simultâneos (atualmente apenas 2), para write HA. Aurora serverless v2 recomendado para flexibilidade.'},
+  {d:'D4',f:'AWS Pricing: transferência de dados',b:'GRÁTIS: intra-AZ (IP privado), AZ→EC2/S3 na mesma região, CloudFront→internet. PAGO: EC2 inter-AZ (~$0.02/GB), cross-region (varia), EC2→internet ($0.09/GB primeiros 10TB). Otimize com CloudFront e VPC Endpoints.'},
 ];
 
 let fcIdx=0,fcFilt=[...FCS];

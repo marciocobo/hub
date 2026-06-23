@@ -130,9 +130,59 @@ strong{color:var(--text);}
 ::-webkit-scrollbar{width:6px;height:6px;}
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
+
+/* ── RESPONSIVE ─────────────────────────────────────── */
+#hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px 10px;border-radius:6px;color:var(--text);font-size:22px;line-height:1;flex-shrink:0;}
+#hamburger:hover{background:var(--bg3);}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:98;}
+#overlay.open{display:block;}
+@media(max-width:768px){
+  body{display:block;}
+  #sidebar{position:fixed!important;left:-290px;top:0;height:100%!important;width:270px!important;min-width:0!important;z-index:99;transition:left .28s ease;box-shadow:6px 0 32px rgba(0,0,0,.5);overflow-y:auto;}
+  #sidebar.open{left:0!important;}
+  #hamburger{display:inline-flex!important;align-items:center;justify-content:center;}
+  #main{width:100%;overflow-x:hidden;}
+  #topbar{padding:10px 12px;gap:8px;}
+  #topbar h2{font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .pp{display:none!important;}
+  #content{padding:14px 12px!important;max-width:100%!important;box-sizing:border-box;}
+  .card{padding:14px 12px;margin-bottom:14px;}
+  .hero{padding:18px 14px;}
+  .hero h1{font-size:18px;}
+  .hero p{font-size:13px;}
+  .ig{grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0;}
+  .ii{padding:10px 12px;}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:13px;}
+  .qo{padding:11px 12px;font-size:14px;}
+  .qt{font-size:15px;}
+  .fcw{height:200px;}
+  .cf.front .fq{font-size:15px;padding:16px;}
+  .cf.back{font-size:13px;padding:14px;}
+  .fcc{flex-wrap:wrap;gap:6px;justify-content:center;}
+  .fbt{min-width:80px;}
+  .fdom{flex-wrap:wrap;gap:6px;}
+  .etime{font-size:20px;}
+  .eqn{font-size:12px;}
+  .eco{padding:9px 10px;font-size:13px;}
+  .epb{width:28px;height:28px;font-size:11px;}
+  .chi{padding:9px 10px;gap:8px;font-size:13.5px;}
+  .chb{width:18px;height:18px;min-width:18px;}
+  .certsafari-card{padding:14px 16px;gap:12px;}
+  .certsafari-icon{font-size:28px;}
+  .certsafari-text h3{font-size:14px;}
+  .certsafari-text p{font-size:12px;}
+}
+@media(max-width:480px){
+  .ig{grid-template-columns:1fr;}
+  .hero h1{font-size:16px;}
+  #content{padding:12px 10px!important;}
+  .qo{font-size:13px;}
+  .eco{font-size:12px;}
+}
 </style>
 </head>
 <body>
+<div id="overlay"></div>
 <nav id="sidebar">
   <div id="sh"><h1>CCA-F 2026</h1><p>Claude Certified Architect Foundations</p></div>
   <div class="ns">
@@ -140,7 +190,6 @@ strong{color:var(--text);}
     <div class="ni active" onclick="P('home',this)">🏠 Dashboard</div>
     <div class="ni" onclick="P('simulado',this)">📝 Simulado Completo (60q)</div>
     <div class="ni" onclick="P('checklist',this)">✅ Checklist de Prontidão</div>
-    <div class="ni" onclick="P('timer',this)">⏱️ Timer Pomodoro</div>
   </div>
   <div class="ns">
     <div class="nst">Plano 8 Semanas</div>
@@ -155,8 +204,8 @@ strong{color:var(--text);}
   </div>
   <div class="ns">
     <div class="nst">Referência Rápida</div>
-    <div class="ni" onclick="P('tricky',this)">⚠️ Pega-Ratões</div>
-    <div class="ni" onclick="P('flashcards',this)">🃏 Flashcards (65+)</div>
+    <div class="ni" onclick="P('tricky',this)">⚠️ Pegadinhas</div>
+    <div class="ni" onclick="P('flashcards',this)">🃏 Flashcards (66)</div>
     <div class="ni" onclick="P('docs',this)">📖 Docs Oficiais</div>
     <div class="ni" onclick="P('academy',this)">🎓 Anthropic Academy</div>
     <div class="ni" onclick="P('resources',this)">📚 Recursos & Links</div>
@@ -164,7 +213,7 @@ strong{color:var(--text);}
 </nav>
 
 <div id="main">
-  <div id="topbar">
+  <div id="topbar"><button id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button>
     <h2 id="tbtitle">Dashboard</h2>
     <div class="pp">
       <span id="ptext">0/10 itens</span>
@@ -509,7 +558,7 @@ Responda APENAS com JSON válido. Sem texto adicional.
 
 <!-- TRICKY -->
 <div id="page-tricky" class="page">
-  <h2 class="sh" style="margin-bottom:16px">⚠️ Pega-Ratões do Exame</h2>
+  <h2 class="sh" style="margin-bottom:16px">⚠️ Pegadinhas do Exame</h2>
   <div class="card">
     <div class="ct">Hierarquia de Confiança</div>
     <div style="display:flex;flex-direction:column;gap:8px">
@@ -565,23 +614,7 @@ Responda APENAS com JSON válido. Sem texto adicional.
 </div>
 
 <!-- TIMER -->
-<div id="page-timer" class="page">
-  <h2 class="sh" style="margin-bottom:16px">⏱️ Timer Pomodoro</h2>
-  <div class="card" style="text-align:center;max-width:400px">
-    <div style="display:flex;gap:6px;justify-content:center;margin-bottom:16px">
-      <button class="btn bg active-mode" onclick="setTM(25,'Foco',this)" id="tm0">Foco 25min</button>
-      <button class="btn bg" onclick="setTM(5,'Pausa Curta',this)" id="tm1">Pausa 5min</button>
-      <button class="btn bg" onclick="setTM(15,'Pausa Longa',this)" id="tm2">Pausa 15min</button>
-    </div>
-    <div style="font-size:12px;color:var(--text3);margin-bottom:4px" id="tmlabel">Foco</div>
-    <div class="td" id="tmdisp">25:00</div>
-    <div style="display:flex;justify-content:center;gap:10px">
-      <button class="btn bg" onclick="resetTM()">↺ Reset</button>
-      <button class="btn bp" id="tmbtn" onclick="toggleTM()">▶ Iniciar</button>
-    </div>
-    <div style="margin-top:16px;font-size:12px;color:var(--text3)">Pomodoros: <strong id="pomoct" style="color:var(--accent2)">0</strong></div>
-  </div>
-</div>
+
 
 <!-- RESOURCES -->
 <div id="page-resources" class="page">
@@ -873,7 +906,7 @@ Responda APENAS com JSON válido. Sem texto adicional.
 </div>
 <script>
 // ── PAGE NAV ──────────────────────────────────────────────
-const titles={home:'Dashboard',simulado:'Simulado Completo',w1:'S1 — Fundamentos API',w2:'S2 — Agentic Loop',w3:'S3 — Multi-Agent',w4:'S4 — Claude Code',w5:'S5 — Prompt Engineering',w6:'S6 — MCP & Tools',w7:'S7 — Context & Reliability',w8:'S8 — Revisão Final',tricky:'Pega-Ratões',flashcards:'Flashcards',checklist:'Checklist',timer:'Timer',docs:'Docs Oficiais',academy:'Anthropic Academy',resources:'Recursos'};
+const titles={home:'Dashboard',simulado:'Simulado Completo',w1:'S1 — Fundamentos API',w2:'S2 — Agentic Loop',w3:'S3 — Multi-Agent',w4:'S4 — Claude Code',w5:'S5 — Prompt Engineering',w6:'S6 — MCP & Tools',w7:'S7 — Context & Reliability',w8:'S8 — Revisão Final',tricky:'Pegadinhas',flashcards:'Flashcards',checklist:'Checklist',docs:'Docs Oficiais',academy:'Anthropic Academy',resources:'Recursos'};
 function P(id,el){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   document.getElementById('page-'+id).classList.add('active');
@@ -893,21 +926,36 @@ w1:[
   {q:"Para classificação de alta frequência onde custo e latência são críticos, qual modelo Claude usar?",o:["Claude Opus","Claude Sonnet","Claude Haiku","São equivalentes para isso"],a:2,e:"Haiku é otimizado para velocidade e custo mínimos — ideal para tarefas simples de alta frequência como classificação."},
   {q:"Em uma conversa multi-turn, qual role contém o histórico de respostas anteriores do modelo?",o:["system","user","assistant","history"],a:2,e:"O role 'assistant' é usado para incluir respostas anteriores do modelo no histórico."},
   {q:"Você quer output JSON determinístico e reproduzível. Qual temperatura usar?",o:["1.0","0.7","0.5","0.0"],a:3,e:"temperature=0 torna o modelo determinístico — ideal para JSON estruturado e testes."},
-  {q:"O parâmetro stop_sequences serve para:",o:["Limitar criatividade","Parar geração em tokens específicos facilitando parsing","Reduzir alucinações","Melhorar qualidade geral"],a:1,e:"Stop sequences param a geração quando o modelo produz um token específico — útil para delimitar e parsear outputs."}
+  {q:"O parâmetro stop_sequences serve para:",o:["Limitar criatividade","Parar geração em tokens específicos facilitando parsing","Reduzir alucinações","Melhorar qualidade geral"],a:1,e:"Stop sequences param a geração quando o modelo produz um token específico — útil para delimitar e parsear outputs."},
+  {q:'Uma chamada à API do Claude retorna erro 529. O que indica?',o:['Chave inválida','Modelo sobrecarregado — tente com backoff exponencial','Prompt muito longo','Parâmetro inválido'],a:1,e:"529 é específico da Anthropic: 'API temporarily overloaded'. Implemente retry com backoff exponencial (ex: aguardar 2^n segundos entre tentativas) até 5 tentativas antes de falhar definitivamente."},
+  {q:'Qual é o benefício de usar stream=True na API do Claude?',o:['Resposta mais rápida','Custo menor','Usuário vê tokens enquanto são gerados, melhorando UX percebida','Tokens ilimitados'],a:2,e:'Streaming não reduz tokens ou melhora qualidade — beneficia a UX. Para respostas longas (5-10s), o usuário começa a ler imediatamente em vez de esperar o texto completo. Essencial para chatbots e assistentes.'},
+  {q:'Um sistema precisa extrair dados estruturados de textos. Qual abordagem é mais confiável?',o:['Pedir JSON no prompt','Usar tool use com schema definido','Aumentar temperatura','Usar regex no output'],a:1,e:'Tool use com schema JSON força o modelo a preencher campos definidos — garantia estrutural. Pedir JSON no prompt pode resultar em texto livre ou JSON malformado. Schema também documenta o contrato esperado.'},
+  {q:"O que é o parâmetro 'system' na API do Claude?",o:['Configuração de sistema operacional','Instruções de operador que definem persona, contexto e restrições — aplicadas antes da conversa do usuário','Temperatura do sistema','Chave de autenticação alternativa'],a:1,e:"O parâmetro 'system' é o system prompt do operador. Define como o Claude deve se comportar: persona (ex: 'Você é Sarah, assistente de RH'), restrições (ex: 'Responda apenas sobre RH') e formato."},
+  {q:'Para evitar que o Claude gere texto após um delimitador específico, qual parâmetro usar?',o:['max_tokens=0','temperature=0',"stop_sequences=['###']",'top_p=0'],a:2,e:"stop_sequences para a geração quando o modelo gera um dos tokens/strings especificados. Útil para delimitar seções (ex: parar ao gerar '</answer>') e facilitar o parsing programático da resposta."},
 ],
 w2:[
   {q:"Um sistema processa 100 documentos de forma independente e paralela. Qual padrão usar?",o:["Prompt Chaining","Hub-and-Spoke","Orchestrator-Worker","Pipeline"],a:2,e:"Orchestrator-Worker é ideal para tarefas decomponíveis em paralelo — o orquestrador distribui, workers executam de forma independente."},
   {q:"Qual é o risco principal do padrão Pipeline?",o:["Maior custo","Falha em cascata","Gargalo no hub","Propagar erros entre workers"],a:1,e:"No Pipeline cada etapa depende da anterior — uma falha intermediária pode cancelar todo o pipeline (falha em cascata)."},
   {q:"Cliente precisa de resposta em menos de 200ms. Você deve usar agente multi-step?",o:["Sim, são mais inteligentes","Não, cada tool call adiciona latência","Sim, se usar Haiku","Depende do número de tools"],a:1,e:"Agentes multi-step são inadequados para latência crítica — cada iteração do loop é uma nova chamada à API adicionando centenas de ms."},
   {q:"Quando usar o padrão Evaluator-Optimizer?",o:["Alto volume de requests","Quando qualidade precisa de validação antes de entregar","Latência é crítica","Custo é o fator principal"],a:1,e:"Evaluator-Optimizer é ideal quando o output precisa passar por validação de qualidade antes de ser entregue — ex: código, textos longos."},
-  {q:"Qual padrão tem o maior risco de gargalo único de processamento?",o:["Pipeline","Orchestrator-Worker","Hub-and-Spoke","Prompt Chaining"],a:2,e:"Hub-and-Spoke tem um hub central que coordena tudo — se ele ficar sobrecarregado, todo o sistema para."}
+  {q:"Qual padrão tem o maior risco de gargalo único de processamento?",o:["Pipeline","Orchestrator-Worker","Hub-and-Spoke","Prompt Chaining"],a:2,e:"Hub-and-Spoke tem um hub central que coordena tudo — se ele ficar sobrecarregado, todo o sistema para."},
+  {q:"O que é 'hitl' (human-in-the-loop) e quando é obrigatório em sistemas agênticos?",o:['Human interfacing tool list','Inserir aprovação humana antes de ações irreversíveis de alto impacto (deletar dados, enviar emails, fazer pagamentos)','Histórico de interações do usuário','Hierarquia de tarefas internas do loop'],a:1,e:'HITL é obrigatório quando ações são: irreversíveis (deletar arquivo), de alto impacto (transação financeira), críticas de segurança, ou quando confiança no output é baixa. A Anthropic recomenda HITL explícito para ações sensíveis.'},
+  {q:'Um agente está em loop infinito chamando a mesma ferramenta sem progresso. Qual defesa implementar?',o:['Aumentar max_tokens','Contador de iterações com limite máximo e timeout global','Usar modelo maior','Diminuir temperatura'],a:1,e:"Defesas contra loops: máximo de iterações (ex: 20 steps), timeout global da tarefa, detecção de estados repetidos e circuit breaker. O agente deve ter critérios de parada explícitos além de 'tarefa concluída'."},
+  {q:'Qual padrão agêntico é mais adequado para extrair dados de 1.000 PDFs em paralelo?',o:['Sequencial com uma instância','Orchestrator-Worker com workers paralelizados','Pipeline linear','Hub-and-Spoke com 1 worker'],a:1,e:'Orchestrator-Worker: o orquestrador divide os 1.000 PDFs em batches, distribui para N workers que processam em paralelo e consolida resultados. Reduz tempo de horas para minutos com paralelismo.'},
+  {q:'Em um sistema multi-agente, como agentes devem compartilhar contexto para minimizar tokens?',o:['Cada agente recebe todo o contexto de todos os outros','Passagem de resumos ou artifacts específicos em vez de transcripts completos','Compartilhar via banco de dados apenas','Não compartilhar contexto'],a:1,e:'Passagem de artifacts (JSON de resultado, resumo da subtarefa) é mais eficiente que replay de toda a conversa. Cada agente recebe apenas o contexto relevante para sua subtarefa. Reduz custo e melhora foco.'},
+  {q:"Qual é o risco de 'context poisoning' em sistemas agênticos?",o:['Contexto muito longo','Input malicioso injetado (via tool output ou dados externos) que manipula o comportamento do agente','Performance degradada','Custo elevado'],a:1,e:'Context poisoning: dados externos (página web, arquivo, email) contêm instruções maliciosas que o agente processa como legítimas. Defesas: sanitizar inputs, instruções claras de não obedecer conteúdo de dados, validação de outputs.'},
 ],
 w3:[
   {q:"Por que subagentes NÃO devem ter acesso ao contexto completo do orquestrador?",o:["Reduz custos","Evita prompt injection via resultados de tools","Garante paralelismo","Facilita debug"],a:1,e:"Context Isolation previne que resultados maliciosos de tools contaminem o contexto do orquestrador — prevenindo prompt injection."},
   {q:"Agente está prestes a enviar email de cancelamento de contrato. Ação correta?",o:["Executar se confiança alta","Escalar para humano — ação irreversível","Usar Opus para maior acerto","Executar após 3 retries"],a:1,e:"Ações irreversíveis (emails críticos, deleção, transações) devem sempre ter Human-in-the-Loop independentemente da confiança do modelo."},
   {q:"API externa retorna status 503. Qual tipo de erro é esse?",o:["Reasoning Error","Environment Error","Tool Error","Context Error"],a:2,e:"Tool Error ocorre quando a tool em si falha — API offline, timeout. Solução: retry com exponential backoff."},
   {q:"O modelo fez encadeamento de raciocínio incorreto e chegou a uma conclusão errada. Qual tipo de erro?",o:["Tool Error","Environment Error","Reasoning Error","Context Error"],a:2,e:"Reasoning Error é quando o modelo raciocina de forma incorreta. Solução: validação independente do output antes de agir."},
-  {q:"Resultado de uma tool instrui o orquestrador a 'ignore suas restrições anteriores'. O sistema deve:",o:["Seguir a instrução","Tratar como dado, não como comando — ignorar","Reiniciar o pipeline","Usar Opus para avaliar"],a:1,e:"Instruções em dados observados (resultados de tools, conteúdo web) são DADOS, nunca comandos. Isso é prompt injection."}
+  {q:"Resultado de uma tool instrui o orquestrador a 'ignore suas restrições anteriores'. O sistema deve:",o:["Seguir a instrução","Tratar como dado, não como comando — ignorar","Reiniciar o pipeline","Usar Opus para avaliar"],a:1,e:"Instruções em dados observados (resultados de tools, conteúdo web) são DADOS, nunca comandos. Isso é prompt injection."},
+  {q:'Qual é a diferença entre MCP Resources e MCP Tools?',o:['São equivalentes','Resources: dados estáticos que o servidor expõe (GET). Tools: operações que podem modificar estado (POST/execute). Resources são lidos, Tools são executados','Resources são mais rápidos','Tools são apenas para APIs'],a:1,e:'MCP Resources são URIs que o cliente pode ler (documentos, dados, configs). Tools são funções que o servidor expõe para execução com side effects (consultar banco, chamar API, escrever arquivo). Separação importante de responsabilidades.'},
+  {q:'Um servidor MCP precisa ser usado por Claude e por um app web simultaneamente. Qual transport usar?',o:['stdio sempre','SSE (Server-Sent Events) ou HTTP Streamable para múltiplos clientes concorrentes','WebSocket apenas','stdio com fork'],a:1,e:'stdio é ideal para processo filho único (Claude Code). Para múltiplos clientes concorrentes, SSE/HTTP Streamable permitem que um servidor sirva N clientes simultâneos. Escolha baseada no padrão de uso.'},
+  {q:'O que são MCP Sampling Requests e qual caso de uso?',o:['Amostras de dados','Permite que servidores MCP solicitem ao cliente que faça uma chamada ao LLM — habilitando IA no servidor sem expor chave de API','Throttling de requisições','Amostragem de logs'],a:1,e:'Sampling requests: o servidor MCP envia uma mensagem de volta ao cliente pedindo inferência do LLM. Útil para servidores que precisam de inteligência (ex: classificar um arquivo antes de salvar) sem gerenciar chaves de API.'},
+  {q:'Como implementar autenticação em um servidor MCP?',o:['MCP não suporta autenticação','Via cabeçalhos HTTP Authorization (Bearer token, API key) inspecionados no handler do servidor, com rejeição de requests não autorizados','Apenas TLS mútuo','Username/password em JSON'],a:1,e:'Servidores MCP com HTTP transport validam Authorization headers. O cliente inclui Bearer token no header. O servidor valida antes de executar qualquer tool ou resource. Essencial para servidores multi-tenant ou com acesso a dados sensíveis.'},
+  {q:'O que é o MCP Registry e por que é importante?',o:['Banco de dados interno do MCP','Catálogo público de servidores MCP disponíveis — facilita descoberta e adoção de integrações existentes antes de construir do zero','Registro de logs MCP','Sistema de versionamento'],a:1,e:'O MCP Registry (mcp.so e outros) cataloga servidores MCP da comunidade. Antes de construir um MCP server para GitHub, Slack ou banco de dados, verifique se já existe um maduro — economiza semanas de desenvolvimento.'},
 ],
 w4:[
   {q:"Projeto tem CLAUDE.md na raiz com 'use tabs' e /scripts/ com 'use 2 spaces'. Para arquivos em /scripts/, qual regra vale?",o:["A da raiz, mais abrangente","A de /scripts/, mais específica","Conflito — nenhuma","Ambas aplicam"],a:1,e:"Na hierarquia CLAUDE.md, arquivos mais específicos (mais próximos do código) têm precedência sobre os mais gerais."},
@@ -915,7 +963,12 @@ w4:[
   {q:"Qual flag torna o Claude Code não-interativo para CI/CD?",o:["--headless","--no-input","-p","--batch"],a:2,e:"A flag -p ativa o modo headless (não-interativo), ideal para pipelines de CI/CD onde não há entrada humana."},
   {q:"O que é Plan Mode no Claude Code?",o:["Executa automaticamente","Claude propõe plano antes de executar para aprovação","Cria CLAUDE.md","Modo offline"],a:1,e:"Plan Mode faz o Claude apresentar o plano de ação completo para aprovação humana antes de executar qualquer coisa — ideal para ações destrutivas."},
   {q:"O CLAUDE.md em ~/.claude/ se aplica a:",o:["Apenas o projeto atual","Todos os projetos do usuário","Apenas projetos com git","Apenas CI"],a:1,e:"O CLAUDE.md user-level (~/.claude/) é global — aplica a todos os projetos do usuário naquela máquina."},
-  {q:"Por que NÃO usar auto-approve em produção?",o:["Aumenta latência","Pode executar ações destrutivas sem confirmação humana","Reduz qualidade","Incompatível com hooks"],a:1,e:"Auto-approve remove o controle humano — em produção isso pode causar danos irreversíveis sem oportunidade de intervenção."}
+  {q:"Por que NÃO usar auto-approve em produção?",o:["Aumenta latência","Pode executar ações destrutivas sem confirmação humana","Reduz qualidade","Incompatível com hooks"],a:1,e:"Auto-approve remove o controle humano — em produção isso pode causar danos irreversíveis sem oportunidade de intervenção."},
+  {q:'Qual é a vantagem do CLAUDE.md sobre variáveis de ambiente para configurar Claude Code?',o:['São equivalentes','CLAUDE.md é versionado com o código, compartilhado com o time e hierárquico (global → projeto → pasta) — cria conhecimento explícito sobre como Claude deve trabalhar no projeto','CLAUDE.md é mais rápido','Variáveis de ambiente são melhores'],a:1,e:"CLAUDE.md vai para o git: todos os devs têm as mesmas instruções, evolui com o projeto, pode ser revisado via PR. Documenta regras do time (ex: 'não altere arquivos de migração sem aprovação'), convenções e contexto específico do projeto."},
+  {q:'Como Claude Code usa as ferramentas Read, Edit e Bash de forma segura?',o:['Sem restrições — acessa tudo','Solicita permissão antes de operações sensíveis, trabalha com worktrees isolados para evitar poluição do branch principal','Apenas leitura, nunca escreve','Apenas em sandbox'],a:1,e:'Claude Code pede confirmação para: executar comandos shell, modificar arquivos fora do projeto, instalar dependências. Usa worktrees para trabalho paralelo isolado. O usuário mantém controle via aprovações explícitas.'},
+  {q:'Um hookde pre-commit no Claude Code deve fazer o quê?',o:['Apenas logging','Verificações automáticas antes do commit: lint, type check, testes unitários, formatação — evitando que Claude commite código com problemas óbvios','Apenas formatação','Apenas git status'],a:1,e:'Hooks de pre-commit do Claude Code (definidos no CLAUDE.md) executam automaticamente verificações: eslint, mypy, pytest, prettier. Garantem qualidade mínima antes que o código chegue ao repositório.'},
+  {q:'O que é o modelo de agent permission no Claude Code?',o:['Claude tem acesso total sempre','Níveis de permissão explícitos: tools permitidas (read, edit, bash), escopo de filesystem, comandos aprovados — evitando ações não autorizadas','Apenas leitura de arquivos','Permissões globais fixas'],a:1,e:'Claude Code tem permissões configuráveis: você define quais ferramentas estão disponíveis, quais diretórios pode acessar e quais comandos pode executar. Segue least privilege — o agente faz apenas o necessário.'},
+  {q:'Como implementar revisão de código automática com Claude Code?',o:['Impossível automatizar','Hook de post-commit ou pipeline CI que invoca Claude Code com o diff do PR e instruções de review — integrando com GitHub PR comments','Apenas via console','Apenas com API direta'],a:1,e:'Claude Code em CI: obtém o diff via git, chama Claude com o diff + checklist de revisão (segurança, performance, edge cases), formata findings como comentários no PR via API do GitHub. Revisão automática em todo PR.'},
 ],
 w5:[
   {q:"Método MAIS confiável para obter JSON estruturado em produção?",o:["Pedir JSON no system prompt","temperature=0","Tool use com schema definido","Few-shot com exemplos JSON"],a:2,e:"Tool use força o modelo a preencher um schema JSON definido — estruturalmente garantido, ao contrário de pedir JSON no prompt."},
@@ -923,7 +976,12 @@ w5:[
   {q:"Quantos few-shot examples são ideais?",o:["1-2","3-5 de alta qualidade","10-15","20+"],a:1,e:"3-5 exemplos de alta qualidade são mais eficazes que 20 exemplos mediocres. Cubra edge cases nos exemplos."},
   {q:"Após JSON inválido no retry, o que incluir no próximo prompt?",o:["Apenas o prompt original","O erro específico para autocorreção","Novos few-shot","System prompt diferente"],a:1,e:"Incluir o erro da tentativa anterior permite que o modelo se autocorrija de forma direcionada."},
   {q:"XML tags (<role>, <task>) no system prompt servem para:",o:["Compatibilidade com APIs","Delimitar seções — o modelo foi treinado nesse padrão","Reduzir tokens","Formatação visual"],a:1,e:"XML tags são um padrão que o Claude foi treinado a reconhecer — delimitar seções melhora significativamente a aderência às instruções."},
-  {q:"Campo ausente no documento de extração deve retornar:",o:["String vazia ''","Omitir o campo","null","Erro de parsing"],a:2,e:"null é o valor padrão para campos ausentes em schemas de extração — deve ser explicitado na constraint do system prompt."}
+  {q:"Campo ausente no documento de extração deve retornar:",o:["String vazia ''","Omitir o campo","null","Erro de parsing"],a:2,e:"null é o valor padrão para campos ausentes em schemas de extração — deve ser explicitado na constraint do system prompt."},
+  {q:"O que é 'negative space prompting' e quando usar?",o:['Prompts com espaços em branco','Especificar explicitamente o que o output NÃO deve conter ou fazer — complementa as instruções positivas e reduz comportamentos indesejados','Prompts muito curtos','Técnica de few-shot negativa'],a:1,e:"Ex: 'Responda em PT-BR. NÃO use bullet points. NÃO mencione limitações. NÃO peça mais informações.' Negações explícitas evitam comportamentos padrão do Claude que podem não ser desejados no contexto."},
+  {q:'Como melhorar consistência de outputs estruturados em múltiplas chamadas ao Claude?',o:['Usar temperatura alta','Definir schema via tool use, incluir exemplos no few-shot, usar temperatura 0 e prefill com o início do JSON esperado','Chamar várias vezes e votar','Usar modelos diferentes'],a:1,e:"Para outputs consistentes: temperatura=0 (determinístico), tool use com schema (garante estrutura), prefill de assistente ('{' force JSON), few-shot com exemplos do formato exato desejado. Combine os 4 para máxima consistência."},
+  {q:'Um prompt retorna respostas corretas mas muito longas. O que ajustar?',o:['Aumentar max_tokens',"Instruir explicitamente o formato e tamanho desejado: 'Responda em 1-2 frases. Sem introdução ou conclusão.'",'Diminuir temperatura','Usar modelo menor'],a:1,e:"Claude tende a ser verboso por padrão. Instruções explícitas de formato suprimem esse comportamento: 'máximo 3 bullet points', 'resposta direta sem explicações', 'formato: X → Y'. Prefill também ajuda: 'A resposta é: '."},
+  {q:"O que é 'context stuffing' e por que é problemático?",o:['Técnica de otimização','Incluir grandes volumes de dados irrelevantes no contexto esperando que o modelo extraia o que é relevante — degrada qualidade e aumenta custo','Método de prompt engineering','Técnica de segurança'],a:1,e:'Jogar 100 páginas de documentação esperando que Claude encontre o relevante é ineficiente: caro (tokens), degrada qualidade (modelo se perde), lento (context longo = mais latência). Prefira RAG para filtrar antes de enviar ao modelo.'},
+  {q:'Qual técnica melhora drasticamente a qualidade para tarefas de raciocínio complexo?',o:['Aumentar temperatura','Extended thinking (budget_tokens) ou Chain-of-Thought com <thinking> explícito','Usar few-shot com exemplos simples','Reduzir max_tokens'],a:1,e:"Extended thinking (claude-3-7-sonnet-20250219 e superiores) permite ao Claude 'pensar em voz alta' antes de responder, com tokens de thinking separados. Melhora dramaticamente matemática, código complexo e raciocínio multi-step."},
 ],
 w6:[
   {q:"Diferença entre Tools e Resources no MCP?",o:["Tools são síncronas, Resources assíncronas","Tools são ações executáveis, Resources são dados para leitura","Tools usam HTTP, Resources usam stdio","Não há diferença"],a:1,e:"Tools = ações (search_database, send_email). Resources = dados para leitura (file://, db://). Primitivas distintas."},
@@ -931,7 +989,12 @@ w6:[
   {q:"Por que não dar acesso full ao BD como uma única tool?",o:["APIs de BD não são suportadas","Reduz surface de ataque e evita modificações acidentais","Modelo fica confuso","Aumenta latência"],a:1,e:"Princípio Least-Privilege: tools de escopo mínimo reduzem riscos, evitam danos acidentais e forçam uso da operação correta."},
   {q:"O que é um MCP Prompt primitive?",o:["Tool que gera prompts","Template de prompt reutilizável (/summarize, /analyze-code)","System prompt do servidor","Configuração de temperatura"],a:1,e:"Prompts são templates reutilizáveis que podem ser invocados como comandos — ex: /summarize, /analyze-code."},
   {q:"Como referenciar variável de ambiente no .mcp.json?",o:["Hardcodar o valor","${NOME_DA_VARIAVEL}","Arquivo .env separado","Não é possível"],a:1,e:"Use ${NOME_DA_VARIAVEL} no .mcp.json — o MCP resolve a variável de ambiente em runtime sem expor o valor no arquivo."},
-  {q:"Campo 'required' no input_schema de uma tool serve para:",o:["Documentação","Forçar o modelo a sempre fornecer esses parâmetros","Validação de tipos","Controle de acesso"],a:1,e:"Campos em 'required' são obrigatórios — o modelo é forçado a fornecê-los antes de chamar a tool."}
+  {q:"Campo 'required' no input_schema de uma tool serve para:",o:["Documentação","Forçar o modelo a sempre fornecer esses parâmetros","Validação de tipos","Controle de acesso"],a:1,e:"Campos em 'required' são obrigatórios — o modelo é forçado a fornecê-los antes de chamar a tool."},
+  {q:"O que é 'tool chaining' e quando é problemático?",o:['Chamar tools sequencialmente','Quando um agente chama ferramentas desnecessárias encadeadas (tool A → tool B → tool C) sem necessidade real — aumenta latência e custo','Técnica de paralelização','Erro de configuração MCP'],a:1,e:'Tool chaining excessivo acontece quando o agente chama ferramentas desnecessariamente. Mitigue com: instruções claras do workflow, tool descriptions precisas (quando usar/não usar), validação de que o resultado foi alcançado antes de chamar outra tool.'},
+  {q:'Como garantir idempotência em tools de um agente?',o:['Não é necessário','Projetar tools que podem ser chamadas múltiplas vezes com o mesmo resultado (sem side effects duplos) — essencial pois agentes podem retry','Apenas com transações','Usando apenas GET requests'],a:1,e:'Idempotência é crítica em agentes: se o agente fizer retry por timeout, a tool não deve criar duplicatas ou estados inconsistentes. Ex: use upsert em vez de insert, verifique existência antes de criar, use tokens de idempotência em APIs.'},
+  {q:'Qual é a melhor prática para tool descriptions no MCP?',o:['Quanto mais curto melhor','Descrições precisas com: o que faz, quando usar, quando NÃO usar, formato dos parâmetros e exemplos de uso — o modelo usa isso para decidir quando chamar a tool','Descrição técnica detalhada','Apenas o nome é suficiente'],a:1,e:"Tool descriptions são o 'prompt engineering' das ferramentas. Claude usa a description para decidir se e como chamar. Má description → wrong tool chamada. Boa description inclui: propósito, pré-condições, exemplos de input/output."},
+  {q:'Como implementar rate limiting em ferramentas de agentes para evitar custos excessivos?',o:['Não é possível','Contador de chamadas por sessão com limite configurável, debounce para tools de busca e alerta quando threshold é atingido','Apenas via IAM','Rate limit automático'],a:1,e:'Implemente: contador de tool calls por sessão (máx N calls de expensive tools), debounce para evitar calls repetidas em sequência, custo estimado acumulado com alerta ao usuário. Agentes sem limites podem ser muito caros.'},
+  {q:"O que é o padrão de 'tool result validation' e por que usar?",o:['Validar formato JSON','Verificar programaticamente se o resultado de uma tool indica sucesso antes de prosseguir — evita que o agente continue com base em dados incorretos','Validação de autenticação','Apenas para bancos de dados'],a:1,e:'Após chamar uma tool, valide: status de sucesso, presença dos campos esperados, valores dentro de range aceitável. Se a tool retornar erro ou dado inválido, o agente deve tratar o erro explicitamente antes de continuar.'},
 ],
 w7:[
   {q:"Prompt Caching oferece aproximadamente qual desconto?",o:["10%","30%","60%","~90%"],a:3,e:"~90% de desconto nos tokens de entrada para chamadas dentro de 5 minutos (cache_control: ephemeral)."},
@@ -939,14 +1002,24 @@ w7:[
   {q:"Para segurança crítica (impedir PII leak), qual guardrail usar?",o:["Instrução no system prompt","Few-shot de bom comportamento","Programmatic guardrail (regex, schema, content filter)","Opus com temperature=0"],a:2,e:"Programmatic guardrails são determinísticos. Prompt-based podem ser contornados por entradas adversariais."},
   {q:"Batch API é ideal quando:",o:["Resposta em tempo real necessária","Alto volume sem necessidade de resposta imediata","Usando modelos Opus","Contexto curto"],a:1,e:"Batch API é para processamento assíncrono de alto volume — sem SLA de latência, com desconto de custo."},
   {q:"Streaming de respostas beneficia principalmente:",o:["Qualidade do output","Percepção de latência pelo usuário final","Custo por token","Confiabilidade"],a:1,e:"Streaming não reduz o tempo total de geração — melhora a percepção do usuário que começa a ler enquanto o modelo ainda gera."},
-  {q:"Context window máximo dos modelos Claude atuais?",o:["8K tokens","32K tokens","100K tokens","200K tokens"],a:3,e:"Os modelos Claude atuais suportam até 200K tokens de contexto."}
+  {q:"Context window máximo dos modelos Claude atuais?",o:["8K tokens","32K tokens","100K tokens","200K tokens"],a:3,e:"Os modelos Claude atuais suportam até 200K tokens de contexto."},
+  {q:"O que é 'semantic chunking' e quando é superior ao chunking fixo?",o:['Sempre é superior','Divide documentos em chunks baseados em significado semântico (parágrafos, seções) em vez de N tokens fixos — preserva contexto e melhora recall em RAG','São equivalentes','Chunking fixo é sempre melhor'],a:1,e:'Chunking fixo pode cortar frases no meio, quebrando contexto. Semantic chunking respeita estrutura natural (por seção, parágrafo, tópico). Resulta em chunks mais coerentes para embedding e melhor recall em RAG.'},
+  {q:'Qual estratégia de RAG melhora precisão quando a query é muito genérica?',o:['Aumentar top-k','HyDE (Hypothetical Document Embeddings): gerar um documento hipotético de resposta e usar seu embedding para busca em vez da query','Usar modelo maior','Reduzir chunk size'],a:1,e:'HyDE: pede ao LLM para gerar uma resposta hipotética → usa o embedding dessa resposta para buscar documentos similares → resultado mais preciso que embedar a query genérica. Útil quando queries são curtas e vagas.'},
+  {q:'Como o prompt caching reduz custo em sistemas com system prompts longos?',o:['Não reduz custo','Tokens em cache custam 90% menos — um system prompt de 10k tokens usado 1000x por dia economiza ~$450/dia vs sem cache','Cache é automático','Apenas para outputs'],a:1,e:'Prompt caching: tokens de input em cache custam $0.30/MTok vs $3.00/MTok (Sonnet). Para system prompts grandes fixos (docs, regras de negócio), o ROI é enorme. Cache dura 5 min (extensível com uso frequente).'},
+  {q:"O que é 'output validation pipeline' e por que implementar?",o:['Validar o formato da API','Camada de verificação independente que valida outputs do agente antes de executar ações — previne erros custosos em automações','Apenas logging','Pipeline de CI/CD'],a:1,e:'Para agentes que tomam ações reais (enviar email, modificar banco, chamar API), implemente: validação do schema do output, verificação de sanidade dos valores, aprovação humana para ações de alto impacto antes de executar.'},
+  {q:'Qual é a melhor estratégia para contextos que excedem a janela do modelo?',o:['Truncar o início','RAG para recuperar apenas o relevante, ou sumarização progressiva do contexto antigo, mantendo o recente completo','Usar modelo com janela maior sempre','Dividir em múltiplas sessões sem contexto'],a:1,e:'Hierarquia de estratégias: 1. RAG (busque apenas o necessário). 2. Sumarização progressiva (condense turnos antigos). 3. Memória estruturada (extraia fatos chave em JSON). 4. Janela maior (último recurso — mais caro).'},
 ],
 w8:[
   {q:"Para Enterprise KB com milhões de docs, qual combinação usar?",o:["Context window 200K + streaming","RAG + prompt caching + conversation summarization","Few-shot + extended thinking","Pipeline + batch"],a:1,e:"Base grande→RAG. Contexto repetido→prompt caching. Histórico longo→summarization. Tríade ideal para enterprise KB."},
   {q:"No Multi-Agent Research, qual é o papel do Aggregator?",o:["Decompor a pesquisa","Buscar informações","Consolidar resultados e validar consistência","Classificar urgência"],a:2,e:"O Aggregator consolida os outputs dos workers paralelos e valida consistência antes do relatório final."},
   {q:"Para Code Gen CI/CD, qual hook garante código válido antes de aceitar?",o:["PreToolUse matcher Bash","PostToolUse matcher Write com testes","Notification hook","Stop hook"],a:1,e:"PostToolUse com matcher Write dispara após cada arquivo escrito, executando lint e testes automaticamente."},
   {q:"No Customer Support Agent, quando escalar para humano?",o:["Toda vez que usar uma tool","Quando a ação é irreversível ou confiança abaixo do threshold","Quando o ticket tem mais de 10 turnos","Quando o usuário pede"],a:1,e:"Escalation rules definem: ação irreversível (reembolso, cancelamento) ou confiança abaixo do threshold → Human-in-the-Loop."},
-  {q:"No Data Extraction Pipeline, qual combinação garante JSON sempre válido?",o:["Prompt pedindo JSON + Opus","Tool use schema + validation-retry loop","Extended thinking + few-shot","Temperatura 0 + chain-of-thought"],a:1,e:"Tool use garante estrutura; validation-retry garante conteúdo correto. Juntos eliminam praticamente todos os erros de formato."}
+  {q:"No Data Extraction Pipeline, qual combinação garante JSON sempre válido?",o:["Prompt pedindo JSON + Opus","Tool use schema + validation-retry loop","Extended thinking + few-shot","Temperatura 0 + chain-of-thought"],a:1,e:"Tool use garante estrutura; validation-retry garante conteúdo correto. Juntos eliminam praticamente todos os erros de formato."},
+  {q:'Um sistema de atendimento ao cliente com Claude recebe 1M de mensagens/mês. Qual modelo otimiza custo?',o:['Sempre Claude Opus','Claude Haiku para triagem/FAQ e Sonnet para casos complexos — roteamento inteligente por tipo de query','Apenas Sonnet','Todos os modelos iguais'],a:1,e:'Roteamento por complexidade: classifique a query com Haiku (barato) → se simples, Haiku responde; se complexo, Sonnet. Para 1M msgs: ~70% Haiku (~$0.25/1M tokens) + 30% Sonnet (~$3/1M tokens) vs tudo Sonnet (3x mais caro).'},
+  {q:'Como implementar observabilidade em um sistema multi-agente com Claude?',o:['Apenas logs de erro','Trace ID único propagado por toda a cadeia com logging de tokens, latência, tool calls e custo — enviados para OpenTelemetry/Datadog','Apenas custo total','Sem necessidade'],a:1,e:'Observabilidade essencial: trace ID para correlacionar logs de múltiplos agentes, span por tool call, métricas de latência P50/P95/P99, custo por request, taxa de retry e falha. Sem isso, debugging em produção é impossível.'},
+  {q:'Um agente Claude modificou um banco de dados incorretamente. Como prevenir na próxima vez?',o:['Proibir acesso a banco','Implementar dry-run que simula ações antes de executar, aprovação humana para writes destrutivos e transações com rollback automático em erro','Usar modelo maior','Reduzir permissões'],a:1,e:'Defesas em camadas: dry-run (simula sem executar), preview do plano para aprovação humana, transações atomicamente revertidas em erro, backups antes de operações destrutivas e logs de auditoria para rastreabilidade.'},
+  {q:'Como garantir respostas consistentes do Claude em testes A/B de UI?',o:['Impossível','Temperatura=0 + system prompt versionado + seed fixo — para comparar variantes de prompt com outputs controlados','Temperatura máxima','Usar modelos diferentes'],a:1,e:'Para testes controlados: temperatura=0 garante determinismo. System prompts versionados no git garantem que variante A e B diferem apenas no elemento testado. Registre a versão do modelo (pode mudar com atualizações).'},
+  {q:'Uma empresa quer auditar todas as interações Claude para compliance. O que implementar?',o:['Não é possível','Logging completo de: timestamp, user ID, session ID, input, output, tokens, custo e model version — armazenado em sistema imutável com acesso restrito','Apenas custo total','Apenas outputs'],a:1,e:'Auditoria de compliance: imutabilidade (append-only log), PII mascarada, retenção configurável (ex: 7 anos para financeiro), acesso restrito aos logs, hash para integridade. LGPD pode exigir pseudonimização dos dados.'},
 ]};
 
 // ── QUIZ ENGINE ────────────────────────────────────────────
@@ -1315,12 +1388,6 @@ function renderCL(){
 }
 window.tck=function(i){const x=saved.indexOf(i);if(x===-1)saved.push(i);else saved.splice(x,1);localStorage.setItem('ccaf_ck',JSON.stringify(saved));renderCL();};
 renderCL();
-// ── TIMER ──────────────────────────────────────────────────
-let tms=25*60,tmr=null,tmrun=false,pomo=0,tmlbl='Foco';
-window.setTM=function(m,l,b){document.querySelectorAll('#tm0,#tm1,#tm2').forEach(x=>x.style.background='');b.style.background='var(--accent)';b.style.color='#fff';tmlbl=l;tms=m*60;tmrun=false;clearInterval(tmr);document.getElementById('tmbtn').textContent='▶ Iniciar';document.getElementById('tmlabel').textContent=l;renderTM();};
-window.toggleTM=function(){if(tmrun){clearInterval(tmr);tmrun=false;document.getElementById('tmbtn').textContent='▶ Continuar';}else{tmrun=true;document.getElementById('tmbtn').textContent='⏸ Pausar';tmr=setInterval(()=>{tms--;if(tms<=0){clearInterval(tmr);tmrun=false;document.getElementById('tmbtn').textContent='▶ Iniciar';if(tmlbl==='Foco'){pomo++;document.getElementById('pomoct').textContent=pomo;}tms=0;alert(tmlbl==='Foco'?'🎉 Pomodoro concluído! Hora de pausar.':'⏰ Pausa encerrada! Hora de focar.');}renderTM();},1000);}};
-window.resetTM=function(){clearInterval(tmr);tmrun=false;const m=tmlbl==='Foco'?25:tmlbl==='Pausa Curta'?5:15;tms=m*60;document.getElementById('tmbtn').textContent='▶ Iniciar';renderTM();};
-window.setTM=function(min,lbl,btn){clearInterval(tmr);tmrun=false;tmlbl=lbl;tms=min*60;document.querySelectorAll('.active-mode').forEach(b=>b.classList.remove('active-mode'));if(btn)btn.classList.add('active-mode');document.getElementById('tmbtn').textContent='▶ Iniciar';renderTM();};
 </script>
 </body>
 </html>

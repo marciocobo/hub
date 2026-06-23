@@ -45,6 +45,21 @@ main{flex:1;padding:48px 32px;max-width:1100px;margin:0 auto;width:100%;}
 .open-btn:hover{opacity:.9;}
 .stats{display:flex;gap:16px;justify-content:center;padding:20px;border-top:1px solid var(--border);color:var(--text3);font-size:13px;}
 .stat{display:flex;align-items:center;gap:6px;}
+
+@media(max-width:768px){
+  .cards{grid-template-columns:1fr !important;}
+  .hero h1{font-size:24px;}
+  .hero p{font-size:14px;}
+  nav{padding:14px 16px;}
+  main{padding:20px 16px;}
+  .card-body{padding:18px 16px;}
+  .stats{flex-wrap:wrap;gap:8px;}
+  .stat{flex:1;min-width:120px;}
+}
+@media(max-width:480px){
+  .hero h1{font-size:20px;}
+  .stats{grid-template-columns:repeat(2,1fr);}
+}
 </style>
 </head>
 <body>

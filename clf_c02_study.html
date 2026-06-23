@@ -108,9 +108,67 @@ p{margin-bottom:10px;color:var(--text2);}
 .td3{background:rgba(52,211,153,.2);color:#34d399;}
 .td4{background:rgba(167,139,250,.2);color:#a78bfa;}
 
+
+/* ── RESPONSIVE ─────────────────────────────────────── */
+#hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px 10px;border-radius:6px;color:var(--text);font-size:22px;line-height:1;flex-shrink:0;}
+#hamburger:hover{background:var(--bg3);}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:98;}
+#overlay.open{display:block;}
+@media(max-width:768px){
+  body{display:block;}
+  #sidebar{position:fixed!important;left:-290px;top:0;height:100%!important;width:270px!important;min-width:0!important;z-index:99;transition:left .28s ease;box-shadow:6px 0 32px rgba(0,0,0,.5);overflow-y:auto;}
+  #sidebar.open{left:0!important;}
+  #hamburger{display:inline-flex!important;align-items:center;justify-content:center;}
+  #main{width:100%;overflow-x:hidden;}
+  #topbar{padding:10px 12px;gap:8px;}
+  #topbar h2{font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+  .pp{display:none!important;}
+  #content{padding:14px 12px!important;max-width:100%!important;box-sizing:border-box;}
+  .card{padding:14px 12px;margin-bottom:14px;}
+  .hero{padding:18px 14px;}
+  .hero h1{font-size:18px;}
+  .hero p{font-size:13px;}
+  .ig{grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0;}
+  .ii{padding:10px 12px;}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:13px;}
+  .qo{padding:11px 12px;font-size:14px;}
+  .qt{font-size:15px;}
+  .fcw{height:200px;}
+  .cf.front .fq{font-size:15px;padding:16px;}
+  .cf.back{font-size:13px;padding:14px;}
+  .fcc{flex-wrap:wrap;gap:6px;justify-content:center;}
+  .fbt{min-width:80px;}
+  .fdom{flex-wrap:wrap;gap:6px;}
+  .etime{font-size:20px;}
+  .eqn{font-size:12px;}
+  .eco{padding:9px 10px;font-size:13px;}
+  .epb{width:28px;height:28px;font-size:11px;}
+  .chi{padding:9px 10px;gap:8px;font-size:13.5px;}
+  .chb{width:18px;height:18px;min-width:18px;}
+  .certsafari-card{padding:14px 16px;gap:12px;}
+  .certsafari-icon{font-size:28px;}
+  .certsafari-text h3{font-size:14px;}
+  .certsafari-text p{font-size:12px;}
+}
+@media(max-width:480px){
+  .ig{grid-template-columns:1fr;}
+  .hero h1{font-size:16px;}
+  #content{padding:12px 10px!important;}
+  .qo{font-size:13px;}
+  .eco{font-size:12px;}
+}
+
+/* CertSafari card */
+.certsafari-card{background:linear-gradient(135deg,rgba(251,191,36,.12),rgba(248,113,113,.08));border:1px solid rgba(251,191,36,.3);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;text-decoration:none;cursor:pointer;transition:all .2s;}
+.certsafari-card:hover{border-color:rgba(251,191,36,.6);background:linear-gradient(135deg,rgba(251,191,36,.18),rgba(248,113,113,.12));}
+.certsafari-icon{font-size:36px;flex-shrink:0;}
+.certsafari-text h3{font-size:16px;font-weight:700;color:var(--yellow);margin-bottom:4px;}
+.certsafari-text p{font-size:13px;color:var(--text2);line-height:1.5;}
+.certsafari-arrow{margin-left:auto;font-size:20px;color:var(--yellow);flex-shrink:0;}
 </style>
 </head>
 <body>
+<div id="overlay"></div>
 <nav id="sidebar">
 <div id="sh"><h1>AWS CLF-C02</h1><p>Cloud Practitioner</p></div>
 <div class="ns">
@@ -118,7 +176,6 @@ p{margin-bottom:10px;color:var(--text2);}
 <div class="ni active" id="nhome" onclick="P('home',this)">🏠 Dashboard</div>
 <div class="ni" onclick="P('simulado',this)">📝 Simulado (65q)</div>
 <div class="ni" onclick="P('checklist',this)">✅ Checklist</div>
-<div class="ni" onclick="P('timer',this)">⏱️ Pomodoro</div>
 </div>
 <div class="ns">
 <div class="nst">Estudo por Domínio</div>
@@ -129,12 +186,12 @@ p{margin-bottom:10px;color:var(--text2);}
 </div>
 <div class="ns">
 <div class="nst">Referência</div>
-<div class="ni" onclick="P('flashcards',this)">🃏 Flashcards (32)</div>
+<div class="ni" onclick="P('flashcards',this)">🃏 Flashcards (48)</div>
 <div class="ni" onclick="P('resources',this)">📚 Recursos</div>
 </div>
 </nav>
 <div id="main">
-<div id="topbar"><h2 id="tbtitle">Dashboard</h2>
+<div id="topbar"><button id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button><h2 id="tbtitle">Dashboard</h2>
 <div class="pp"><span id="ptext">0 itens</span><div class="pbw"><div class="pbf" id="gpbar" style="width:0%"></div></div></div>
 </div>
 <div id="content">
@@ -289,26 +346,18 @@ p{margin-bottom:10px;color:var(--text2);}
 <div class="chi" id="chi44" onclick="toggleChi(44)"><div class="chb" id="chb44">✓</div><div class="cht">Saber o que é AWS Cost Allocation Tags</div></div>
 
 </div>
-<div id="page-timer" class="page">
-<h2 class="sh">⏱️ Pomodoro Timer</h2>
-<p>Estude em blocos focados com pausas estratégicas.</p>
-<div class="card" style="max-width:380px;text-align:center">
-<div class="td" id="ptimer">25:00</div>
-<div style="font-size:14px;color:var(--text2);margin-bottom:20px" id="pmode">Foco</div>
-<div style="display:flex;gap:10px;justify-content:center;margin-bottom:16px">
-<button class="btn bp" id="pbtn" onclick="pToggle()">▶ Iniciar</button>
-<button class="btn bg" onclick="pReset()">↺ Resetar</button>
-</div>
-<div style="display:flex;gap:8px;justify-content:center">
-<button class="btn bg" onclick="pSet(25,5)" style="border-color:var(--accent)">25 min</button>
-<button class="btn bg" onclick="pSet(50,10)">50 min</button>
-<button class="btn bg" onclick="pSet(5,0)">5 min</button>
-</div>
-<div style="font-size:13px;color:var(--text3);margin-top:16px">Sessões concluídas: <strong id="psess">0</strong></div>
-</div>
-</div>
+
 <div id="page-resources" class="page">
 <h2 class="sh">📚 Recursos & Links</h2>
+<a class="certsafari-card" href="https://www.certsafari.com/aws/cloud-practitioner-foundational" target="_blank">
+    <div class="certsafari-icon">🎯</div>
+    <div class="certsafari-text">
+      <h3>CertSafari — Banco de Questões CLF-C02</h3>
+      <p>Questões de prática do AWS Certified Cloud Practitioner. Gratuito, sem cadastro, cobertura completa dos domínios.</p>
+    </div>
+    <div class="certsafari-arrow">→</div>
+  </a>
+
 <div class="card"><a href="https://aws.amazon.com/certification/certified-cloud-practitioner/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📘 AWS Certified Cloud Practitioner (Página oficial)</a>
 <a href="https://explore.skillbuilder.aws/learn/course/134/aws-cloud-practitioner-essentials" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🎓 AWS Cloud Practitioner Essentials (gratuito no Skill Builder)</a>
 <a href="https://explore.skillbuilder.aws/learn/course/14050/aws-certified-cloud-practitioner-official-practice-question-set" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📝 CLF-C02 Official Practice Question Set</a>
@@ -347,6 +396,16 @@ w1:[
 {q:'O que é o modelo de nuvem híbrida?',o:['Usar dois provedores de nuvem','Combinação de infraestrutura on-premises com serviços de nuvem pública','Nuvem exclusiva para setor público','Multi-cloud apenas'],a:1,e:"Nuvem híbrida combina infraestrutura on-premises com nuvem pública (AWS). Permite migração gradual, manter dados sensíveis localmente e 'burstar' para nuvem em picos."},
 {q:'Qual é um benefício de escala ao usar AWS?',o:['Você compra hardware mais barato','A AWS compra em escala massiva e passa os descontos para os clientes via preços menores','Não há benefício de escala','Apenas grandes empresas se beneficiam'],a:1,e:'AWS compra hardware em volume enorme, negocia melhores preços e distribui os custos entre milhões de clientes. Resultado: preços cada vez menores (AWS reduziu preços mais de 100 vezes).'},
 {q:'O que é o AWS Well-Architected Framework?',o:['Ferramenta de deploy de aplicações','Conjunto de melhores práticas em 6 pilares para avaliar e melhorar arquiteturas cloud','Serviço de monitoramento','Linguagem de programação AWS'],a:1,e:'Well-Architected Framework tem 6 pilares: Excelência Operacional, Segurança, Confiabilidade, Eficiência de Performance, Otimização de Custo e Sustentabilidade. Ferramenta gratuita na console.'},
+  {q:"O que é 'agility' (agilidade) como benefício da nuvem?",o:['Hardware mais rápido','Capacidade de experimentar, errar e inovar rapidamente sem grandes investimentos antecipados','Backup automático','Rede mais rápida'],a:1,e:'Agilidade na nuvem significa que experimentos que antes levavam semanas (comprar servidor, instalar) agora levam minutos. Você itera mais rápido, reduz custo de errar e acelera inovação.'},
+  {q:"O que é 'go global in minutes' na AWS?",o:['A AWS tem escritórios em todo o mundo','Você pode lançar sua aplicação em múltiplas regiões globais em minutos, com baixa latência para usuários locais','Suporte 24/7 global','Internet mais rápida via AWS'],a:1,e:'Com clicks ou IaC, você replica infra em qualquer das 33+ regiões AWS. Uma startup brasileira pode ter servidores no Brasil, EUA e Europa em horas, algo impossível on-premises sem enorme investimento.'},
+  {q:'Qual pilar do Well-Architected Framework foca em eficiência do uso de energia e recursos?',o:['Otimização de Custo','Sustentabilidade','Eficiência de Performance','Excelência Operacional'],a:1,e:'Sustentabilidade (6° pilar) foca em minimizar o impacto ambiental: usar regiões de menor intensidade de carbono, instâncias Graviton (mais eficientes), escalar para baixo quando possível e medir carbon footprint.'},
+  {q:'O que é AWS Local Zones?',o:['Zones dentro de uma AZ','Extensões de Regiões AWS em áreas metropolitanas para latência ultra-baixa (<10ms) para usuários locais','Zonas de dados privados','Regiões menores da AWS'],a:1,e:'Local Zones colocam compute, storage e database mais perto de usuários finais em cidades específicas (ex: São Paulo, Los Angeles). Para apps que precisam de <10ms: gaming, streaming, AR/VR.'},
+  {q:'Qual é a principal diferença entre alta disponibilidade e tolerância a falhas?',o:['São equivalentes','HA: serviço continua com possível degradação. Fault Tolerance: sem impacto mesmo com falhas (zero downtime, zero perda de dados)','HA é mais cara','Tolerância a falhas é apenas para bancos de dados'],a:1,e:'Alta Disponibilidade: serviço disponível com mínimo de downtime (pode degradar). Fault Tolerance: continua funcionando SEM impacto durante falhas. FT é mais caro (requer redundância ativa). Multi-AZ = HA. Multi-Region ativo-ativo = FT.'},
+  {q:'O que é o AWS Well-Architected Framework Review?',o:['Auditoria de segurança pela AWS','Avaliação de uma arquitetura contra boas práticas dos 6 pilares usando a ferramenta Well-Architected Tool','Revisão de código pela AWS','Relatório de custos'],a:1,e:'W-A Review é uma avaliação estruturada feita com parceiros AWS certificados ou via W-A Tool no console. Identifica riscos, gera relatório e prioriza melhorias por pilar e impacto.'},
+  {q:'O que é economia de escala na AWS e como beneficia o cliente?',o:['Apenas grandes empresas têm desconto','AWS compra hardware em volume massivo e repassa a economia para os clientes via redução contínua de preços','Você precisa gastar mais para ter desconto','Descontos automáticos após $1M de gasto'],a:1,e:'AWS reduziu preços mais de 100 vezes desde 2006. Ao distribuir custos de data centers, energia e hardware entre milhões de clientes, conseguem preços unitários impossíveis para qualquer empresa individualmente.'},
+  {q:'O que é serverless computing?',o:['Computação sem custos','Modelo onde o provedor gerencia toda a infraestrutura de servidores, e você paga apenas pela execução do código/uso','Computação apenas em GPUs','Servers na nuvem'],a:1,e:'Serverless: sem provisioning, sem patching, sem scaling manual. AWS Lambda (compute), DynamoDB (banco), S3 (storage), API Gateway (API) são serverless. Você foca no código, AWS cuida de tudo mais.'},
+  {q:'Quais são os 3 fatores principais na escolha de uma Região AWS?',o:['Preço, velocidade, suporte','Conformidade/soberania de dados, latência para usuários, disponibilidade de serviços','Número de AZs, preço, suporte','Velocidade, segurança, parceiros'],a:1,e:'1. Conformidade: leis de soberania de dados (dados devem ficar no país?). 2. Latência: regiões próximas aos usuários. 3. Disponibilidade de serviços: nem todo serviço está em todas as regiões. Custo é 4° fator.'},
+  {q:'O que significa escalabilidade vertical vs horizontal?',o:['São sinônimos','Vertical (scale up): aumentar CPU/RAM de uma instância. Horizontal (scale out): adicionar mais instâncias','Vertical é para bancos; horizontal para apps','Horizontal é mais barato sempre'],a:1,e:'Scale Up: instância maior (t3.medium → m5.2xlarge). Scale Out: mais instâncias do mesmo tipo com Load Balancer. Horizontal é preferível na nuvem pois elimina SPOF e permite escala quase ilimitada.'},
 ],
 w2:[
 {q:'No Shared Responsibility Model, quem é responsável pela segurança da infraestrutura física?',o:['O cliente','A AWS','Ambos igualmente','Depende do contrato'],a:1,e:"AWS é responsável pela 'segurança DA nuvem': hardware, data centers, rede, hipervisor. Cliente é responsável pela 'segurança NA nuvem': dados, OS (se EC2), configurações e acessos."},
@@ -359,6 +418,16 @@ w2:[
 {q:'Para que serve o AWS Artifact?',o:['Deploy de aplicações','Acesso a relatórios de conformidade (SOC, ISO, PCI DSS) e acordos AWS','Monitoramento de segurança','Ferramenta de custo'],a:1,e:'AWS Artifact é um portal self-service para: baixar relatórios de conformidade (SOC 1/2, ISO 27001, PCI DSS) e assinar acordos como BAA (Business Associate Agreement para HIPAA).'},
 {q:'O que é criptografia em repouso?',o:['Criptografar dados em movimento pela rede','Criptografar dados armazenados em disco, banco ou S3','Usar HTTPS em todas as APIs','Criptografar apenas backups'],a:1,e:'Encryption at rest protege dados armazenados: S3 (SSE-S3, SSE-KMS), RDS (engine encryption com KMS), EBS (AES-256). AWS gerencia a criptografia transparentemente com KMS.'},
 {q:'O que é o Amazon Inspector?',o:['Serviço de auditoria de faturamento','Avalia vulnerabilidades de segurança em EC2 e containers ECR automaticamente','Monitor de performance','Serviço de conformidade de dados'],a:1,e:'Inspector escaneia instâncias EC2 e imagens de container (ECR) em busca de vulnerabilidades de software (CVEs) e configurações inseguras. Gera findings com severity e recomendações.'},
+  {q:'No Shared Responsibility Model, quem é responsável por patches do sistema operacional em instâncias EC2?',o:['A AWS','O cliente','Depende do contrato','Automaticamente pela AWS'],a:1,e:'Em EC2 (IaaS), o cliente gerencia o SO: patching, configuração, firewall (Security Groups), criptografia de dados em disco. AWS gerencia a infraestrutura física abaixo do hypervisor.'},
+  {q:'Para um banco de dados RDS gerenciado, quem é responsável pelo patching do SO?',o:['O cliente','A AWS gerencia patches do SO e do engine de banco','Ambos igualmente','O DBA do cliente'],a:1,e:'Em serviços gerenciados (PaaS) como RDS, AWS cuida de: patches do SO, patches do banco, backups automáticos, Multi-AZ e hardware. O cliente cuida apenas dos dados, schema, usuários e configurações de acesso.'},
+  {q:'O que é AWS Config e como difere do CloudTrail?',o:['São equivalentes','Config: registra o ESTADO dos recursos ao longo do tempo (o que foi configurado). CloudTrail: registra AÇÕES de API (quem fez o quê)','CloudTrail registra configurações','Config registra chamadas de API'],a:1,e:"Config responde: 'Como estava configurado o recurso X na data Y?' e 'Este recurso está em conformidade com a regra Z?'. CloudTrail responde: 'Quem modificou o recurso X às 14:32 de quinta?'"},
+  {q:'Uma empresa financeira precisa de conformidade com PCI DSS na AWS. Qual recurso consultar?',o:['Ligar para o suporte','AWS Artifact para relatórios de conformidade PCI DSS','AWS Config automaticamente garante PCI DSS','Contratar consultor externo apenas'],a:1,e:'AWS Artifact fornece relatórios de auditoria (PCI DSS, SOC, ISO) e acordo de responsabilidade (PCI DSS AOC). Mas lembre: conformidade é compartilhada — AWS cumpre sua parte, cliente precisa cumprir a sua.'},
+  {q:'O que é o AWS Abuse team e quando contatar?',o:['Suporte técnico','Equipe que investiga uso abusivo de recursos AWS (spam, ataques, mineração ilegal) originados de infraestrutura AWS','Time de cobrança','Suporte de conformidade'],a:1,e:'Report abuse em abuse@amazonaws.com quando você recebe spam/ataque de IPs AWS, ou se suspeitar que sua conta foi comprometida para uso malicioso. AWS investiga e toma medidas.'},
+  {q:'Qual serviço AWS protege contra roubo de dados em S3 detectando padrões anômalos?',o:['GuardDuty','Amazon Macie','Security Hub','Inspector'],a:1,e:'Macie usa ML para detectar e alertar sobre dados sensíveis no S3 (PII, credenciais, dados financeiros) e acesso anômalo (ex: download em massa de bucket). Ideal para compliance com LGPD/GDPR.'},
+  {q:'O que é Zero Trust Security Model?',o:['Não confiar em ninguém na internet','Nunca confiar implicitamente em nenhum usuário ou sistema, mesmo dentro da rede corporativa — sempre verificar','Desabilitar todo acesso externo','Modelo de suporte sem custo'],a:1,e:"Zero Trust: 'nunca confie, sempre verifique'. Cada acesso é autenticado e autorizado explicitamente, independente de localização. Na AWS: IAM granular, MFA, PrivateLink, VPC Endpoints e microsegmentação."},
+  {q:'O que é criptografia em trânsito e como AWS a implementa?',o:['Criptografar dados em backup','Proteger dados enquanto se movem pela rede usando TLS/HTTPS, garantindo que interceptação não revele o conteúdo','Criptografar EBS apenas','Usar VPN para tudo'],a:1,e:'Criptografia em trânsito usa TLS/HTTPS. Na AWS: ACM provisiona certificados gratuitos para ALB/CloudFront, API Gateway usa HTTPS, S3 pode exigir aws:SecureTransport, e serviços gerenciados usam TLS por padrão.'},
+  {q:'Uma empresa quer garantir que nenhum recurso AWS seja criado fora das regiões autorizadas. O que usar?',o:['IAM com tags de região','Service Control Policy (SCP) com condição aws:RequestedRegion','AWS Config','Trusted Advisor'],a:1,e:'SCP com condição aws:RequestedRegion:[] bloqueia criação de recursos fora das regiões especificadas para todas as contas da Organization. Ex: {Effect:Deny, NotAction:..., Condition:{StringNotIn:{aws:RequestedRegion:[sa-east-1]}}}'},
+  {q:'O que é AWS Security Hub?',o:['Serviço de suporte','Centraliza findings de segurança de GuardDuty, Inspector, Macie, Config e parceiros em painel único com score de postura de segurança','Monitor de performance','Gerenciador de certificados'],a:1,e:'Security Hub agrega findings de múltiplos serviços, normaliza no formato ASFF, calcula security score e prioriza remediações. Economiza tempo ao eliminar a necessidade de verificar cada serviço individualmente.'},
 ],
 w3:[
 {q:'O que é Amazon EC2?',o:['Elastic Cache Compute','Servidores virtuais na nuvem com controle total de OS e configurações','Banco de dados relacional','Serviço de CDN'],a:1,e:'EC2 são instâncias virtuais de computação. Você escolhe tipo, OS, storage e rede. Inicia em minutos. Paga por segundo (Linux) ou hora (Windows). Escalável de 1 a milhares de instâncias.'},
@@ -371,6 +440,16 @@ w3:[
 {q:'Qual serviço AWS armazena objetos (arquivos) de qualquer tamanho com alta durabilidade?',o:['Amazon EBS','Amazon S3','Amazon EFS','Amazon RDS'],a:1,e:'S3 (Simple Storage Service) armazena objetos com 11 noves de durabilidade. Use para: backup, data lake, site estático, distribuição de conteúdo, data analytics.'},
 {q:'O que é Amazon SQS?',o:['Simple Queue Service — fila de mensagens para comunicação assíncrona entre serviços','Serviço de banco SQL','Serviço de queries seguras','Sistema de notificações'],a:0,e:'SQS é uma fila de mensagens gerenciada. Desacopla produtores de consumidores. Garante entrega de mensagens mesmo se o consumer estiver temporariamente offline.'},
 {q:'O que diferencia Amazon Aurora de RDS MySQL?',o:['Aurora não suporta MySQL','Aurora tem armazenamento distribuído (6 cópias em 3 AZs), até 5x mais rápido e failover em ~30s','Aurora é mais barato','Aurora não tem backups automáticos'],a:1,e:'Aurora usa arquitetura de storage distribuído proprietária: 6 cópias em 3 AZs automático, failover em ~30s, até 5x mais rápido que MySQL, storage auto-scale até 128TB.'},
+  {q:'O que é Amazon Elastic Load Balancing (ELB)?',o:['Storage elástico','Distribui tráfego automaticamente entre múltiplos targets (EC2, Lambda, containers) em uma ou mais AZs','Sistema de cache','Banco de dados elástico'],a:1,e:'ELB distribui tráfego para garantir HA e escalabilidade. Tipos: ALB (HTTP/HTTPS, L7), NLB (TCP/UDP, L4), Gateway LB (appliances de segurança). Health checks removem targets não saudáveis automaticamente.'},
+  {q:'O que é AWS Auto Scaling?',o:['Aumenta automaticamente o tamanho das instâncias','Monitora e ajusta automaticamente a capacidade (número de instâncias/ECS tasks/DynamoDB) para manter performance com menor custo','Reduz automaticamente todos os custos','Backup automático'],a:1,e:'Auto Scaling monitora métricas (CPU, requisições) e ajusta capacidade: scale out para mais instâncias quando a demanda sobe, scale in para menos quando cai. Disponível para EC2, ECS, DynamoDB, Aurora e Lambda.'},
+  {q:'O que é Amazon CloudWatch?',o:['Serviço de vídeo','Monitoramento e observabilidade: coleta métricas, logs e eventos de recursos AWS e aplicações, com alarmes e dashboards','Armazenamento de objetos','Serviço de CDN'],a:1,e:'CloudWatch: métricas (CPU, rede, disco), logs (Lambda, ECS, aplicações), alarmes (aciona SNS, Auto Scaling, Lambda), dashboards customizados e insights de logs com análise de padrões.'},
+  {q:'O que faz o AWS Elastic Beanstalk?',o:['Cria beans magicamente','PaaS que faz deploy automático de aplicações web (Python, Node, Java, PHP, .NET) gerenciando EC2, ELB, Auto Scaling e RDS','Banco de dados para dados elásticos','Serviço de Machine Learning'],a:1,e:'Beanstalk: você envia o código (ZIP, WAR, container), ele provisiona e gerencia a infraestrutura. Você mantém controle total dos recursos AWS criados. Ideal para equipes que querem foco no código, não em infra.'},
+  {q:'O que é Amazon ECS Fargate?',o:['Banco de dados para containers','Execução de containers Docker sem gerenciar servidores — serverless para containers','Armazenamento para containers','CDN para containers'],a:1,e:'Fargate é o modo serverless do ECS/EKS: você define CPU e memória para sua task/pod, AWS aloca e gerencia o servidor. Sem patching de EC2, sem dimensionamento de cluster. Paga por vCPU e memória por segundo.'},
+  {q:'O que é AWS CloudFormation?',o:['Nuvem de formulários','Infrastructure as Code: define e provisiona infraestrutura AWS usando templates YAML/JSON, com rollback automático em erros','Serviço de segurança','Monitor de compliance'],a:1,e:'CloudFormation permite criar stacks de recursos AWS de forma declarativa e repetível. Template descreve o que você quer, CloudFormation cria na ordem certa. Gratuito (paga pelos recursos criados).'},
+  {q:'Qual serviço AWS permite análise de dados em S3 usando SQL sem provisionar servidores?',o:['Amazon RDS','Amazon Athena','Amazon Redshift','Amazon DynamoDB'],a:1,e:'Amazon Athena é serverless: aponta para dados no S3, escreve SQL e paga por dado escaneado ($5/TB). Ideal para análises ocasionais sem manter um data warehouse ativo. Usa Presto/Trino internamente.'},
+  {q:'O que é Amazon SNS (Simple Notification Service)?',o:['Social Network Service','Pub/Sub gerenciado: publica mensagens em tópicos que são entregues a múltiplos subscribers (Lambda, SQS, email, SMS, HTTP) simultaneamente','Banco de dados de notificações','Monitor de serviços'],a:1,e:'SNS implementa padrão pub/sub (fan-out): uma publicação → múltiplos subscribers recebem. Ideal para: notificações de eventos S3, alertas CloudWatch, pipelines com múltiplos consumidores.'},
+  {q:'Para que serve o AWS Direct Connect?',o:['Conectar diretamente ao suporte','Conexão de rede dedicada e privada entre data center on-premises e AWS, bypassando a internet pública','VPN mais rápida','Conexão entre regiões AWS'],a:1,e:'Direct Connect: largura de banda dedicada (1-100 Gbps), latência consistente e previsível, menor custo de transferência de dados vs internet. Ideal para workloads híbridos com transferência massiva.'},
+  {q:'O que é Amazon WorkSpaces?',o:['Espaço de armazenamento','Desktop as a Service (DaaS): fornece desktops Windows/Linux virtuais e persistentes na nuvem, acessíveis de qualquer dispositivo','Workspace para ML','Ambiente de desenvolvimento'],a:1,e:'WorkSpaces fornece desktops virtuais gerenciados: sem infra local para VDI, acesso seguro de qualquer lugar, paga por usuário/mês. Ideal para trabalho remoto, terceiros e ambientes BYOD seguros.'},
 ],
 w4:[
 {q:'Qual é o modelo de preços principal da AWS?',o:['Assinatura mensal fixa','Pay-as-you-go: pague pelo que usar, quando usar, sem compromisso mínimo','Taxa anual com desconto','Cobrança por usuário'],a:1,e:'Pay-as-you-go = zero compromisso em On-Demand. Pague por segundo/hora de uso. Instância parada não cobra compute. Comece pequeno e cresça conforme a necessidade.'},
@@ -383,6 +462,16 @@ w4:[
 {q:'O que é AWS Trusted Advisor?',o:['Consultor humano da AWS','Ferramenta que analisa a conta em 5 categorias: custo, segurança, performance, tolerância a falhas e service quotas','Serviço de deploy automático','Monitor de aplicações'],a:1,e:'Trusted Advisor verifica a conta contra centenas de boas práticas. Básico gratuito (6 checks de segurança). Business/Enterprise: acesso completo incluindo custo e performance.'},
 {q:'O que é faturamento consolidado no AWS Organizations?',o:['Fatura separada para cada conta','Uma única fatura para todas as contas da organização com descontos por volume agregado','Desconto automático de 20%','Sistema de pagamento parcelado'],a:1,e:'Organizations consolida faturamento: 1 fatura, uso agregado para descontos por volume (S3, EC2 ficam mais baratos quando múltiplas contas somam mais uso), gerenciamento centralizado.'},
 {q:'Qual é o plano de suporte AWS mais básico e seu custo?',o:['Developer — $29/mês','Business — $100/mês','Basic — gratuito','Enterprise — $15.000/mês'],a:2,e:'Basic Support é gratuito para todos os clientes AWS. Inclui: documentação, whitepapers, fóruns, AWS Personal Health Dashboard e 6 checks básicos do Trusted Advisor.'},
+  {q:'Qual é o modelo de cobrança do Amazon S3?',o:['Por instância por hora','Por GB armazenado + GB transferido + número de requisições (varia por storage class)','Assinatura mensal fixa','Por usuário que acessa'],a:1,e:'S3 cobra: armazenamento ($/GB/mês por tier), transferência de dados (saída para internet), requisições (PUT/GET/LIST) e retrieval (IA e Glacier). Entrada de dados no S3 é gratuita.'},
+  {q:'Qual plano de suporte AWS é adequado para uma equipe de desenvolvimento testando novos serviços?',o:['Basic','Developer','Business','Enterprise'],a:1,e:'Developer (~$29/mês): acesso via email a Cloud Support Associates em horário comercial, SLA de 12h para problemas de sistema. Adequado para development/test. Basic é gratuito mas sem engenheiros de suporte.'},
+  {q:'O que é o AWS Personal Health Dashboard?',o:['Dashboard de saúde pessoal','Painel personalizado que mostra eventos AWS que afetam SEUS recursos específicos, com notificações proativas','Dashboard geral de status da AWS','Monitor de uptime'],a:1,e:'PHD (agora AWS Health) mostra: alertas de recursos afetados por falhas regionais, janelas de manutenção que afetam suas instâncias, e recomendações de ação. Diferente do status.aws.amazon.com que é público e geral.'},
+  {q:'O que é o AWS Marketplace?',o:['Loja para comprar hardware AWS','Catálogo com mais de 10.000 produtos de terceiros (software, dados, ML models) que rodam na AWS com cobrança na fatura AWS','Marketplace de empregos','Loja de serviços de consultoria'],a:1,e:'AWS Marketplace: AMIs pré-configuradas, containers, software SaaS, datasets e ML models de ISVs. Cobrança unificada na fatura AWS, deploy em 1 clique, BYOL ou pay-as-you-go. Agiliza adoção de software.'},
+  {q:'O que é Total Cost of Ownership (TCO) e por que comparar AWS vs on-premises?',o:['Apenas o custo de instâncias EC2','Custo total incluindo hardware, licenças, energia, espaço físico, RH de TI e operações — geralmente 30-50% menor na AWS','Custo de suporte anual','Custo de treinamento'],a:1,e:'TCO inclui todos os custos de posse. On-premises: servidores, storage, rede, data center (energia, espaço, segurança física), licenças de SO, backup software, pessoal para operar. Na AWS, esses custos são OpEx transparente.'},
+  {q:'O que é AWS Support Plans e qual é sempre gratuito?',o:['Basic — pago','Developer — gratuito','Basic — gratuito para todos','Business — obrigatório'],a:2,e:'Basic Support é gratuito para TODOS os clientes AWS. Inclui: documentação, whitepapers, fóruns AWS re:Post, AWS Health Dashboard e 6 checks do Trusted Advisor (segurança básica e limites).'},
+  {q:'Qual serviço AWS ajuda a calcular o custo de migração on-premises → AWS?',o:['AWS Cost Explorer','AWS Pricing Calculator','AWS Budgets','AWS Migration Hub'],a:1,e:'AWS Pricing Calculator modela a infraestrutura AWS equivalente e estima o custo mensal. AWS Migration Evaluator (gratuito) analisa o ambiente on-premises atual e calcula TCO comparativo com AWS.'},
+  {q:'O que são Tags na AWS e para que servem?',o:['Marcadores de segurança','Pares chave-valor (ex: Project:Alpha, Env:Prod) para organizar recursos, filtrar custos e controlar acesso via IAM','Backups automáticos','Alertas de custo'],a:1,e:'Tags são metadados nos recursos AWS usados para: organização (filtrar no console), alocação de custos (Cost Explorer por tag), automação (scripts que agem em tags específicas) e controle de acesso (condições IAM).'},
+  {q:'Uma empresa quer garantir que seus gastos AWS nunca excedam $1.000/mês. O que configurar?',o:['Limitar instâncias EC2','AWS Budgets com alerta e action para desligar recursos','Cost Explorer com filtros','Falar com suporte'],a:1,e:'AWS Budgets permite ações automáticas: quando o gasto atinge 80% do budget, aplica SCP para bloquear novos recursos; a 100%, envia alerta. Budget Actions integra com IAM e SCPs para controle real de gastos.'},
+  {q:"O que é o AWS Free Tier 'Always Free' e exemplos?",o:['Tudo grátis para sempre','Serviços específicos gratuitos permanentemente sem expirar de 12 meses: Lambda (1M req/mês), DynamoDB (25GB), CloudWatch (10 métricas), SNS (1M publicações)','Apenas para estudantes','Requer cartão de crédito gratuito'],a:1,e:'Always Free não expira: Lambda (1M req e 400k GB-s/mês), DynamoDB (25GB storage, 25 WCU/RCU), CloudWatch (10 métricas, 5GB logs), SNS (1M publicações), SES (3.000 emails, se enviado de EC2).'},
 ],
 };
 
@@ -573,6 +662,22 @@ const FCS=[
 {d:'D3',f:'AWS Elastic Beanstalk vs EC2 vs Lambda',b:'EC2: máximo controle, gerencia tudo. Beanstalk: PaaS, você envia código, AWS provisiona infra. Lambda: serverless, zero gestão de infra, paga por execução. Quanto mais gerenciado, menos controle.'},
 {d:'D4',f:'AWS Organizations',b:'Gerencia múltiplas contas AWS: faturamento consolidado (1 fatura, descontos por volume), SCPs (guardrails de permissão), hierarquia de OUs, criação centralizada de contas.'},
 {d:'D3',f:'Amazon DynamoDB vs RDS',b:'DynamoDB: NoSQL, serverless, latência ms constante em qualquer escala, sem schema fixo, ideal para apps de alta escala. RDS: SQL relacional, transações ACID, joins, ideal para apps tradicionais com dados estruturados.'},
+  {d:'D1',f:'O que é latência e como a AWS minimiza?',b:'Latência é o tempo para um request ir do usuário ao servidor e voltar. AWS minimiza com: Edge Locations do CloudFront (cache próximo), Local Zones (compute em cidades) e escolha de Região próxima.'},
+  {d:'D1',f:'AWS Well-Architected: Confiabilidade',b:'Pillar de Confiabilidade cobre: service quotas (evitar throttling), topologia de rede (múltiplas AZs), design distribuído (evitar SPOF), monitoramento, gestão de mudanças (IaC) e recuperação de falhas.'},
+  {d:'D1',f:'O que é Infrastructure as Code (IaC)?',b:'Definir e gerenciar infraestrutura usando código (templates, scripts) em vez de console manual. Na AWS: CloudFormation, CDK, Terraform. Benefícios: repetibilidade, versionamento, consistência entre ambientes.'},
+  {d:'D2',f:'Princípios de segurança AWS (5 principais)',b:'1. Identidade forte (MFA, least privilege). 2. Rastreabilidade (CloudTrail, logs). 3. Segurança em todas as camadas (VPC, SG, WAF). 4. Automação de segurança (Config, Inspector). 5. Proteção de dados (KMS, criptografia).'},
+  {d:'D2',f:'AWS IAM Best Practices',b:'1. Não usar root para operações. 2. MFA em root e admins. 3. Least privilege. 4. Usar Groups, não permissões diretas em users. 5. Usar Roles para serviços. 6. Rotacionar access keys. 7. Monitorar com CloudTrail.'},
+  {d:'D2',f:'Criptografia SSE no S3: SSE-S3, SSE-KMS, SSE-C',b:'SSE-S3: chaves gerenciadas pelo S3, grátis, simples. SSE-KMS: usa KMS CMK, audit trail de uso de chave, controle granular, cobra por chamada de API. SSE-C: cliente fornece e gerencia as próprias chaves.'},
+  {d:'D3',f:'Amazon EC2 Instance Store vs EBS',b:'Instance Store: armazenamento efêmero direto no hardware do host, ultra rápido, dados perdidos se instância parar/falhar. EBS: bloco persistente que sobrevive reinicialização, pode ser movido entre instâncias, tem backup (snapshot).'},
+  {d:'D3',f:'AWS Lambda Layers',b:'Pacotes reutilizáveis de código e dependências que podem ser compartilhados entre múltiplas funções Lambda. Reduz tamanho do deployment package e centraliza atualizações de bibliotecas comuns.'},
+  {d:'D3',f:'Amazon API Gateway',b:'Serviço gerenciado para criar, publicar e gerenciar APIs REST, HTTP e WebSocket. Integra com Lambda (serverless backend), EC2, qualquer endpoint HTTP. Inclui autenticação, throttling, caching e monitoramento.'},
+  {d:'D3',f:'AWS CloudTrail vs CloudWatch vs Config',b:'CloudTrail: WHO (quem fez ação de API, quando e de onde). CloudWatch: WHAT is happening NOW (métricas, logs em tempo real, alarmes). Config: WHAT WAS (histórico de configurações, conformidade atual vs regra).'},
+  {d:'D4',f:'AWS Pricing Calculator',b:'Ferramenta gratuita em calculator.aws para estimar custos de arquiteturas AWS ANTES de implementar. Modela EC2, RDS, Lambda, S3 e mais. Gera relatório exportável para aprovação de orçamento.'},
+  {d:'D4',f:'AWS Cost and Usage Report (CUR)',b:'Relatório mais detalhado da AWS: cada linha de custo por recurso, hora e tag. Entregue em S3 como CSV/Parquet. Base para dashboards avançados com Athena, QuickSight ou Cost Intelligence Dashboard.'},
+  {d:'D1',f:'Mitos sobre cloud computing',b:"❌ 'Nuvem é sempre mais barata' — depende do workload e otimização. ❌ 'Nuvem é menos segura' — pode ser mais segura com as práticas certas. ❌ 'Você perde controle' — você mantém controle dos dados e configs."},
+  {d:'D2',f:'Amazon Cognito: casos de uso',b:'Use Cognito para: apps móveis/web que precisam de login (User Pools), federação com Google/Facebook/Apple (User Pools), acesso temporário a recursos AWS para usuários autenticados (Identity Pools), guest access.'},
+  {d:'D3',f:'Amazon ElastiCache: casos de uso',b:'Use ElastiCache para: sessões de usuário, resultados de queries frequentes (leaderboards, product catalog), dados de configuração, rate limiting. Redis adiciona: Pub/Sub, sorted sets, geolocation, persistência.'},
+  {d:'D4',f:'AWS Trusted Advisor: checks gratuitos vs pagos',b:'Gratuito (Basic/Developer): MFA na conta root, S3 bucket permissions, portas de segurança abertas (22/3389), IAM use, Service Limits. Pago (Business/Enterprise): todos os checks incluindo custo, performance e FT.'},
 ];
 
 let fcIdx=0,fcFilt=[...FCS];
