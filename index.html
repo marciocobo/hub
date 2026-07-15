@@ -103,6 +103,11 @@ header p{color:var(--text2);font-size:15px;}
 
   .stats{font-size:12px;padding:14px 12px;gap:8px;}
 }
+
+.card.concepts{background:linear-gradient(135deg,rgba(20,184,166,.15),rgba(6,182,212,.05));}
+.card.concepts .cert-badge{background:rgba(20,184,166,.2);color:#2dd4bf;}
+.card.concepts:hover{box-shadow:0 20px 60px rgba(20,184,166,.2);border-color:rgba(20,184,166,.4);}
+
 </style>
 </head>
 <body>
@@ -183,6 +188,19 @@ header p{color:var(--text2);font-size:15px;}
           </div>
           <button class="open-btn" onclick="event.preventDefault();window.location.href='clf_c02_study.html'">Abrir Guia de Estudos →</button>
         </a>
+        <!-- AI Concepts -->
+        <a href="ai_concepts.html" class="card concepts" data-idx="3">
+          <div class="cert-icon">&#x1F9E0;</div>
+          <div class="cert-badge">REFER&#xCA;NCIA</div>
+          <div class="cert-title">Conceitos de IA Avan&#xE7;ados</div>
+          <div class="cert-sub">RAG &middot; Agentes &middot; MCP &middot; LLMOps &middot; Embeddings &middot; e mais</div>
+          <div class="cert-info">
+            <div class="ci"><div class="label">Conceitos</div><div class="value">14</div></div>
+            <div class="ci"><div class="label">Exemplos</div><div class="value">14</div></div>
+            <div class="ci"><div class="label">N&iacute;vel</div><div class="value">Avan&ccedil;ado</div></div>
+            <div class="ci"><div class="label">Tipo</div><div class="value">Refer&ecirc;ncia</div></div>
+          </div>
+        </a>
 
       </div><!-- /c-track -->
     </div><!-- /c-wrap -->
@@ -194,6 +212,7 @@ header p{color:var(--text2);font-size:15px;}
     <button class="c-dot d0 active" onclick="goTo(0)"></button>
     <button class="c-dot d1" onclick="goTo(1)"></button>
     <button class="c-dot d2" onclick="goTo(2)"></button>
+    <button class="c-dot d3" onclick="goTo(3)"></button>
   </div>
   <p class="c-hint">← deslize para navegar →</p>
 </main>
@@ -209,7 +228,7 @@ header p{color:var(--text2);font-size:15px;}
 </div>
 
 <script>
-var TOTAL = 3, cur = 0;
+var TOTAL = 4, cur = 0;
 function isMobile(){ return window.innerWidth <= 768; }
 
 function updateCarousel(){

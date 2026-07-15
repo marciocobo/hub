@@ -179,6 +179,13 @@ strong{color:var(--text);}
   .qo{font-size:13px;}
   .eco{font-size:12px;}
 }
+
+/* ── CHECKLIST LINKS ── */
+.chi-link { display:inline-block; margin-left:8px; font-size:10px; color:var(--accent2);
+            opacity:0.55; text-decoration:none; vertical-align:middle; padding:1px 5px;
+            border-radius:3px; border:1px solid transparent; transition:all .2s; }
+.chi-link:hover { opacity:1; background:rgba(99,102,241,.15); border-color:var(--accent2); }
+
 </style>
 </head>
 <body>
@@ -1367,6 +1374,7 @@ const CIG=[
     "Avaliar riscos de segurança antes de dar permissões de execução a agentes",
   ]},
 ];
+const CIG_URLS=["https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/about-claude/models/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking","https://docs.anthropic.com/en/docs/build-with-claude/token-counting","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users","https://docs.anthropic.com/en/docs/claude-code/memory","https://docs.anthropic.com/en/docs/about-claude/models/overview","https://docs.anthropic.com/en/docs/about-claude/models/overview",null,null,"https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/structured-outputs","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",null,null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/claude-code/memory","https://docs.anthropic.com/en/docs/mcp","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/structured-outputs",null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/agents",null,"https://www.anthropic.com/pricing","https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching","https://docs.anthropic.com/en/api/errors","https://docs.anthropic.com/en/docs/build-with-claude/overview","https://docs.anthropic.com/en/docs/build-with-claude/security-best-practices","https://www.anthropic.com/legal/aup",null,"https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback","https://www.anthropic.com/responsible-scaling-policy","https://docs.anthropic.com/en/docs/build-with-claude/content-moderation","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users",null,"https://privacy.anthropic.com","https://trust.anthropic.com",null,null];
 const CKflat=CIG.flatMap(g=>g.items);
 const saved=JSON.parse(localStorage.getItem('ccaf_ck')||'[]');
 function renderCL(){
@@ -1375,7 +1383,7 @@ function renderCL(){
     const items=g.items.map((t,li)=>{
       const gi=offset+li;
       const ck=saved.includes(gi);
-      return `<div class="chi${ck?' ck':''}" onclick="tck(${gi})"><div class="chb">${ck?'<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0d1117" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}</div><div class="cht">${t}</div></div>`;
+      return `<div class="chi${ck?' ck':''}" onclick="tck(${gi})"><div class="chb">${ck?'<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0d1117" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}</div><div class="cht">${t}${CIG_URLS[gi]?'<a class="chi-link" href="'+CIG_URLS[gi]+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Abrir documentação">↗</a>':'<a class="chi-link" href="#" onclick="event.stopPropagation();P(\'resources\',document.getElementById(\'nresources\'));return false;" title="Ver Recursos">📚</a>'}</div></div>`;
     }).join('');
     offset+=g.items.length;
     return `<div style="font-size:14px;font-weight:700;color:var(--accent2);margin:20px 0 10px;padding-top:12px;border-top:1px solid var(--border)">${g.g}</div><div class="card" style="padding:12px 20px">${items}</div>`;

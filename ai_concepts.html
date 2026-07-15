@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conceitos de IA Avançados</title>
+<style>
+:root{
+  --bg:#0f1117;--bg2:#1a1d27;--bg3:#22263a;--border:#2e3250;
+  --accent:#14b8a6;--accent2:#2dd4bf;
+  --green:#34d399;--yellow:#fbbf24;--red:#f87171;--blue:#60a5fa;--purple:#a78bfa;
+  --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;
+     font-size:15px;line-height:1.7;display:flex;min-height:100vh;overflow-x:hidden;}
+#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:98;}
+#overlay.open{display:block;}
+#sidebar{width:260px;min-width:260px;background:var(--bg2);border-right:1px solid var(--border);
+          display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
+.sb-logo{padding:20px 20px 12px;border-bottom:1px solid var(--border);}
+.sb-logo h1{font-size:14px;font-weight:700;color:var(--accent);letter-spacing:.5px;}
+.sb-logo p{font-size:11px;color:var(--text3);margin-top:2px;}
+.sb-section{padding:10px 0 4px 16px;font-size:10px;font-weight:700;color:var(--text3);
+             letter-spacing:1px;text-transform:uppercase;}
+.ni{display:flex;align-items:center;gap:10px;padding:8px 16px;cursor:pointer;
+     border-left:3px solid transparent;transition:all .2s;text-decoration:none;
+     color:var(--text2);font-size:13px;}
+.ni:hover{background:var(--bg3);color:var(--text);border-left-color:var(--accent2);}
+.ni.active{background:rgba(20,184,166,.08);color:var(--accent2);border-left-color:var(--accent);}
+.ni .ni-icon{font-size:14px;width:18px;text-align:center;flex-shrink:0;}
+#main{flex:1;overflow-y:auto;display:flex;flex-direction:column;}
+#topbar{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 20px;
+         display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:10;}
+#topbar h2{font-size:15px;font-weight:600;color:var(--text);}
+#content{padding:28px 32px;max-width:980px;}
+
+/* Concept cards */
+.concept-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);
+               margin-bottom:28px;overflow:hidden;scroll-margin-top:80px;}
+.concept-header{padding:20px 24px 16px;border-bottom:1px solid var(--border);
+                 display:flex;align-items:flex-start;gap:14px;}
+.concept-icon{font-size:32px;flex-shrink:0;margin-top:2px;}
+.concept-title-wrap h2{font-size:18px;font-weight:700;color:var(--accent2);margin-bottom:4px;}
+.concept-title-wrap .tag{display:inline-block;background:rgba(20,184,166,.15);
+                          color:var(--accent);border:1px solid rgba(20,184,166,.3);
+                          border-radius:4px;font-size:11px;padding:2px 8px;font-weight:600;}
+.concept-body{padding:20px 24px;}
+.section-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;
+                color:var(--text3);margin-bottom:8px;margin-top:18px;}
+.section-label:first-child{margin-top:0;}
+.concept-body p{color:var(--text2);font-size:14px;margin-bottom:8px;}
+.concept-body p:last-child{margin-bottom:0;}
+.example-box{background:var(--bg3);border:1px solid var(--border);border-left:3px solid var(--accent);
+              border-radius:6px;padding:14px 16px;margin:10px 0;font-size:13px;color:var(--text2);}
+.example-box code{background:rgba(255,255,255,.06);border-radius:3px;padding:1px 5px;
+                   font-family:'Consolas',monospace;font-size:12px;color:var(--accent2);}
+.example-box strong{color:var(--text);}
+.why-box{background:rgba(20,184,166,.05);border:1px solid rgba(20,184,166,.2);
+          border-radius:6px;padding:12px 16px;margin-top:12px;font-size:13px;color:var(--text2);}
+.why-box::before{content:"💡 ";font-size:14px;}
+.pill-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
+.pill{background:var(--bg3);border:1px solid var(--border);border-radius:20px;
+       padding:3px 10px;font-size:12px;color:var(--text2);}
+.arch-diagram{background:var(--bg3);border:1px solid var(--border);border-radius:6px;
+               padding:16px;font-family:'Consolas',monospace;font-size:12px;color:var(--text2);
+               line-height:1.8;margin:10px 0;overflow-x:auto;white-space:pre;}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0;}
+.mini-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:12px 14px;}
+.mini-card h4{font-size:12px;font-weight:700;color:var(--text);margin-bottom:4px;}
+.mini-card p{font-size:12px;color:var(--text2);}
+.hero{background:linear-gradient(135deg,rgba(20,184,166,.12),rgba(99,102,241,.08));
+       border:1px solid rgba(20,184,166,.2);border-radius:var(--r);padding:24px 28px;
+       margin-bottom:28px;}
+.hero h1{font-size:22px;font-weight:800;color:var(--text);margin-bottom:8px;}
+.hero p{font-size:14px;color:var(--text2);}
+.hero .count-row{display:flex;gap:20px;margin-top:16px;flex-wrap:wrap;}
+.hero .cnt{text-align:center;}
+.hero .cnt .n{font-size:26px;font-weight:800;color:var(--accent2);}
+.hero .cnt .l{font-size:11px;color:var(--text3);}
+
+/* Hamburger */
+#hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px 10px;
+            border-radius:6px;color:var(--text);font-size:22px;line-height:1;flex-shrink:0;}
+#hamburger:hover{background:var(--bg3);}
+
+/* Responsive */
+@media(max-width:768px){
+  body{display:block;}
+  #sidebar{position:fixed!important;left:-290px;top:0;height:100%!important;
+            width:270px!important;min-width:0!important;z-index:99;
+            transition:left .28s ease;box-shadow:6px 0 32px rgba(0,0,0,.5);overflow-y:auto;}
+  #sidebar.open{left:0!important;}
+  #hamburger{display:inline-flex!important;align-items:center;justify-content:center;}
+  #main{width:100%;}
+  #topbar{padding:10px 12px;gap:8px;}
+  #topbar h2{font-size:13px;}
+  #content{padding:14px 12px;max-width:100%;}
+  .concept-header{padding:14px 14px 12px;gap:10px;}
+  .concept-icon{font-size:24px;}
+  .concept-title-wrap h2{font-size:15px;}
+  .concept-body{padding:14px;}
+  .grid2{grid-template-columns:1fr;}
+  .arch-diagram{font-size:11px;}
+  .hero{padding:16px 14px;}
+  .hero h1{font-size:18px;}
+}
+@media(max-width:480px){
+  #content{padding:10px 8px;}
+  .concept-card{margin-bottom:16px;}
+}
+</style>
+</head>
+<body>
+<div id="overlay"></div>
+<nav id="sidebar">
+  <div class="sb-logo">
+    <h1>🧠 Conceitos de IA</h1>
+    <p>14 conceitos essenciais de IA avançada</p>
+  </div>
+  <div class="sb-section">Dados &amp; Busca</div>
+  <a class="ni" href="#rag" onclick="scrollTo('rag')"><span class="ni-icon">🔍</span>RAG</a>
+  <a class="ni" href="#embeddings" onclick="scrollTo('embeddings')"><span class="ni-icon">🗄️</span>Embeddings &amp; VectorDB</a>
+  <div class="sb-section">Agentes &amp; Orquestração</div>
+  <a class="ni" href="#agentes" onclick="scrollTo('agentes')"><span class="ni-icon">🤖</span>Agentes de IA</a>
+  <a class="ni" href="#skills" onclick="scrollTo('skills')"><span class="ni-icon">🛠️</span>Skills para Agentes</a>
+  <a class="ni" href="#harness" onclick="scrollTo('harness')"><span class="ni-icon">⚙️</span>Harness</a>
+  <a class="ni" href="#mcp" onclick="scrollTo('mcp')"><span class="ni-icon">🔌</span>MCP</a>
+  <a class="ni" href="#sweagent" onclick="scrollTo('sweagent')"><span class="ni-icon">💻</span>SWE-agent / Claude Code</a>
+  <div class="sb-section">Qualidade &amp; Segurança</div>
+  <a class="ni" href="#guardrails" onclick="scrollTo('guardrails')"><span class="ni-icon">🛡️</span>Guardrails</a>
+  <a class="ni" href="#evals" onclick="scrollTo('evals')"><span class="ni-icon">📊</span>Evals</a>
+  <a class="ni" href="#testes" onclick="scrollTo('testes')"><span class="ni-icon">🧪</span>GenAI para Testes</a>
+  <div class="sb-section">Produção &amp; Operação</div>
+  <a class="ni" href="#routing" onclick="scrollTo('routing')"><span class="ni-icon">🔀</span>Model Routing</a>
+  <a class="ni" href="#llmops" onclick="scrollTo('llmops')"><span class="ni-icon">🏭</span>LLMOps</a>
+  <a class="ni" href="#context" onclick="scrollTo('context')"><span class="ni-icon">📐</span>Context Engineering</a>
+  <a class="ni" href="#dora" onclick="scrollTo('dora')"><span class="ni-icon">📈</span>Métricas DORA &amp; IA</a>
+  <div style="margin-top:auto;padding:16px;border-top:1px solid var(--border);">
+    <a href="index.html" style="font-size:12px;color:var(--text3);text-decoration:none;">
+      ← Voltar ao Hub</a>
+  </div>
+</nav>
+
+<div id="main">
+  <div id="topbar">
+    <button id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+    <h2>🧠 Conceitos de IA Avançados</h2>
+  </div>
+  <div id="content">
+
+    <div class="hero">
+      <h1>Conceitos de IA Avançados</h1>
+      <p>Guia prático com explicações, exemplos reais e aplicações de 14 conceitos essenciais para
+         desenvolvedores e arquitetos que trabalham com sistemas de Inteligência Artificial em produção.</p>
+      <div class="count-row">
+        <div class="cnt"><div class="n">14</div><div class="l">Conceitos</div></div>
+        <div class="cnt"><div class="n">14</div><div class="l">Exemplos</div></div>
+        <div class="cnt"><div class="n">5</div><div class="l">Categorias</div></div>
+      </div>
+    </div>
+
+    <!-- ─── 1. RAG ─────────────────────────────────────────────────────────── -->
+    <div class="concept-card" id="rag">
+      <div class="concept-header">
+        <div class="concept-icon">🔍</div>
+        <div class="concept-title-wrap">
+          <h2>RAG — Retrieval-Augmented Generation</h2>
+          <span class="tag">Dados &amp; Busca</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que é</div>
+        <p>RAG é uma arquitetura que combina busca semântica com geração de texto. Em vez de depender
+           apenas do conhecimento interno do LLM (que é estático e limitado pela data de corte),
+           o sistema recupera documentos relevantes em tempo real e os insere no contexto da
+           requisição antes de gerar a resposta.</p>
+
+        <div class="arch-diagram">Pergunta do usuário
+   ↓
+[Embedding da pergunta]  →  [Vector DB]  →  Top-K documentos relevantes
+                                                      ↓
+                              [Contexto montado: pergunta + documentos]
+                                                      ↓
+                                               [LLM gera resposta]</div>
+
+        <div class="section-label">Exemplo prático</div>
+        <div class="example-box">
+          <strong>Cenário:</strong> Empresa com 10.000 páginas de manuais técnicos internos.<br><br>
+          Sem RAG: o LLM não conhece esses documentos e alucina respostas.<br><br>
+          Com RAG: a pergunta <code>"Como calibrar o sensor modelo X-200?"</code> gera um embedding
+          → busca no vector DB → recupera as 3 páginas mais similares do manual
+          → LLM responde com base no conteúdo real do documento.
+        </div>
+
+        <div class="section-label">Quando usar</div>
+        <div class="why-box">Use RAG quando o sistema precisa responder com base em documentos
+          que mudam com frequência (wikis, contratos, políticas), são proprietários (não públicos),
+          ou são muito extensos para caber no contexto do modelo.</div>
+
+        <div class="section-label">Componentes-chave</div>
+        <div class="pill-row">
+          <span class="pill">Embeddings</span>
+          <span class="pill">Vector Database</span>
+          <span class="pill">Chunking</span>
+          <span class="pill">Retrieval (top-K)</span>
+          <span class="pill">Re-ranking</span>
+          <span class="pill">Prompt augmentation</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ─── 2. Embeddings & VectorDB ─────────────────────────────────────── -->
+    <div class="concept-card" id="embeddings">
+      <div class="concept-header">
+        <div class="concept-icon">🗄️</div>
+        <div class="concept-title-wrap">
+          <h2>Embeddings Vetoriais e Vector Databases</h2>
+          <span class="tag">Dados &amp; Busca</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que são embeddings</div>
+        <p>Embeddings são representações numéricas de texto (ou imagem, áudio) em um espaço
+           vetorial de alta dimensão (ex: 1536 dimensões). Textos semanticamente similares ficam
+           próximos nesse espaço. O modelo de embedding converte qualquer texto em um vetor
+           que captura seu significado.</p>
+
+        <div class="example-box">
+          <code>"cachorro"</code> e <code>"cão"</code> ficam muito próximos no espaço vetorial.<br>
+          <code>"banco de dados"</code> e <code>"base de dados"</code> ficam próximos.<br>
+          <code>"banana"</code> e <code>"banco de dados"</code> ficam distantes.
+        </div>
+
+        <div class="section-label">O que são Vector Databases</div>
+        <p>Bancos de dados especializados em armazenar e buscar vetores por similaridade
+           (distância coseno ou L2), em vez de busca por palavra-chave exata (SQL LIKE).</p>
+
+        <div class="section-label">Principais opções no mercado</div>
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>🌲 Pinecone</h4>
+            <p>Managed, serverless, muito fácil de usar. Ideal para protótipos e produção rápida.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🕸️ Weaviate</h4>
+            <p>Open-source, suporta busca híbrida (vetorial + keyword). Auto-hospedado ou cloud.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🐘 pgvector</h4>
+            <p>Extensão do PostgreSQL. Sem infraestrutura nova — ideal se já usa Postgres.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🔵 Qdrant</h4>
+            <p>Open-source, muito rápido, suporta filtros avançados junto com busca vetorial.</p>
+          </div>
+        </div>
+
+        <div class="why-box">A grande vantagem sobre busca por keyword: encontrar documentos
+          por <em>significado</em>, não por correspondência exata de palavras. Uma pergunta sobre
+          "como exportar para PDF" encontra artigos que falam em "salvar como documento portátil".</div>
+      </div>
+    </div>
+
+    <!-- ─── 3. Agentes de IA ──────────────────────────────────────────────── -->
+    <div class="concept-card" id="agentes">
+      <div class="concept-header">
+        <div class="concept-icon">🤖</div>
+        <div class="concept-title-wrap">
+          <h2>Agentes de IA (Agentic AI)</h2>
+          <span class="tag">Agentes &amp; Orquestração</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que é</div>
+        <p>Um agente de IA é um sistema onde o LLM não só gera texto — ele decide qual ação
+           tomar, executa ferramentas, observa o resultado e itera até concluir a tarefa.
+           O ciclo fundamental é: <strong>Perceber → Raciocinar → Agir → Observar</strong>.</p>
+
+        <div class="arch-diagram">Objetivo: "Reserve uma sala de reunião para amanhã às 14h"
+        ↓
+[LLM raciocina] → escolhe tool: buscar_disponibilidade(data="amanhã", hora="14h")
+        ↓
+[Executa tool] → retorna: "Sala A disponível, Sala B ocupada"
+        ↓
+[LLM raciocina] → escolhe tool: reservar_sala(sala="A", data="amanhã", hora="14h")
+        ↓
+[Executa tool] → retorna: "Reserva confirmada, ID #4821"
+        ↓
+[LLM responde] → "Sala A reservada para amanhã às 14h (ID #4821)"</div>
+
+        <div class="section-label">Padrões arquiteturais</div>
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>🔗 Prompt Chaining</h4>
+            <p>Saída de um LLM vira input do próximo. Sequencial, previsível, boa para pipelines fixos.</p>
+          </div>
+          <div class="mini-card">
+            <h4>⚡ Paralelização</h4>
+            <p>Múltiplos agentes executam tarefas simultâneas e os resultados são agregados.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🎯 Orchestrator-Worker</h4>
+            <p>Um LLM coordenador delega subtarefas para agentes especializados.</p>
+          </div>
+          <div class="mini-card">
+            <h4>👤 Human-in-the-loop</h4>
+            <p>O agente pausa e pede aprovação humana antes de ações irreversíveis.</p>
+          </div>
+        </div>
+
+        <div class="why-box">Diferente de um chatbot simples, um agente pode completar tarefas
+          complexas de múltiplos passos sem intervenção humana a cada etapa — como um assistente
+          que você dá um objetivo e ele resolve.</div>
+      </div>
+    </div>
+
+    <!-- ─── 4. Skills para Agentes ───────────────────────────────────────── -->
+    <div class="concept-card" id="skills">
+      <div class="concept-header">
+        <div class="concept-icon">🛠️</div>
+        <div class="concept-title-wrap">
+          <h2>Skills para Agentes de IA</h2>
+          <span class="tag">Agentes &amp; Orquestração</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que são</div>
+        <p>Skills são capacidades modulares e reutilizáveis que podem ser instaladas em um agente
+           de IA, funcionando como "plugins de comportamento". Cada skill encapsula um conjunto
+           de instruções, ferramentas e exemplos que ensinam o agente a executar um tipo específico
+           de tarefa com qualidade consistente.</p>
+
+        <div class="section-label">Exemplo prático (Claude Cowork)</div>
+        <div class="example-box">
+          <strong>Sem skill:</strong> "Crie um Word doc" → o agente improvisa o código, pode gerar
+          arquivo corrompido ou formatação inconsistente.<br><br>
+          <strong>Com skill <code>docx</code> instalada:</strong> o agente carrega instruções
+          especializadas, usa <code>python-docx</code> com padrões corretos, gera headers, TOC
+          e estilos adequados automaticamente.
+        </div>
+
+        <div class="section-label">Anatomia de uma skill</div>
+        <div class="arch-diagram">skill-name/
+├── SKILL.md          ← instruções em linguagem natural (quando usar, como executar)
+├── scripts/          ← scripts Python/Node reutilizáveis
+├── references/       ← documentação de referência carregada sob demanda
+└── assets/           ← templates, ícones, fontes</div>
+
+        <div class="section-label">Benefícios</div>
+        <div class="pill-row">
+          <span class="pill">Consistência de saída</span>
+          <span class="pill">Reutilização entre projetos</span>
+          <span class="pill">Menos alucinação em tarefas complexas</span>
+          <span class="pill">Fácil de versionar e testar</span>
+          <span class="pill">Distribuição via marketplace</span>
+        </div>
+
+        <div class="why-box">Skills transformam capacidades ad-hoc em ativos organizacionais.
+          Um time pode criar a skill "relatório-financeiro" uma vez e todos os agentes da empresa
+          passam a gerar relatórios com o mesmo padrão e qualidade.</div>
+      </div>
+    </div>
+
+    <!-- ─── 5. Harness ───────────────────────────────────────────────────── -->
+    <div class="concept-card" id="harness">
+      <div class="concept-header">
+        <div class="concept-icon">⚙️</div>
+        <div class="concept-title-wrap">
+          <h2>Harness em Agentes de IA</h2>
+          <span class="tag">Agentes &amp; Orquestração</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que é</div>
+        <p>Um harness (ou agent harness) é o scaffolding — a estrutura de controle — que orquestra
+           o loop de execução de um agente. Ele gerencia o ciclo de vida: inicializa o contexto,
+           chama o LLM, intercepta chamadas de ferramentas, executa-as e reinjeta os resultados,
+           repetindo até o objetivo ser alcançado ou um limite ser atingido.</p>
+
+        <div class="section-label">O que um harness gerencia</div>
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>🔄 Loop de execução</h4>
+            <p>Controla quantas iterações o agente pode fazer antes de parar (evitar loops infinitos).</p>
+          </div>
+          <div class="mini-card">
+            <h4>🗃️ Memória e contexto</h4>
+            <p>Mantém o histórico de tool calls e resultados entre cada iteração do loop.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🛡️ Interceptação de tools</h4>
+            <p>Valida, autentica e limita o que o agente pode fazer antes de executar cada tool.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🚨 Erros e retries</h4>
+            <p>Lida com falhas de tool, timeouts e decide se reinicia ou escala para humano.</p>
+          </div>
+        </div>
+
+        <div class="section-label">Exemplos de harnesses populares</div>
+        <div class="example-box">
+          <strong>LangGraph:</strong> harness baseado em grafo de estados, ideal para fluxos complexos com condicionais.<br>
+          <strong>Claude Agent SDK:</strong> SDK oficial da Anthropic para construir harnesses com Claude.<br>
+          <strong>AutoGen:</strong> harness multi-agente da Microsoft com suporte a conversas entre agentes.<br>
+          <strong>CrewAI:</strong> harness com foco em equipes de agentes com papéis definidos.
+        </div>
+
+        <div class="why-box">O harness é o que transforma um LLM em um agente confiável em
+          produção — sem ele, não há controle de segurança, limite de custo, tratamento de erro
+          ou rastreabilidade das ações executadas.</div>
+      </div>
+    </div>
+
+    <!-- ─── 6. MCP ────────────────────────────────────────────────────────── -->
+    <div class="concept-card" id="mcp">
+      <div class="concept-header">
+        <div class="concept-icon">🔌</div>
+        <div class="concept-title-wrap">
+          <h2>MCP — Model Context Protocol</h2>
+          <span class="tag">Agentes &amp; Orquestração</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que é</div>
+        <p>MCP é um protocolo aberto (criado pela Anthropic) que padroniza como modelos de IA
+           se conectam a ferramentas e fontes de dados externas. Funciona como um "USB para IA":
+           qualquer aplicação que implemente o protocolo MCP pode ser usada por qualquer modelo
+           compatível, sem integrações customizadas.</p>
+
+        <div class="arch-diagram">Host (Claude Desktop / IDE / App)
+          ↕ MCP Protocol (JSON-RPC over stdio ou HTTP/SSE)
+MCP Server (Slack / GitHub / Postgres / S3 / API interna / ...)
+          ↕
+ Ferramentas expostas: [list_files] [send_message] [run_query] ...</div>
+
+        <div class="section-label">Componentes do protocolo</div>
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>🖥️ MCP Host</h4>
+            <p>A aplicação de IA (Claude Desktop, IDEs, agentes) que consome as ferramentas.</p>
+          </div>
+          <div class="mini-card">
+            <h4>⚡ MCP Server</h4>
+            <p>O serviço que expõe ferramentas, recursos e prompts. Pode ser local ou remoto.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🛠️ Tools</h4>
+            <p>Funções que o modelo pode chamar: ler arquivos, executar queries, enviar emails.</p>
+          </div>
+          <div class="mini-card">
+            <h4>📚 Resources</h4>
+            <p>Conteúdo que o servidor expõe para o contexto: arquivos, docs, dados ao vivo.</p>
+          </div>
+        </div>
+
+        <div class="section-label">Exemplo prático</div>
+        <div class="example-box">
+          Você cria um MCP server para seu banco de dados PostgreSQL.<br>
+          Ao conectar ao Claude Desktop: o Claude pode responder "Quantos usuários ativos temos
+          hoje?" executando automaticamente <code>SELECT COUNT(*) FROM users WHERE last_seen > NOW() - INTERVAL '24h'</code>
+          e retornando o resultado — sem você escrever nenhuma linha de código de integração.
+        </div>
+
+        <div class="why-box">MCP elimina o problema de integração N×M (N modelos × M ferramentas).
+          Com o protocolo padronizado, cada ferramenta é implementada uma vez e funciona com
+          qualquer host compatível.</div>
+      </div>
+    </div>
+
+    <!-- ─── 7. SWE-agent / Claude Code ───────────────────────────────────── -->
+    <div class="concept-card" id="sweagent">
+      <div class="concept-header">
+        <div class="concept-icon">💻</div>
+        <div class="concept-title-wrap">
+          <h2>SWE-agent e Claude Code</h2>
+          <span class="tag">Agentes &amp; Orquestração</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que são</div>
+        <p><strong>SWE-agent</strong> (Software Engineering Agent) é a categoria de agentes de IA
+           especializados em tarefas de engenharia de software: ler código, editar arquivos, executar
+           testes, depurar erros e submeter Pull Requests de forma autônoma.</p>
+        <p><strong>Claude Code</strong> é a implementação da Anthropic: um agente de desenvolvimento
+           autônomo que roda no terminal, tem acesso ao filesystem, pode executar comandos, instalar
+           dependências e interagir com Git — tudo guiado pelo desenvolvedor via linguagem natural.</p>
+
+        <div class="section-label">O que Claude Code pode fazer</div>
+        <div class="example-box">
+          <strong>Usuário:</strong> "Refatore o módulo de autenticação para usar JWT ao invés de sessões"<br><br>
+          <strong>Claude Code (autonomamente):</strong><br>
+          1. Lê todos os arquivos relevantes (<code>auth/*.py</code>, <code>models/user.py</code>)<br>
+          2. Instala <code>python-jose</code> via pip<br>
+          3. Edita os arquivos, remove lógica de sessão, implementa JWT<br>
+          4. Roda <code>pytest</code> e corrige erros encontrados<br>
+          5. Cria commit com mensagem descritiva
+        </div>
+
+        <div class="section-label">Benchmark de referência</div>
+        <div class="example-box">
+          <strong>SWE-bench Verified:</strong> benchmark com 500 issues reais do GitHub.<br>
+          Claude Sonnet 4 (com Claude Code): resolve ~72% dos issues de forma autônoma.<br>
+          Isso significa corrigir bugs reais em projetos como Django, scikit-learn, Flask.
+        </div>
+
+        <div class="why-box">SWE-agents não substituem desenvolvedores — eles multiplicam a
+          produtividade. Tarefas repetitivas (adicionar testes, migrar APIs deprecadas, ajustar
+          configurações) podem ser delegadas com segurança, liberando o dev para arquitetura e decisões.</div>
+      </div>
+    </div>
+
+    <!-- ─── 8. Guardrails ────────────────────────────────────────────────── -->
+    <div class="concept-card" id="guardrails">
+      <div class="concept-header">
+        <div class="concept-icon">🛡️</div>
+        <div class="concept-title-wrap">
+          <h2>Guardrails em Sistemas de IA</h2>
+          <span class="tag">Qualidade &amp; Segurança</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que são</div>
+        <p>Guardrails são controles técnicos que protegem sistemas de IA em produção — validando
+           o que entra (input) e o que sai (output) para garantir segurança, conformidade e
+           proteção de dados pessoais (PII). São a diferença entre um modelo que pode dizer
+           qualquer coisa e um sistema confiável para uso empresarial.</p>
+
+        <div class="section-label">Tipos de guardrails</div>
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>📥 Input Guardrails</h4>
+            <p>Filtram prompts antes do LLM: detectam injeção de prompt, conteúdo proibido, PII.</p>
+          </div>
+          <div class="mini-card">
+            <h4>📤 Output Guardrails</h4>
+            <p>Validam respostas antes de entregar ao usuário: removem dados sensíveis, verificam formato.</p>
+          </div>
+          <div class="mini-card">
+            <h4>📋 Policy Guardrails</h4>
+            <p>Regras de negócio: o assistente não pode discutir concorrentes, não pode dar preços sem aprovação.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🔒 Safety Guardrails</h4>
+            <p>Bloqueiam conteúdo prejudicial, discriminatório ou ilegal — via classificadores ou regras.</p>
+          </div>
+        </div>
+
+        <div class="section-label">Exemplo prático</div>
+        <div class="example-box">
+          <strong>Input:</strong> usuário envia mensagem com um CPF → guardrail detecta padrão
+          <code>\d{3}\.\d{3}\.\d{3}-\d{2}</code> → mascara antes de enviar ao LLM.<br><br>
+          <strong>Output:</strong> LLM gera resposta com dados de treinamento sensíveis →
+          guardrail detecta padrão de cartão de crédito → substitui por <code>[REDACTED]</code>.
+        </div>
+
+        <div class="section-label">Ferramentas</div>
+        <div class="pill-row">
+          <span class="pill">NeMo Guardrails (NVIDIA)</span>
+          <span class="pill">Guardrails.ai</span>
+          <span class="pill">LlamaGuard (Meta)</span>
+          <span class="pill">AWS Bedrock Guardrails</span>
+          <span class="pill">Presidio (PII)</span>
+        </div>
+
+        <div class="why-box">Em sistemas LGPD/GDPR, guardrails de PII não são opcionais — são
+          requisito legal. Qualquer dado pessoal que entre no contexto do LLM pode ser memorizado
+          ou retransmitido inadvertidamente.</div>
+      </div>
+    </div>
+
+    <!-- ─── 9. Evals ─────────────────────────────────────────────────────── -->
+    <div class="concept-card" id="evals">
+      <div class="concept-header">
+        <div class="concept-icon">📊</div>
+        <div class="concept-title-wrap">
+          <h2>Evals — Avaliações Automatizadas de IA</h2>
+          <span class="tag">Qualidade &amp; Segurança</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que são</div>
+        <p>Evals (evaluations) são suítes de testes automatizados para medir qualidade, consistência
+           e regressão em sistemas de LLM em produção. Assim como unit tests medem corretude de
+           código, evals medem qualidade de respostas — mas com critérios que podem ser subjetivos
+           ou difíceis de verificar automaticamente.</p>
+
+        <div class="section-label">Tipos de evals</div>
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>✅ Evals determinísticos</h4>
+            <p>Assertivas verificáveis: "a resposta contém JSON válido?", "o número retornado é &gt; 0?"</p>
+          </div>
+          <div class="mini-card">
+            <h4>🤖 LLM-as-judge</h4>
+            <p>Um LLM avalia a resposta de outro: "esta resposta é factualmente correta? (sim/não/parcial)"</p>
+          </div>
+          <div class="mini-card">
+            <h4>👤 Human eval</h4>
+            <p>Avaliadores humanos pontuam amostras. Lento mas necessário para validar os outros tipos.</p>
+          </div>
+          <div class="mini-card">
+            <h4>📊 Métricas de referência</h4>
+            <p>BLEU, ROUGE, BERTScore — comparam a saída com uma resposta de referência ideal.</p>
+          </div>
+        </div>
+
+        <div class="section-label">Pipeline de eval em produção</div>
+        <div class="arch-diagram">Dataset de golden examples (input + resposta esperada)
+       ↓
+[Sistema de IA gera respostas] (versão atual vs. versão nova)
+       ↓
+[Grader automático] → pass_rate, latência, custo por resposta
+       ↓
+[Relatório] → regressão detectada? → bloquear deploy ou aprovar</div>
+
+        <div class="why-box">Sem evals, cada mudança de prompt ou modelo é uma aposta. Com evals,
+          você tem confiança para iterar rapidamente — uma queda de 5% em pass_rate é detectada
+          antes do deploy chegar aos usuários.</div>
+      </div>
+    </div>
+
+    <!-- ─── 10. GenAI para Testes ────────────────────────────────────────── -->
+    <div class="concept-card" id="testes">
+      <div class="concept-header">
+        <div class="concept-icon">🧪</div>
+        <div class="concept-title-wrap">
+          <h2>GenAI para Geração de Testes</h2>
+          <span class="tag">Qualidade &amp; Segurança</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que é</div>
+        <p>Usar modelos de IA generativa para criar automaticamente casos de teste, testes unitários,
+           testes de integração e dados de teste. O LLM analisa o código-fonte (ou especificação)
+           e gera cobertura de teste que cobriria edge cases que um desenvolvedor poderia não
+           considerar manualmente.</p>
+
+        <div class="section-label">Exemplo prático</div>
+        <div class="example-box">
+          <strong>Input para o LLM:</strong> função Python <code>calcular_desconto(preco, cupom)</code><br><br>
+          <strong>LLM gera:</strong><br>
+          • Teste com preço zero → espera ValueError<br>
+          • Teste com cupom expirado → espera desconto 0%<br>
+          • Teste com desconto &gt; 100% → espera cap em 100%<br>
+          • Teste com cupom válido → verifica cálculo correto<br>
+          • Teste com preço negativo → espera ValueError<br>
+          • Fuzz test com strings aleatórias no campo cupom
+        </div>
+
+        <div class="section-label">Casos de uso</div>
+        <div class="pill-row">
+          <span class="pill">Geração de unit tests</span>
+          <span class="pill">Testes de edge cases</span>
+          <span class="pill">Dados de teste sintéticos</span>
+          <span class="pill">Testes de mutação</span>
+          <span class="pill">Geração de mocks</span>
+          <span class="pill">Testes de regressão</span>
+        </div>
+
+        <div class="section-label">Ferramentas</div>
+        <div class="example-box">
+          <strong>CodiumAI / Qodo:</strong> VSCode plugin que gera testes diretamente no IDE.<br>
+          <strong>GitHub Copilot:</strong> sugere testes ao abrir arquivos de test.<br>
+          <strong>Claude Code:</strong> escreve toda a suíte de testes de um módulo com um comando.<br>
+          <strong>Diffblue Cover:</strong> especializado em Java, gera JUnit tests automaticamente.
+        </div>
+
+        <div class="why-box">Times que usam GenAI para testes reportam 3-5× mais cobertura em
+          metade do tempo. O valor não é eliminar o engenheiro de QA — é eliminar o trabalho
+          mecânico de escrever boilerplate de testes.</div>
+      </div>
+    </div>
+
+    <!-- ─── 11. Model Routing ─────────────────────────────────────────────── -->
+    <div class="concept-card" id="routing">
+      <div class="concept-header">
+        <div class="concept-icon">🔀</div>
+        <div class="concept-title-wrap">
+          <h2>Model Routing</h2>
+          <span class="tag">Produção &amp; Operação</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que é</div>
+        <p>Model Routing é a prática de direcionar cada requisição para o modelo mais adequado
+           com base na complexidade, custo e latência requerida. Em vez de sempre usar o modelo
+           mais caro e poderoso, o sistema classifica a tarefa e escolhe o modelo certo
+           para aquela complexidade específica.</p>
+
+        <div class="arch-diagram">Requisição do usuário
+        ↓
+[Router / Classifier]
+        ↓
+┌────────────────┬──────────────────┬──────────────────────┐
+│  SIMPLES       │  MÉDIA           │  COMPLEXA            │
+│  "Que horas?"  │  "Resuma texto"  │  "Analise contrato"  │
+│  Haiku ~$0.25  │  Sonnet ~$3      │  Opus ~$15           │
+│  /MTok input   │  /MTok input     │  /MTok input         │
+└────────────────┴──────────────────┴──────────────────────┘</div>
+
+        <div class="section-label">Critérios de roteamento</div>
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>📏 Complexidade da tarefa</h4>
+            <p>Perguntas simples → modelo pequeno. Raciocínio multi-step → modelo grande.</p>
+          </div>
+          <div class="mini-card">
+            <h4>💰 Budget por requisição</h4>
+            <p>Usuário free tier → modelo econômico. Usuário premium → modelo premium.</p>
+          </div>
+          <div class="mini-card">
+            <h4>⏱️ Latência requerida</h4>
+            <p>Interface de chat precisa de resposta em &lt;2s → modelos menores e mais rápidos.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🔧 Especialidade do domínio</h4>
+            <p>Código → modelo especializado em código. Jurídico → modelo fine-tuned jurídico.</p>
+          </div>
+        </div>
+
+        <div class="why-box">Uma empresa que processa 1 milhão de requisições/dia pode reduzir
+          custo em 60-80% com routing bem implementado — roteando 80% das consultas simples
+          para modelos baratos e reservando modelos premium para casos que realmente precisam.</div>
+      </div>
+    </div>
+
+    <!-- ─── 12. LLMOps ───────────────────────────────────────────────────── -->
+    <div class="concept-card" id="llmops">
+      <div class="concept-header">
+        <div class="concept-icon">🏭</div>
+        <div class="concept-title-wrap">
+          <h2>LLMOps</h2>
+          <span class="tag">Produção &amp; Operação</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que é</div>
+        <p>LLMOps é a disciplina de operar, monitorar e versionar sistemas baseados em LLMs em
+           produção. É o MLOps adaptado para as particularidades dos modelos de linguagem:
+           prompts são código, respostas são não-determinísticas, e regressões podem ser sutis
+           e difíceis de detectar.</p>
+
+        <div class="section-label">Pilares do LLMOps</div>
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>📝 Prompt versioning</h4>
+            <p>Prompts tratados como código: versionados em Git, testados antes de deploy, rollback disponível.</p>
+          </div>
+          <div class="mini-card">
+            <h4>📊 Observabilidade</h4>
+            <p>Logs de cada LLM call: tokens, latência, custo, input/output. Traces de agentes multi-step.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🧪 Testes contínuos</h4>
+            <p>Suite de evals roda a cada mudança de prompt ou modelo — igual CI/CD para código.</p>
+          </div>
+          <div class="mini-card">
+            <h4>💸 Gestão de custo</h4>
+            <p>Budget por endpoint, alertas de anomalia, otimização de tokens via prompt caching.</p>
+          </div>
+        </div>
+
+        <div class="section-label">Stack de LLMOps</div>
+        <div class="example-box">
+          <strong>Observabilidade:</strong> LangSmith, Langfuse, Phoenix (Arize), Helicone<br>
+          <strong>Experiments/Evals:</strong> PromptFlow, Weave (W&B), Braintrust<br>
+          <strong>Feature flags de prompts:</strong> LaunchDarkly + LLM, Statsig<br>
+          <strong>Cost tracking:</strong> OpenMeter, LiteLLM Proxy, Portkey
+        </div>
+
+        <div class="why-box">Sistemas de LLM sem LLMOps são caixas-pretas que custam dinheiro
+          imprevisível, falham de formas inesperadas e são impossíveis de debugar em produção.
+          LLMOps é o que transforma um protótipo em produto.</div>
+      </div>
+    </div>
+
+    <!-- ─── 13. Context Engineering ──────────────────────────────────────── -->
+    <div class="concept-card" id="context">
+      <div class="concept-header">
+        <div class="concept-icon">📐</div>
+        <div class="concept-title-wrap">
+          <h2>Context Engineering</h2>
+          <span class="tag">Produção &amp; Operação</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que é</div>
+        <p>Context Engineering é a prática de estruturar deliberadamente o conteúdo da context
+           window para maximizar a qualidade da resposta e minimizar custo. Vai além do
+           "prompt engineering" — é uma disciplina que inclui o que incluir, em que ordem,
+           em que formato e o que omitir do contexto de cada chamada ao LLM.</p>
+
+        <div class="section-label">A anatomy da context window</div>
+        <div class="arch-diagram">┌─────────────────────────────────────────┐
+│  SYSTEM PROMPT (identidade + regras)    │  ← estável, cacheável
+│  MEMORY (fatos relevantes sobre o user) │  ← recuperado do perfil
+│  RETRIEVED DOCS (RAG)                   │  ← 3-5 chunks mais relevantes
+│  CONVERSATION HISTORY (últimas N msgs)  │  ← truncado por tokens, não msgs
+│  TOOL RESULTS (resultados das tools)    │  ← comprimidos se necessário
+│  USER MESSAGE (pergunta atual)          │  ← fim do contexto
+└─────────────────────────────────────────┘</div>
+
+        <div class="section-label">Técnicas práticas</div>
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>🗜️ Compressão de histórico</h4>
+            <p>Em vez de manter 50 mensagens completas, sumarize a conversa antiga em 200 tokens.</p>
+          </div>
+          <div class="mini-card">
+            <h4>💾 Prompt caching</h4>
+            <p>Prefixos estáticos (system prompt + docs) em cache: economia de 90% em tokens de input.</p>
+          </div>
+          <div class="mini-card">
+            <h4>📍 Position bias</h4>
+            <p>LLMs prestam mais atenção ao início e fim. Coloque instruções críticas nesses locais.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🏷️ XML tags estruturais</h4>
+            <p>&lt;documents&gt;, &lt;thinking&gt;, &lt;answer&gt; ajudam o modelo a entender a estrutura do contexto.</p>
+          </div>
+        </div>
+
+        <div class="why-box">Um context de 200k tokens custa o mesmo independente do que você
+          coloca nele. Context Engineering é sobre colocar as 200k tokens certas — não as mais
+          fáceis de coletar. A qualidade da resposta é diretamente proporcional à qualidade
+          do contexto.</div>
+      </div>
+    </div>
+
+    <!-- ─── 14. Métricas DORA ─────────────────────────────────────────────── -->
+    <div class="concept-card" id="dora">
+      <div class="concept-header">
+        <div class="concept-icon">📈</div>
+        <div class="concept-title-wrap">
+          <h2>Métricas DORA e o Impacto de IA no Time</h2>
+          <span class="tag">Produção &amp; Operação</span>
+        </div>
+      </div>
+      <div class="concept-body">
+        <div class="section-label">O que são as métricas DORA</div>
+        <p>DORA (DevOps Research and Assessment) são 4 métricas que medem a performance de
+           times de engenharia de software. Definidas pelo Google Cloud após pesquisa com
+           32.000 profissionais, são o padrão de referência para medir elite performers.</p>
+
+        <div class="grid2">
+          <div class="mini-card">
+            <h4>🚀 Deployment Frequency</h4>
+            <p>Com que frequência o time faz deploy em produção. Elite: múltiplos por dia.</p>
+          </div>
+          <div class="mini-card">
+            <h4>⏱️ Lead Time for Changes</h4>
+            <p>Tempo do commit ao deploy em produção. Elite: menos de 1 hora.</p>
+          </div>
+          <div class="mini-card">
+            <h4>🔧 Mean Time to Recovery (MTTR)</h4>
+            <p>Tempo médio para restaurar serviço após incidente. Elite: menos de 1 hora.</p>
+          </div>
+          <div class="mini-card">
+            <h4>❌ Change Failure Rate</h4>
+            <p>% de deploys que causam incidente. Elite: 0-15%.</p>
+          </div>
+        </div>
+
+        <div class="section-label">Como correlacionar IA com DORA</div>
+        <div class="example-box">
+          <strong>Deployment Frequency ↑</strong> — AI code review automático e geração de testes
+          reduz o ciclo de review, times conseguem mergear com mais segurança e frequência.<br><br>
+          <strong>Lead Time ↓</strong> — Claude Code reduz tempo de implementação de features.
+          Tarefas que levavam 2 dias passam a levar 4 horas.<br><br>
+          <strong>MTTR ↓</strong> — Agentes de IA para incident response analisam logs, identificam
+          root cause e sugerem fix em minutos, não horas.<br><br>
+          <strong>Change Failure Rate ↓</strong> — GenAI para geração de testes aumenta cobertura
+          e detecta regressões antes do deploy.
+        </div>
+
+        <div class="section-label">Como medir o impacto de IA no seu time</div>
+        <div class="arch-diagram">Baseline (antes da IA) → Métricas DORA por trimestre
+                ↓
+Implantação de ferramentas de IA (Claude Code, AI review, AI testes)
+                ↓
+Métricas DORA por trimestre → delta vs baseline
+                ↓
+ROI = (horas economizadas × custo/hora) / custo das ferramentas de IA</div>
+
+        <div class="why-box">Empresas elite com IA reportam Deployment Frequency 2-4× maior
+          e Lead Time 30-60% menor que peers sem IA. As métricas DORA são a linguagem para
+          comunicar esse impacto para liderança em termos de negócio, não de tecnologia.</div>
+      </div>
+    </div>
+
+    <div style="text-align:center;padding:20px 0 40px;color:var(--text3);font-size:13px;">
+      14 conceitos · Atualizado julho 2025 ·
+      <a href="index.html" style="color:var(--accent2);text-decoration:none;">← Voltar ao Hub de Certificações</a>
+    </div>
+
+  </div><!-- #content -->
+</div><!-- #main -->
+
+<script>
+function toggleSidebar(){
+  document.getElementById('sidebar').classList.toggle('open');
+  document.getElementById('overlay').classList.toggle('open');
+}
+document.getElementById('overlay').addEventListener('click',function(){
+  document.getElementById('sidebar').classList.remove('open');
+  document.getElementById('overlay').classList.remove('open');
+});
+
+// Smooth scroll + highlight active nav item
+function scrollTo(id){
+  const el = document.getElementById(id);
+  if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
+  document.querySelectorAll('.ni').forEach(function(n){ n.classList.remove('active'); });
+  const nav = document.querySelector('.ni[href="#'+id+'"]');
+  if(nav) nav.classList.add('active');
+  if(window.innerWidth<=768){
+    document.getElementById('sidebar').classList.remove('open');
+    document.getElementById('overlay').classList.remove('open');
+  }
+  return false;
+}
+
+// Intersection observer to update active nav on scroll
+const observer = new IntersectionObserver(function(entries){
+  entries.forEach(function(e){
+    if(e.isIntersecting){
+      const id = e.target.id;
+      document.querySelectorAll('.ni').forEach(function(n){ n.classList.remove('active'); });
+      const nav = document.querySelector('.ni[href="#'+id+'"]');
+      if(nav) nav.classList.add('active');
+    }
+  });
+},{threshold:0.25, rootMargin:'-80px 0px 0px 0px'});
+
+document.querySelectorAll('.concept-card').forEach(function(c){ observer.observe(c); });
+</script>
+</body>
+</html>
