@@ -108,6 +108,11 @@ header p{color:var(--text2);font-size:15px;}
 .card.concepts .cert-badge{background:rgba(20,184,166,.2);color:#2dd4bf;}
 .card.concepts:hover{box-shadow:0 20px 60px rgba(20,184,166,.2);border-color:rgba(20,184,166,.4);}
 
+
+.card.awssvc{background:linear-gradient(135deg,rgba(249,115,22,.15),rgba(251,146,60,.05));}
+.card.awssvc .cert-badge{background:rgba(249,115,22,.2);color:#fb923c;}
+.card.awssvc:hover{box-shadow:0 20px 60px rgba(249,115,22,.2);border-color:rgba(249,115,22,.4);}
+
 </style>
 </head>
 <body>
@@ -201,6 +206,19 @@ header p{color:var(--text2);font-size:15px;}
             <div class="ci"><div class="label">Tipo</div><div class="value">Refer&ecirc;ncia</div></div>
           </div>
         </a>
+        <!-- AWS Services -->
+        <a href="aws_services.html" class="card awssvc" data-idx="4">
+          <div class="cert-icon">&#x2601;&#xFE0F;</div>
+          <div class="cert-badge">AWS</div>
+          <div class="cert-title">Servi&#xE7;os AWS — Guia Completo</div>
+          <div class="cert-sub">120+ servi&#xE7;os com descri&#xE7;&#xE3;o, exemplos e tags de certifica&#xE7;&#xE3;o</div>
+          <div class="cert-info">
+            <div class="ci"><div class="label">Servi&#xE7;os</div><div class="value">120+</div></div>
+            <div class="ci"><div class="label">Categorias</div><div class="value">13</div></div>
+            <div class="ci"><div class="label">CLF-C02</div><div class="value">&#x2714;</div></div>
+            <div class="ci"><div class="label">SAA-C03</div><div class="value">&#x2714;</div></div>
+          </div>
+        </a>
 
       </div><!-- /c-track -->
     </div><!-- /c-wrap -->
@@ -213,6 +231,7 @@ header p{color:var(--text2);font-size:15px;}
     <button class="c-dot d1" onclick="goTo(1)"></button>
     <button class="c-dot d2" onclick="goTo(2)"></button>
     <button class="c-dot d3" onclick="goTo(3)"></button>
+    <button class="c-dot d4" onclick="goTo(4)"></button>
   </div>
   <p class="c-hint">← deslize para navegar →</p>
 </main>
@@ -228,7 +247,7 @@ header p{color:var(--text2);font-size:15px;}
 </div>
 
 <script>
-var TOTAL = 4, cur = 0;
+var TOTAL = 5, cur = 0;
 function isMobile(){ return window.innerWidth <= 768; }
 
 function updateCarousel(){
