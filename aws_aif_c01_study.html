@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AWS AIF-C01 — Guia de Estudos</title>
+<style>
+:root{--accent:#ec4899;--accent2:#f472b6;--accent-rgb:236,72,153;}
+.td1{background:rgba(236,72,153,.2);color:#f9a8d4;}
+.td2{background:rgba(96,165,250,.2);color:#93c5fd;}
+.td3{background:rgba(52,211,153,.2);color:#6ee7b7;}
+.td4{background:rgba(251,191,36,.2);color:#fde68a;}
+.td5{background:rgba(167,139,250,.2);color:#c4b5fd;}
+</style>
+<link rel="stylesheet" href="study-engine.css">
+</head>
+<body>
+<div id="overlay"></div>
+<nav id="sidebar">
+  <div id="sh" onclick="P('home',document.getElementById('nhome'))" style="cursor:pointer"><h1>AWS AIF-C01</h1><p>Certified AI Practitioner</p></div>
+  <div class="ns">
+    <div class="nst">Visão Geral</div>
+    <div class="ni active" id="nhome" onclick="P('home',this)">🏠 Dashboard</div>
+    <div class="ni" onclick="P('simulado',this)">📝 Simulado (65q)</div>
+    <div class="ni" onclick="P('checklist',this)">✅ Checklist</div>
+  </div>
+  <div class="ns">
+    <div class="nst">Estudo por Domínio</div>
+    <div class="ni" id="nw1" onclick="P('w1',this)"><span class="dot"></span>D1 — Fundamentos de IA/ML<span class="nb">D1</span></div>
+    <div class="ni" id="nw2" onclick="P('w2',this)"><span class="dot"></span>D2 — Fundamentos de IA Generativa<span class="nb">D2</span></div>
+    <div class="ni" id="nw3" onclick="P('w3',this)"><span class="dot"></span>D3 — Aplicações de Foundation Models<span class="nb">D3</span></div>
+    <div class="ni" id="nw4" onclick="P('w4',this)"><span class="dot"></span>D4 — IA Responsável<span class="nb">D4</span></div>
+    <div class="ni" id="nw5" onclick="P('w5',this)"><span class="dot"></span>D5 — Segurança & Governança<span class="nb">D5</span></div>
+  </div>
+  <div class="ns">
+    <div class="nst">Referência</div>
+    <div class="ni" onclick="P('flashcards',this)">🃏 Flashcards (50)</div>
+    <div class="ni" id="nresources" onclick="P('resources',this)">📚 Recursos</div>
+  </div>
+</nav>
+<div id="main">
+  <div id="topbar"><button id="hamburger" onclick="toggleSidebar()" aria-label="Menu">☰</button>
+    <h2 id="tbtitle" onclick="P('home',document.getElementById('nhome'))" style="cursor:pointer" title="Voltar ao Dashboard">Dashboard</h2>
+    <div class="pp"><span id="ptext">0 itens</span><div class="pbw"><div class="pbf" id="gpbar" style="width:0%"></div></div></div>
+  </div>
+  <div id="content">
+
+<div id="page-home" class="page active">
+  <div class="hero"><h1>🏆 AWS Certified AI Practitioner</h1><p>AIF-C01 — Guia completo e interativo. Tudo que você precisa em um só lugar.</p></div>
+  <div class="ig">
+    <div class="ii"><div class="lb">Questões</div><div class="vl">65</div></div>
+    <div class="ii"><div class="lb">Tempo</div><div class="vl">90 min</div></div>
+    <div class="ii"><div class="lb">Nota mín.</div><div class="vl">700/1000</div></div>
+    <div class="ii"><div class="lb">Custo</div><div class="vl">USD 100</div></div>
+    <div class="ii"><div class="lb">Nível</div><div class="vl">Foundational</div></div>
+  </div>
+  <div class="card">
+    <div class="ct">📊 Distribuição dos Domínios</div>
+    <div class="dbi"><div class="dbh"><span><span class="tag td1">D1</span> Fundamentos de IA e ML</span><strong>20%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#ec4899" data-t="20"></div></div></div>
+    <div class="dbi"><div class="dbh"><span><span class="tag td2">D2</span> Fundamentos de IA Generativa</span><strong>24%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#60a5fa" data-t="24"></div></div></div>
+    <div class="dbi"><div class="dbh"><span><span class="tag td3">D3</span> Aplicações de Foundation Models</span><strong>28%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#34d399" data-t="28"></div></div></div>
+    <div class="dbi"><div class="dbh"><span><span class="tag td4">D4</span> Diretrizes para IA Responsável</span><strong>14%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#fbbf24" data-t="14"></div></div></div>
+    <div class="dbi"><div class="dbh"><span><span class="tag td5">D5</span> Segurança, Conformidade e Governança</span><strong>14%</strong></div><div class="dbt"><div class="dbf" style="width:0%;background:#a78bfa" data-t="14"></div></div></div>
+    <div class="al aw" style="margin-top:16px">⚠️ D2+D3 = 52% do exame. Domine IA generativa e aplicações de foundation models antes de tudo.</div>
+  </div>
+  <div class="card"><div class="ct">🗺️ Estudo por Domínio</div>
+  <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:10px;margin-top:8px">
+    <div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w1',document.getElementById('nw1'))"><strong style="font-size:13px">D1 — Fundamentos de IA/ML</strong><br><span style="font-size:12px;color:var(--text3)">Tipos de ML, ciclo de vida, serviços AWS de IA</span></div>
+    <div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w2',document.getElementById('nw2'))"><strong style="font-size:13px">D2 — Fundamentos de GenAI</strong><br><span style="font-size:12px;color:var(--text3)">Foundation models, tokens, embeddings, Bedrock</span></div>
+    <div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w3',document.getElementById('nw3'))"><strong style="font-size:13px">D3 — Aplicações de FMs</strong><br><span style="font-size:12px;color:var(--text3)">Prompt engineering, RAG, fine-tuning, avaliação</span></div>
+    <div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w4',document.getElementById('nw4'))"><strong style="font-size:13px">D4 — IA Responsável</strong><br><span style="font-size:12px;color:var(--text3)">Fairness, bias, explicabilidade, Clarify, A2I</span></div>
+    <div style="background:var(--bg3);border-radius:8px;padding:12px;cursor:pointer" onclick="P('w5',document.getElementById('nw5'))"><strong style="font-size:13px">D5 — Segurança & Governança</strong><br><span style="font-size:12px;color:var(--text3)">Responsabilidade compartilhada, IAM, conformidade</span></div>
+  </div>
+  </div>
+</div>
+
+<div id="page-simulado" class="page">
+<h2 class="sh">📝 Simulado — AWS AIF-C01</h2>
+<p style="margin-bottom:20px">65 questões · 90 min · Mínimo: 700/1000</p>
+<div id="exam-start">
+<div class="card" style="max-width:520px">
+<div style="font-size:48px;text-align:center;margin-bottom:12px">🎓</div>
+<div class="ct" style="justify-content:center">Pronto para o simulado?</div>
+<p>Simula o exame real com questões embaralhadas e timer.</p>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:16px 0"><div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D1</strong> — 13q (20%)</div>
+<div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D2</strong> — 16q (24%)</div>
+<div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D3</strong> — 18q (28%)</div>
+<div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px"><strong>D4</strong> — 9q (14%)</div>
+<div style="background:var(--bg3);padding:10px;border-radius:8px;font-size:13px;grid-column:span 2;text-align:center"><strong>D5</strong> — 9q (14%)</div>
+</div>
+<button class="btn bp" style="font-size:15px;padding:12px 32px;width:100%;margin-top:8px" onclick="startExam()">▶ Iniciar Simulado</button>
+</div>
+</div>
+<div id="exam-body" style="display:none">
+<div class="exam-header">
+<div><div style="font-size:11px;color:var(--text3)">TEMPO</div><div class="exam-timer" id="exam-clock">90:00</div></div>
+<div class="exam-prog">
+<div class="exam-qnum" id="exam-qnum">Questão 1 de 65</div>
+<div class="exam-bar"><div class="exam-bf" id="exam-bf" style="width:1%"></div></div>
+<div style="font-size:11px;color:var(--text3);margin-top:4px" id="exam-score-live">Respondidas: 0 | Marcadas: 0</div>
+</div>
+</div>
+<div class="card">
+<div class="exam-domain" id="exam-domain"></div>
+<div class="exam-q" id="exam-q"></div>
+<div id="exam-opts"></div>
+<div class="exam-nav">
+<button class="btn bg" onclick="examNav(-1)">← Anterior</button>
+<button class="exam-flag" onclick="examFlag()">🚩 Marcar</button>
+<button class="btn bp" onclick="examNav(1)" style="margin-left:auto">Próxima →</button>
+</div>
+<div style="margin-top:12px;display:flex;gap:6px;flex-wrap:wrap" id="exam-dots"></div>
+</div>
+<button class="btn" onclick="finishExam()" style="background:#f87171;color:#fff;margin-top:4px">⏹ Encerrar</button>
+</div>
+<div id="exam-result" style="display:none"><div class="card" id="exam-result-card"></div></div>
+<div class="card"><div class="ct">📈 Histórico de Tentativas</div><div id="exam-history"></div></div>
+</div>
+
+<div id="page-w1" class="page">
+<h2 class="sh">D1 — Fundamentos de IA e ML</h2><p style="margin-bottom:20px">Conceitos de IA/ML/Deep Learning, tipos de aprendizado, ciclo de vida de ML, serviços AWS de IA</p>
+<div class="card"><div class="ct">🧠 Quiz — D1 — Fundamentos de IA e ML</div><div id="qw1"></div></div>
+</div>
+<div id="page-w2" class="page">
+<h2 class="sh">D2 — Fundamentos de IA Generativa</h2><p style="margin-bottom:20px">Foundation models, tokens, embeddings, Transformers, Amazon Bedrock, RAG</p>
+<div class="card"><div class="ct">🧠 Quiz — D2 — Fundamentos de IA Generativa</div><div id="qw2"></div></div>
+</div>
+<div id="page-w3" class="page">
+<h2 class="sh">D3 — Aplicações de Foundation Models</h2><p style="margin-bottom:20px">Prompt engineering, RAG, fine-tuning, Bedrock Agents/Knowledge Bases, avaliação de modelos</p>
+<div class="card"><div class="ct">🧠 Quiz — D3 — Aplicações de Foundation Models</div><div id="qw3"></div></div>
+</div>
+<div id="page-w4" class="page">
+<h2 class="sh">D4 — Diretrizes para IA Responsável</h2><p style="margin-bottom:20px">Fairness, bias, explicabilidade, SageMaker Clarify, Amazon A2I, Guardrails</p>
+<div class="card"><div class="ct">🧠 Quiz — D4 — Diretrizes para IA Responsável</div><div id="qw4"></div></div>
+</div>
+<div id="page-w5" class="page">
+<h2 class="sh">D5 — Segurança, Conformidade e Governança</h2><p style="margin-bottom:20px">Responsabilidade compartilhada, IAM, criptografia, conformidade, governança de dados</p>
+<div class="card"><div class="ct">🧠 Quiz — D5 — Segurança, Conformidade e Governança</div><div id="qw5"></div></div>
+</div>
+
+<div id="page-flashcards" class="page">
+<h2 class="sh">🃏 Flashcards (50 cards)</h2>
+<p>Clique no card para revelar. Use setas ou teclado ← → para navegar, Espaço para virar.</p>
+<div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap" id="fc-tags"></div>
+<div class="fcw" onclick="flipFC()">
+<div class="fc" id="fc-card">
+<div class="cf front"><div style="font-size:12px;color:var(--accent2);margin-bottom:10px"><span id="fc-dom"></span><span id="fc-due-badge" class="fc-due-badge" style="display:none">revisão</span></div><div style="font-size:16px;font-weight:600;line-height:1.5" id="fc-front"></div><div class="hint">clique para revelar →</div></div>
+<div class="cf back"><div style="font-size:12px;color:var(--green);margin-bottom:10px" id="fc-dom2"></div><div style="font-size:14px;line-height:1.6;color:var(--text)" id="fc-back"></div></div></div>
+</div>
+<div class="fc-known-controls">
+<button class="btn fbt-unknown" onclick="fcMarkUnknown()">😕 Ainda não sei</button>
+<button class="btn fbt-known" onclick="fcMarkKnown()">✅ Já sei</button>
+</div>
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+<button class="btn bg" onclick="fcNav(-1)">← Anterior</button>
+<span style="font-size:13px;color:var(--text3)" id="fc-ctr">1 / 50</span>
+<button class="btn bg" onclick="fcNav(1)">Próximo →</button>
+<button class="btn bp" onclick="shuffleFC()" style="margin-left:auto">🔀 Embaralhar</button>
+</div>
+</div>
+
+<div id="page-checklist" class="page">
+<h2 class="sh">✅ Checklist de Prontidão</h2>
+<p>Marque os tópicos que você já domina. Progresso salvo automaticamente.</p>
+<div class="cp"><div class="cpf" id="cpfill" style="width:0%"></div></div>
+<div style="font-size:13px;color:var(--text2);margin-bottom:20px" id="cptxt">0 de 0 completos</div>
+<div id="chklist"></div>
+</div>
+
+<div id="page-resources" class="page">
+<h2 class="sh">📚 Recursos & Links</h2>
+<div class="card"><a href="https://aws.amazon.com/certification/certified-ai-practitioner/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📘 AWS Certified AI Practitioner (Página oficial)</a>
+<a href="https://aws.amazon.com/what-is/foundation-models/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🧠 O que são Foundation Models</a>
+<a href="https://aws.amazon.com/bedrock/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">☁️ Amazon Bedrock</a>
+<a href="https://aws.amazon.com/machine-learning/ai-services/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🛠️ Serviços de IA da AWS</a>
+<a href="https://aws.amazon.com/machine-learning/responsible-ai/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">⚖️ IA Responsável na AWS</a>
+<a href="https://docs.aws.amazon.com/whitepapers/latest/aws-overview/introduction.html" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">📄 AWS Overview — The Basics</a>
+<a href="https://aws.amazon.com/free/" target="_blank" style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(46,50,80,.4);color:var(--text2);text-decoration:none;font-size:13.5px" onmouseover="this.style.color='var(--accent2)'" onmouseout="this.style.color='var(--text2)'">🔧 AWS Free Tier — Pratique sem custo</a>
+</div>
+</div>
+
+</div></div></div>
+<script src="study-engine.js"></script>
+<script>
+const TITLES={'home':'Dashboard','simulado':'Simulado Completo','flashcards':'Flashcards','checklist':'Checklist','resources':'Recursos','w1':'D1 — Fundamentos de IA e ML','w2':'D2 — Fundamentos de IA Generativa','w3':'D3 — Aplicações de Foundation Models','w4':'D4 — IA Responsável','w5':'D5 — Segurança & Governança',};
+const QD={
+w1:[
+{q:'O que é Machine Learning?',o:['Um conjunto de regras codificadas manualmente para toda decisão','Subcampo da IA em que sistemas aprendem padrões a partir de dados em vez de serem explicitamente programados','Um tipo de banco de dados NoSQL','Uma técnica exclusiva para geração de imagens'],a:1,e:'ML permite que sistemas aprendam padrões e façam previsões a partir de dados, sem regras explícitas codificadas para cada cenário.'},
+{q:'Qual é a relação entre IA, ML e Deep Learning?',o:['São termos equivalentes','ML é subconjunto de IA; Deep Learning é subconjunto de ML','Deep Learning é o campo mais amplo','IA é subconjunto de ML'],a:1,e:'IA ⊃ ML ⊃ Deep Learning — cada um é um subconjunto mais especializado do anterior.'},
+{q:'O que caracteriza aprendizado supervisionado?',o:['Não usa dados rotulados','Usa dados rotulados (com respostas conhecidas) para treinar o modelo','Aprende por tentativa e erro com recompensas','Agrupa dados sem rótulos'],a:1,e:'Supervised learning treina com pares entrada-saída rotulados (labels conhecidos), como classificação e regressão.'},
+{q:'O que caracteriza aprendizado não supervisionado?',o:['Usa recompensas e penalidades','Encontra padrões e estruturas em dados sem rótulos','Requer grandes volumes de dados rotulados','É usado apenas para geração de texto'],a:1,e:'Unsupervised learning (ex: clustering, redução de dimensionalidade) busca padrões em dados sem rótulos.'},
+{q:'O que é aprendizado por reforço (reinforcement learning)?',o:['Aprendizado a partir de dados históricos rotulados','Um agente aprende por tentativa e erro, recebendo recompensas ou penalidades pelas ações','Agrupamento de dados semelhantes','Redução de dimensionalidade de features'],a:1,e:'RL treina um agente a tomar decisões sequenciais maximizando recompensa cumulativa através de interação com um ambiente.'},
+{q:'Quais são as etapas típicas do ciclo de vida de ML?',o:['Apenas treinamento e deploy','Coleta de dados → preparação → engenharia de features → treinamento → avaliação → deploy → monitoramento','Apenas coleta e avaliação','Deploy seguido de coleta de dados'],a:1,e:'O ciclo de vida de ML é iterativo: coleta/preparação de dados, feature engineering, treinamento, avaliação, deploy e monitoramento contínuo.'},
+{q:'O que é "overfitting" em um modelo de ML?',o:['O modelo generaliza bem para dados novos','O modelo memoriza os dados de treino e performa mal em dados novos','O modelo não aprendeu nada dos dados','O modelo tem poucos parâmetros'],a:1,e:'Overfitting ocorre quando o modelo se ajusta excessivamente aos dados de treino, perdendo capacidade de generalização.'},
+{q:'Qual serviço AWS é usado para construir, treinar e implantar modelos de ML customizados?',o:['Amazon Comprehend','Amazon SageMaker','Amazon Polly','Amazon Textract'],a:1,e:'SageMaker é o serviço central da AWS para todo o ciclo de vida de ML: preparação de dados, treinamento, tuning e deploy de modelos customizados.'},
+{q:'Qual serviço AWS extrai texto e dados estruturados de documentos escaneados (formulários, notas fiscais)?',o:['Amazon Rekognition','Amazon Textract','Amazon Transcribe','Amazon Kendra'],a:1,e:'Textract extrai texto, tabelas e formulários de documentos digitalizados usando OCR e ML.'},
+{q:'Quando NÃO é apropriado usar machine learning para resolver um problema?',o:['Quando há grande volume de dados históricos','Quando regras determinísticas simples já resolvem o problema com precisão','Quando o problema envolve padrões complexos','Quando é necessário processar linguagem natural'],a:1,e:'ML adiciona complexidade e custo; se um conjunto simples de regras (if/else) resolve o problema de forma confiável, ML é desnecessário.'},
+],
+w2:[
+{q:'O que é um foundation model (modelo de fundação)?',o:['Um modelo pequeno treinado para uma única tarefa específica','Um modelo grande pré-treinado em dados massivos e diversos, adaptável a múltiplas tarefas','Um banco de dados de treinamento','Um algoritmo de clustering'],a:1,e:'Foundation models são pré-treinados em grandes volumes de dados diversos e podem ser adaptados (fine-tuned ou via prompting) para várias tarefas downstream.'},
+{q:'O que é um "token" no contexto de modelos de linguagem?',o:['Uma senha de autenticação da API','Uma unidade de texto (palavra, subpalavra ou caractere) que o modelo processa','Um tipo de rede neural','Uma métrica de avaliação'],a:1,e:'Tokens são as unidades básicas de texto (fragmentos de palavras) em que o modelo divide o input/output para processamento.'},
+{q:'O que são "embeddings"?',o:['Representações numéricas (vetores) de texto/dados que capturam significado semântico','Um tipo de arquitetura de rede neural','Parâmetros do modelo','Hiperparâmetros de treinamento'],a:0,e:'Embeddings convertem texto (ou outros dados) em vetores numéricos, posicionando itens semanticamente similares próximos no espaço vetorial.'},
+{q:'O que é a arquitetura Transformer, base dos LLMs modernos?',o:['Uma rede neural convolucional para imagens','Uma arquitetura baseada em "self-attention" que processa sequências em paralelo','Um algoritmo de clustering','Um tipo de banco de dados vetorial'],a:1,e:'Transformers usam self-attention para pesar a importância relativa de diferentes tokens em uma sequência, permitindo processamento paralelo eficiente.'},
+{q:'O que é "alucinação" em IA generativa?',o:['Quando o modelo se recusa a responder','Quando o modelo gera conteúdo factualmente incorreto ou fabricado com confiança','Quando o modelo demora para responder','Quando o modelo usa muitos tokens'],a:1,e:'Alucinação é quando o modelo generativo produz informação incorreta, inventada ou não fundamentada, mas apresentada como fato.'},
+{q:'Qual é uma desvantagem inerente dos modelos generativos que profissionais devem considerar?',o:['São sempre determinísticos','Podem ser não-determinísticos, difíceis de interpretar e propensos a alucinação','Não requerem avaliação humana','São sempre mais baratos que soluções tradicionais'],a:1,e:'Modelos generativos podem produzir saídas diferentes para o mesmo input (não-determinismo), têm baixa interpretabilidade e podem alucinar.'},
+{q:'O que é o Amazon Bedrock?',o:['Um serviço de banco de dados relacional','Um serviço totalmente gerenciado que oferece acesso a múltiplos foundation models via API unificada','Uma ferramenta de visualização de dados','Um serviço de armazenamento de objetos'],a:1,e:'Bedrock oferece acesso serverless a FMs de múltiplos provedores através de uma API única, sem gerenciar infraestrutura.'},
+{q:'Qual é a diferença entre um "base model" e um modelo fine-tuned?',o:['São idênticos','Base model é o modelo pré-treinado original; fine-tuned foi adicionalmente treinado em dados específicos','Fine-tuned é sempre menor que o base model','Base model não pode ser usado diretamente'],a:1,e:'O base model é o FM pré-treinado geral; fine-tuning ajusta seus pesos com dados adicionais específicos para melhorar performance em uma tarefa/domínio.'},
+{q:'O que é RAG (Retrieval-Augmented Generation)?',o:['Uma técnica de compressão de modelos','Técnica que combina recuperação de informação externa com geração de texto pelo modelo','Um tipo de fine-tuning','Um algoritmo de treinamento supervisionado'],a:1,e:'RAG recupera documentos/trechos relevantes de uma base de conhecimento externa e os injeta no contexto do prompt.'},
+{q:'Quais fatores são importantes ao escolher um foundation model para uma aplicação?',o:['Apenas o preço','Custo, latência, modalidade suportada, tamanho da janela de contexto e capacidades da tarefa','Apenas a popularidade do modelo','Apenas o número de parâmetros'],a:1,e:'A seleção de modelo deve balancear custo, latência, modalidades suportadas, tamanho de contexto e adequação às capacidades exigidas.'},
+{q:'O que são modelos de difusão (diffusion models)?',o:['Modelos que geram texto através de árvores de decisão','Modelos generativos que aprendem a reverter um processo de adição de ruído, usados para gerar imagens','Modelos usados apenas para classificação','Modelos que fazem apenas tradução de idiomas'],a:1,e:'Diffusion models aprendem a remover ruído progressivamente de dados aleatórios até formar uma saída coerente.'},
+{q:'Qual é uma métrica de valor de negócio relevante ao avaliar uma solução de IA generativa?',o:['Apenas o número de parâmetros do modelo','Eficiência, taxa de conversão e desempenho cross-domain','Apenas a velocidade de treinamento','Apenas o tamanho do dataset de treino'],a:1,e:'Métricas de negócio incluem eficiência operacional, taxa de conversão, satisfação do cliente e desempenho consistente entre casos de uso.'},
+],
+w3:[
+{q:'O que é "prompt engineering"?',o:['Um tipo de fine-tuning','A prática de projetar e refinar prompts para obter as melhores respostas de um modelo generativo','Um algoritmo de treinamento de redes neurais','Uma técnica de compressão de modelos'],a:1,e:'Prompt engineering estrutura instruções/exemplos no prompt para guiar o modelo, sem alterar seus pesos.'},
+{q:'O que é "few-shot prompting"?',o:['Fornecer zero exemplos no prompt','Incluir alguns exemplos de entrada-saída no prompt para guiar o formato/estilo da resposta','Treinar o modelo com poucos dados','Reduzir o tamanho do modelo'],a:1,e:'Few-shot prompting inclui alguns exemplos (input→output) no prompt, ajudando o modelo a entender o padrão esperado.'},
+{q:'O que é "chain-of-thought prompting"?',o:['Pedir ao modelo para responder o mais rápido possível','Instruir o modelo a explicitar seu raciocínio passo a passo antes da resposta final','Encadear múltiplos modelos diferentes','Um tipo de fine-tuning supervisionado'],a:1,e:'Chain-of-thought (CoT) pede ao modelo para "pensar em voz alta", melhorando desempenho em tarefas de raciocínio.'},
+{q:'Uma empresa quer que um FM responda com base em documentos internos atualizados diariamente, sem re-treinar o modelo. Qual abordagem é mais apropriada?',o:['Pré-treinamento do zero','RAG (Retrieval-Augmented Generation)','Fine-tuning completo do modelo','Reduzir a temperature do modelo'],a:1,e:'RAG incorpora conhecimento atualizado externamente sem o custo/latência de re-treinar o modelo.'},
+{q:'Quais são os componentes típicos de uma arquitetura RAG?',o:['Apenas o modelo de linguagem','Base vetorial, mecanismo de embeddings, componente de recuperação e o modelo gerador','Apenas um banco de dados relacional','Apenas um pipeline de fine-tuning'],a:1,e:'RAG combina dados fonte em embeddings, um retriever que busca trechos relevantes, e o FM que gera a resposta.'},
+{q:'Qual recurso do Amazon Bedrock consulta automaticamente uma base de conhecimento para respostas fundamentadas?',o:['Bedrock Guardrails','Knowledge Bases for Amazon Bedrock','Bedrock Playground','Model Evaluation'],a:1,e:'Knowledge Bases implementa RAG de forma gerenciada: indexa documentos, cria embeddings e recupera contexto relevante.'},
+{q:'O que são "Agents for Amazon Bedrock"?',o:['Um serviço de suporte ao cliente','Recurso que permite FMs executarem tarefas multi-etapas invocando APIs externas','Um tipo de banco de dados vetorial','Uma ferramenta apenas de visualização'],a:1,e:'Bedrock Agents orquestram chamadas de API e raciocínio para que um FM complete tarefas complexas de forma autônoma.'},
+{q:'Quando fine-tuning é mais apropriado do que prompt engineering?',o:['Quando é necessária apenas uma mudança rápida e barata de comportamento','Quando é necessário adaptar consistentemente o estilo/domínio e prompt engineering não é suficiente','Sempre, para qualquer caso de uso','Nunca — RAG substitui fine-tuning em todos os casos'],a:1,e:'Fine-tuning é indicado quando o comportamento precisa ser consistente e profundo, não alcançável apenas com prompting.'},
+{q:'O que é ROUGE, usado na avaliação de modelos generativos?',o:['Uma métrica de custo computacional','Métrica que compara sobreposição de n-gramas entre o texto gerado e uma referência','Um algoritmo de treinamento','Um tipo de arquitetura de rede neural'],a:1,e:'ROUGE mede a sobreposição de sequências de palavras entre a saída do modelo e um texto de referência, comum em sumarização.'},
+{q:'Por que a avaliação humana continua importante mesmo com métricas automáticas?',o:['Métricas automáticas capturam perfeitamente qualidade e coerência','Métricas automáticas podem não capturar nuances de qualidade, coerência e segurança','Avaliação humana é mais barata','Avaliação humana é sempre desnecessária'],a:1,e:'Métricas automáticas medem sobreposição textual mas não necessariamente qualidade real ou adequação.'},
+{q:'O que é "Amazon SageMaker JumpStart"?',o:['Um serviço de banco de dados','Hub que oferece foundation models prontos para deploy e fine-tuning dentro do SageMaker','Uma ferramenta de BI','Um serviço de rede'],a:1,e:'SageMaker JumpStart fornece acesso a FMs e modelos pré-treinados com deploy e fine-tuning simplificados.'},
+{q:'Uma equipe quer testar prompts em diferentes FMs no Bedrock antes de integrar à aplicação. Qual recurso usar?',o:['Bedrock Agents','Bedrock Playgrounds','Bedrock Guardrails','Bedrock Knowledge Bases'],a:1,e:'Os Playgrounds do Bedrock permitem testar prompts interativamente em diferentes modelos via console.'},
+{q:'O que caracteriza pré-treinamento (pre-training), em contraste com fine-tuning?',o:['Pre-training usa poucos dados; fine-tuning usa muitos dados','Pre-training treina o modelo do zero em grandes volumes de dados gerais; fine-tuning ajusta um modelo já pronto','São o mesmo processo','Pre-training é sempre mais barato que fine-tuning'],a:1,e:'Pre-training constrói as capacidades gerais a partir de grandes corpora; fine-tuning refina um modelo já pronto com dados menores.'},
+{q:'Qual é um trade-off importante do fine-tuning completo em vez de prompt engineering?',o:['Fine-tuning é sempre mais rápido e barato','Fine-tuning geralmente exige mais dados, tempo e custo, mas pode gerar resultados mais consistentes','Prompt engineering sempre supera fine-tuning em qualidade','Não há diferença prática entre as duas abordagens'],a:1,e:'Fine-tuning requer investimento maior comparado ao prompt engineering, mas pode produzir comportamento mais consistente e especializado.'},
+],
+w4:[
+{q:'Quais são exemplos de dimensões da IA responsável segundo a AWS?',o:['Apenas velocidade e custo','Fairness, explicabilidade, privacidade/segurança, transparência, robustez, governança e controlabilidade','Apenas precisão do modelo','Apenas escalabilidade'],a:1,e:'A AWS define múltiplas dimensões: fairness, explainability, privacy & security, safety, controllability, veracity & robustness, transparency e governance.'},
+{q:'O que é "viés" (bias) em um modelo de ML, e de onde geralmente se origina?',o:['Apenas de erros de programação','Frequentemente de dados de treinamento não representativos ou de escolhas no design do algoritmo','Apenas de hardware insuficiente','Nunca ocorre em modelos bem treinados'],a:1,e:'Bias pode vir de dados de treino não representativos ou de decisões no design/algoritmo do modelo.'},
+{q:'Qual ferramenta da AWS ajuda a detectar viés e explicar previsões de modelos de ML?',o:['Amazon SageMaker Clarify','Amazon Comprehend','Amazon Polly','AWS Config'],a:0,e:'SageMaker Clarify detecta possíveis vieses nos dados e modelos e fornece explicações sobre as previsões.'},
+{q:'O que é "Amazon Augmented AI (A2I)"?',o:['Um serviço de tradução automática','Serviço que facilita a construção de fluxos de revisão humana (human-in-the-loop)','Uma ferramenta de treinamento de modelos','Um banco de dados vetorial'],a:1,e:'Amazon A2I permite inserir revisão humana em pontos do pipeline de ML, especialmente para previsões de baixa confiança.'},
+{q:'Qual é a diferença entre "interpretabilidade" e "explicabilidade" de um modelo?',o:['São sinônimos exatos','Interpretabilidade é entender como o modelo funciona internamente; explicabilidade explica por que uma previsão foi feita','Interpretabilidade só se aplica a modelos generativos','Explicabilidade elimina a necessidade de testes'],a:1,e:'Interpretabilidade é sobre o funcionamento geral do modelo; explicabilidade foca em justificar decisões individuais.'},
+{q:'O que são "Guardrails for Amazon Bedrock"?',o:['Um serviço de monitoramento de custos','Recurso que permite filtros de conteúdo e políticas para restringir tópicos indesejados nas respostas de FMs','Um algoritmo de treinamento','Uma ferramenta de versionamento de modelos'],a:1,e:'Guardrails permitem bloquear tópicos indesejados, filtrar conteúdo nocivo e redigir informação sensível nas interações com FMs.'},
+{q:'Por que a transparência é importante em sistemas de IA usados para decisões de alto impacto?',o:['Não é importante, apenas a acurácia importa','Permite que usuários e reguladores entendam e confiem no processo decisório, e possibilita auditoria','Transparência sempre reduz a acurácia do modelo','Só é relevante para modelos pequenos'],a:1,e:'Em decisões de alto impacto, transparência permite auditoria, conformidade regulatória e confiança do usuário.'},
+{q:'O que são "AWS AI Service Cards"?',o:['Cartões de crédito para serviços de IA','Documentação sobre casos de uso pretendidos, limitações e considerações de fairness/desempenho de serviços de IA da AWS','Um tipo de instância de EC2','Um plano de suporte'],a:1,e:'AI Service Cards documentam de forma transparente o propósito, limitações e boas práticas de serviços de IA da AWS.'},
+],
+w5:[
+{q:'Qual é o modelo de responsabilidade compartilhada aplicado a serviços de IA gerenciados da AWS?',o:['O cliente é responsável por tudo, incluindo a infraestrutura física','A AWS protege a infraestrutura (segurança DA nuvem); o cliente cuida dos dados e configurações (segurança NA nuvem)','Não existe responsabilidade compartilhada para serviços de IA','Apenas a AWS é responsável por tudo'],a:1,e:'O mesmo modelo se aplica: AWS protege a infraestrutura subjacente; o cliente é responsável pelos dados, IAM e uso adequado.'},
+{q:'Qual serviço AWS fornece acesso a relatórios de conformidade (SOC, ISO) relevantes para soluções de IA?',o:['AWS Trusted Advisor','AWS Artifact','Amazon CloudWatch','AWS Config'],a:1,e:'AWS Artifact é o portal self-service para baixar relatórios de auditoria e conformidade.'},
+{q:'O que é "governança de dados" no contexto de soluções de IA?',o:['Apenas backup de dados','Controles para garantir qualidade, linhagem, segurança e uso apropriado dos dados usados em modelos de IA','Apenas criptografia de dados','Apenas armazenamento em múltiplas regiões'],a:1,e:'Governança de dados envolve controles sobre qualidade, linhagem, classificação, segurança e políticas de uso dos dados.'},
+{q:'Por que rastrear a "linhagem de dados" (data lineage) é importante em pipelines de ML?',o:['Não é importante para IA','Permite rastrear a origem e transformações dos dados, essencial para auditoria e conformidade','Apenas reduz custos de armazenamento','Serve apenas para melhorar performance de treino'],a:1,e:'Data lineage permite rastrear de onde vieram os dados e como foram transformados, essencial para auditoria e debugging.'},
+{q:'Qual mecanismo AWS permite que uma aplicação acesse serviços de IA sem passar pela internet pública?',o:['Internet Gateway','AWS PrivateLink / VPC Endpoints','NAT Gateway público','Elastic IP'],a:1,e:'PrivateLink/VPC Endpoints permitem conexão privada entre a VPC e serviços AWS sem tráfego pela internet pública.'},
+{q:'Qual é uma prática recomendada de controle de acesso (IAM) para soluções de IA?',o:['Conceder acesso administrativo total a todos os usuários','Aplicar o princípio de least privilege, concedendo apenas permissões mínimas necessárias','Compartilhar credenciais root entre a equipe','Desabilitar logging para reduzir custos'],a:1,e:'Least privilege reduz o risco de uso indevido ou exposição acidental de modelos e dados de IA.'},
+{q:'Por que monitorar e registrar o uso de modelos de IA em produção é uma prática de governança importante?',o:['Não traz nenhum benefício','Permite auditoria, detecção de uso indevido, rastreamento de custos e conformidade contínua','Apenas aumenta a latência sem benefício','É necessário apenas durante o desenvolvimento'],a:1,e:'Logging e monitoramento contínuo permitem auditoria, detecção de anomalias e evidência de conformidade.'},
+{q:'Qual regulamentação é frequentemente relevante para soluções de IA que processam dados pessoais de cidadãos europeus?',o:['HIPAA apenas','GDPR (Regulamento Geral de Proteção de Dados)','Apenas leis dos EUA','Nenhuma regulamentação se aplica a IA'],a:1,e:'O GDPR regula o tratamento de dados pessoais de residentes da UE, com requisitos relevantes para sistemas de IA.'},
+{q:'O que é um risco de segurança específico de prompts em aplicações de IA generativa expostas a usuários finais?',o:['Prompts nunca representam risco de segurança','Prompt injection: manipulação do modelo para ignorar instruções originais ou vazar dados sensíveis','Apenas a velocidade de resposta importa','Prompts não precisam de nenhuma validação'],a:1,e:'Prompt injection é uma técnica em que inputs maliciosos tentam manipular o modelo a ignorar suas instruções de sistema.'},
+],
+};
+const EXAM=[
+{d:'D1',q:'Qual das alternativas melhor define Machine Learning?',o:['Um conjunto de regras codificadas manualmente para todas as decisões','Um subcampo da IA em que sistemas aprendem padrões a partir de dados em vez de serem explicitamente programados','Um tipo de banco de dados NoSQL','Uma técnica exclusiva para geração de imagens'],a:1,e:'ML permite que sistemas aprendam padrões e façam previsões a partir de dados, sem regras explícitas codificadas para cada cenário.'},
+{d:'D1',q:'O que é uma "feature" em um modelo de ML?',o:['O resultado final da previsão','Uma variável de entrada usada pelo modelo para fazer previsões','Um tipo de algoritmo de treinamento','O nome do dataset'],a:1,e:'Features são as variáveis/atributos de entrada que o modelo usa para aprender padrões e gerar previsões.'},
+{d:'D1',q:'O que é um "label" (rótulo) em aprendizado supervisionado?',o:['O nome do modelo treinado','O valor de saída conhecido/correto associado a um exemplo de treino','Um hiperparâmetro do algoritmo','Uma métrica de avaliação'],a:1,e:'Labels são os valores de saída corretos/conhecidos em um dataset rotulado, usados para treinar e avaliar modelos supervisionados.'},
+{d:'D1',q:'O que significa "underfitting" em um modelo?',o:['O modelo é complexo demais e memoriza os dados de treino','O modelo é simples demais para capturar os padrões dos dados, tendo baixo desempenho tanto no treino quanto em novos dados','O modelo tem desempenho perfeito','O modelo usa muitos parâmetros'],a:1,e:'Underfitting ocorre quando o modelo é simples demais para capturar os padrões relevantes, resultando em baixa performance geral.'},
+{d:'D1',q:'Qual serviço AWS converte fala em texto?',o:['Amazon Polly','Amazon Transcribe','Amazon Translate','Amazon Lex'],a:1,e:'Amazon Transcribe realiza reconhecimento automático de fala (speech-to-text).'},
+{d:'D1',q:'Qual serviço AWS converte texto em fala natural?',o:['Amazon Transcribe','Amazon Polly','Amazon Comprehend','Amazon Rekognition'],a:1,e:'Amazon Polly realiza text-to-speech, convertendo texto em áudio com voz natural.'},
+{d:'D1',q:'Qual serviço AWS realiza análise de sentimento, extração de entidades e detecção de idioma em texto?',o:['Amazon Comprehend','Amazon Textract','Amazon Kendra','Amazon Forecast'],a:0,e:'Amazon Comprehend é o serviço de NLP da AWS para análise de sentimento, extração de entidades-chave e detecção de idioma.'},
+{d:'D1',q:'Qual serviço AWS é especializado em busca inteligente (semantic search) corporativa?',o:['Amazon Kendra','Amazon Personalize','Amazon Forecast','AWS Glue'],a:0,e:'Amazon Kendra é um serviço de busca empresarial com NLP, permitindo consultas em linguagem natural sobre documentos corporativos.'},
+{d:'D1',q:'Qual serviço AWS gera previsões de séries temporais (demanda, vendas futuras)?',o:['Amazon Forecast','Amazon Personalize','Amazon Rekognition','Amazon Lex'],a:0,e:'Amazon Forecast usa ML para gerar previsões precisas de séries temporais a partir de dados históricos.'},
+{d:'D1',q:'Qual serviço AWS constrói chatbots e assistentes de voz conversacionais?',o:['Amazon Lex','Amazon Polly','Amazon Comprehend','Amazon Translate'],a:0,e:'Amazon Lex fornece a mesma tecnologia de compreensão de linguagem natural da Alexa para construir chatbots e interfaces de voz.'},
+{d:'D1',q:'Por que instâncias com GPU são frequentemente usadas para treinar modelos de deep learning?',o:['GPUs são mais baratas que CPUs','GPUs realizam processamento paralelo massivo, acelerando cálculos matriciais intensivos do treinamento','GPUs consomem menos energia','GPUs armazenam mais dados que CPUs'],a:1,e:'GPUs são otimizadas para operações matriciais paralelas, essenciais para o treinamento eficiente de redes neurais profundas.'},
+{d:'D1',q:'O que é "engenharia de features" (feature engineering)?',o:['O processo de remover todos os dados de um dataset','O processo de selecionar, transformar e criar variáveis de entrada que melhoram o desempenho do modelo','Um tipo de arquitetura de modelo','A etapa final de deploy de um modelo'],a:1,e:'Feature engineering envolve selecionar, transformar e criar features relevantes a partir dos dados brutos para melhorar o aprendizado do modelo.'},
+{d:'D1',q:'Qual é um caso de uso apropriado para IA/ML segundo os princípios de seleção de casos de uso da AWS?',o:['Problemas com regras fixas e simples que nunca mudam','Problemas complexos, com grande volume de dados e padrões difíceis de codificar manualmente, onde a precisão perfeita não é obrigatória','Qualquer problema, independentemente de complexidade ou dados disponíveis','Apenas problemas de classificação de imagens'],a:1,e:'ML é mais indicado para problemas complexos com muitos dados e padrões não triviais, onde uma solução aproximada é aceitável.'},
+{d:'D2',q:'O que diferencia IA generativa de IA discriminativa/preditiva tradicional?',o:['IA generativa apenas classifica dados existentes','IA generativa cria novo conteúdo similar aos dados de treino, enquanto a discriminativa classifica ou prevê com base em dados existentes','Não há diferença entre elas','IA generativa não usa redes neurais'],a:1,e:'Modelos generativos aprendem a distribuição dos dados para criar novos conteúdos; modelos discriminativos aprendem a distinguir/classificar categorias existentes.'},
+{d:'D2',q:'O que é o "contexto" (context window) de um LLM?',o:['O histórico de todas as conversas já realizadas pelo modelo desde seu lançamento','A quantidade máxima de tokens que o modelo pode processar em uma única interação','O número de parâmetros do modelo','O conjunto de dados usado no treinamento'],a:1,e:'A janela de contexto define o limite de tokens (entrada + saída) que o modelo consegue processar em uma única chamada.'},
+{d:'D2',q:'O que é "temperature" como parâmetro de inferência em um LLM?',o:['A velocidade de processamento do servidor','Parâmetro que controla a aleatoriedade/criatividade das respostas — valores baixos geram saídas mais determinísticas','O custo por token gerado','O tamanho do modelo em GB'],a:1,e:'Temperature ajusta a aleatoriedade da amostragem de tokens: valores próximos de 0 tornam a saída mais previsível, valores altos aumentam a diversidade.'},
+{d:'D2',q:'Qual é uma vantagem de usar um foundation model pré-treinado em vez de treinar um modelo do zero?',o:['Elimina totalmente a necessidade de dados','Reduz drasticamente o tempo e custo de desenvolvimento, aproveitando conhecimento já aprendido','Garante 100% de precisão em qualquer tarefa','Elimina a necessidade de qualquer avaliação'],a:1,e:'Foundation models já capturam conhecimento geral extenso, permitindo adaptação rápida e barata a novas tarefas.'},
+{d:'D2',q:'O que é o PartyRock, um app builder da AWS?',o:['Um serviço de banco de dados','Um playground gratuito baseado em Amazon Bedrock para criar apps de IA generativa sem código','Uma ferramenta de monitoramento de rede','Um serviço de CDN'],a:1,e:'PartyRock é um playground sem código, construído sobre o Amazon Bedrock, para experimentar e criar aplicações de IA generativa.'},
+{d:'D2',q:'O que é o Amazon Q?',o:['Um banco de dados NoSQL','Um assistente de IA generativa da AWS voltado para produtividade empresarial e desenvolvimento de software','Um serviço de rede privada virtual','Um tipo de instância EC2'],a:1,e:'Amazon Q é o assistente de IA generativa da AWS, com variantes para desenvolvedores (Q Developer) e uso empresarial (Q Business).'},
+{d:'D2',q:'Por que a saída de um LLM pode variar mesmo com o mesmo prompt em execuções diferentes?',o:['Isso nunca acontece com LLMs','Devido ao processo de amostragem probabilística na geração de tokens, especialmente com temperature > 0','Porque o modelo é retreinado a cada chamada','Porque o modelo sempre falha na primeira tentativa'],a:1,e:'LLMs geram texto por amostragem probabilística sobre a distribuição de próximos tokens; com temperature > 0, isso introduz variabilidade.'},
+{d:'D2',q:'O que é uma "GAN" (Generative Adversarial Network)?',o:['Um tipo de banco de dados vetorial','Arquitetura com duas redes (gerador e discriminador) competindo entre si para gerar dados sintéticos realistas','Um algoritmo de clustering','Uma métrica de avaliação de modelos'],a:1,e:'GANs treinam um gerador e um discriminador em um processo adversarial, resultando em geração de dados sintéticos cada vez mais realistas.'},
+{d:'D2',q:'Qual é um risco de negócio relacionado ao uso de IA generativa que uma empresa deve avaliar antes de adotar a tecnologia?',o:['Redução de custos operacionais','Possibilidade de gerar conteúdo incorreto, tendencioso ou inadequado que afete a reputação da marca','Aumento automático de receita','Eliminação de todos os riscos de segurança'],a:1,e:'Alucinações, viés e conteúdo inadequado gerados por IA podem causar danos à reputação, exigindo avaliação de risco antes da adoção.'},
+{d:'D2',q:'O que são "multimodal models" (modelos multimodais)?',o:['Modelos que só processam texto','Modelos capazes de processar e/ou gerar múltiplos tipos de dados, como texto, imagem e áudio, simultaneamente','Modelos que rodam em múltiplas regiões AWS','Modelos que usam múltiplos algoritmos de clustering'],a:1,e:'Modelos multimodais processam e combinam diferentes tipos de dados (texto, imagem, áudio, vídeo) em uma única arquitetura.'},
+{d:'D2',q:'Qual é o papel dos "pesos" (weights) em um modelo de rede neural?',o:['Armazenam os dados brutos de treino','Parâmetros aprendidos durante o treinamento que determinam como as entradas são transformadas em saídas','Definem a taxa de aprendizado do algoritmo','São hiperparâmetros configurados manualmente'],a:1,e:'Pesos são os parâmetros internos ajustados durante o treinamento que codificam o que o modelo "aprendeu".'},
+{d:'D2',q:'Por que a IA generativa pode ter dificuldade em tarefas que exigem cálculos matemáticos precisos ou fatos muito recentes?',o:['Porque os modelos são proibidos de fazer cálculos','Porque LLMs preveem a próxima sequência de tokens com base em padrões estatísticos, não realizam raciocínio matemático exato nem têm conhecimento além do seu treinamento','Porque isso nunca é um problema para LLMs','Porque LLMs são sempre atualizados em tempo real automaticamente'],a:1,e:'LLMs geram texto por predição estatística de tokens e têm um "corte" (cutoff) de conhecimento na data de treinamento.'},
+{d:'D2',q:'O que é "auto-regressive generation" em LLMs baseados em transformer?',o:['Gerar toda a resposta de uma vez, sem sequência','Gerar a saída token por token, onde cada novo token é condicionado nos tokens gerados anteriormente','Um método de compressão do modelo','Um algoritmo de clustering de dados'],a:1,e:'Geração auto-regressiva produz um token de cada vez, usando os tokens já gerados como contexto para prever o próximo.'},
+{d:'D2',q:'Qual das opções é um caso de uso adequado para IA generativa?',o:['Cálculo exato de folha de pagamento','Geração de rascunhos de conteúdo, sumarização de documentos e assistência conversacional','Armazenamento seguro de senhas','Balanceamento de carga de rede'],a:1,e:'IA generativa se destaca em tarefas criativas/linguísticas: geração de texto, sumarização, tradução e conversação.'},
+{d:'D2',q:'O que caracteriza um modelo "open-weight" disponível no Amazon Bedrock ou SageMaker JumpStart?',o:['O modelo não pode ser usado comercialmente','Os pesos treinados do modelo são publicamente disponíveis para download, inspeção e uso/customização','O modelo não tem nenhum parâmetro','É obrigatoriamente um modelo pequeno'],a:1,e:'Modelos open-weight disponibilizam publicamente seus parâmetros treinados, permitindo uso e customização mais flexível.'},
+{d:'D2',q:'Qual é uma consideração de custo relevante ao usar foundation models via API (ex: Bedrock)?',o:['O custo é sempre fixo independente do uso','Cobrança geralmente é baseada no volume de tokens de entrada e saída processados','Não há custos associados a inferência','O custo depende apenas do número de usuários cadastrados'],a:1,e:'A maioria dos provedores de FM via API cobra com base na quantidade de tokens de entrada e saída processados.'},
+{d:'D3',q:'O que é um "prompt template"?',o:['Um tipo de modelo de rede neural','Uma estrutura reutilizável de prompt com placeholders preenchidos dinamicamente para diferentes entradas','Um algoritmo de treinamento','Um formato de arquivo de dados'],a:1,e:'Prompt templates definem uma estrutura fixa de instrução com variáveis preenchidas em tempo de execução, garantindo consistência.'},
+{d:'D3',q:'O que é "zero-shot prompting"?',o:['Fornecer múltiplos exemplos no prompt','Pedir ao modelo para realizar uma tarefa sem fornecer nenhum exemplo prévio no prompt','Treinar o modelo do zero','Usar temperature igual a zero'],a:1,e:'Zero-shot prompting solicita que o modelo execute uma tarefa baseando-se apenas na instrução, sem exemplos de referência.'},
+{d:'D3',q:'Em uma arquitetura RAG, qual é o papel do banco de dados vetorial?',o:['Armazenar logs de acesso à aplicação','Armazenar embeddings dos documentos para permitir busca por similaridade semântica rápida','Armazenar apenas metadados de usuários','Substituir o foundation model'],a:1,e:'O banco de dados vetorial armazena embeddings dos documentos-fonte, permitindo buscas de similaridade semântica eficientes.'},
+{d:'D3',q:'Qual serviço AWS pode ser usado como banco de dados vetorial para uma solução RAG?',o:['Amazon RDS apenas','Amazon OpenSearch Service (com suporte a busca vetorial k-NN)','Amazon SQS','AWS Lambda'],a:1,e:'Amazon OpenSearch Service suporta busca vetorial (k-NN), sendo uma opção comum como vector store em arquiteturas RAG.'},
+{d:'D3',q:'Qual é o principal benefício de usar RAG em vez de incluir todo o conhecimento necessário diretamente no prompt?',o:['RAG elimina completamente a necessidade do foundation model','RAG permite acessar dinamicamente apenas os trechos mais relevantes de uma base grande, sem exceder a janela de contexto','RAG é sempre mais lento que incluir tudo no prompt','RAG elimina a necessidade de embeddings'],a:1,e:'RAG recupera dinamicamente apenas os trechos mais relevantes de uma base potencialmente enorme, contornando o limite de contexto.'},
+{d:'D3',q:'O que é "instruction tuning" (um tipo de fine-tuning)?',o:['Remover instruções do prompt','Fine-tuning de um modelo usando exemplos de instrução-resposta para melhorar sua capacidade de seguir instruções','Treinar o modelo apenas com código-fonte','Reduzir o número de parâmetros do modelo'],a:1,e:'Instruction tuning ajusta o modelo com pares instrução→resposta, melhorando sua capacidade de seguir instruções diversas.'},
+{d:'D3',q:'Qual recurso do Amazon Bedrock permite comparar o desempenho de diferentes modelos em uma tarefa específica?',o:['Bedrock Guardrails','Model Evaluation no Amazon Bedrock','Bedrock Studio apenas','Amazon Comprehend'],a:1,e:'Model Evaluation no Bedrock permite comparar modelos usando métricas automáticas ou avaliação humana em tarefas específicas.'},
+{d:'D3',q:'Uma aplicação precisa gerar respostas sempre no mesmo formato JSON estruturado. Qual técnica ajuda a garantir isso?',o:['Aumentar a temperature ao máximo','Usar um prompt bem estruturado com exemplos do formato desejado (few-shot) e validação/retry no output','Remover todas as instruções do prompt','Usar apenas zero-shot sem exemplos'],a:1,e:'Exemplos claros do formato esperado e validação com retry aumentam a confiabilidade de saídas estruturadas.'},
+{d:'D3',q:'O que é "BERTScore", uma métrica de avaliação para texto gerado?',o:['Uma métrica de custo computacional','Métrica que usa embeddings contextuais para medir similaridade semântica entre o texto gerado e uma referência','Um algoritmo de treinamento de modelos','Um tipo de arquitetura transformer'],a:1,e:'BERTScore compara embeddings contextuais entre texto gerado e referência, capturando similaridade semântica mesmo com formulações diferentes.'},
+{d:'D3',q:'Por que prompt engineering costuma ser a opção de menor custo e complexidade em comparação a RAG e fine-tuning?',o:['Prompt engineering sempre produz melhores resultados','Não requer treinamento adicional, infraestrutura de recuperação ou dados rotulados — apenas ajuste do texto de entrada','Prompt engineering elimina a necessidade do modelo','Não há diferença de custo entre as três abordagens'],a:1,e:'Prompt engineering ajusta apenas o texto de entrada, sem exigir infraestrutura adicional nem dados de treinamento rotulados.'},
+{d:'D3',q:'O que caracteriza um "guardrail" de tópico em uma aplicação de IA generativa?',o:['Uma regra que aumenta a velocidade de resposta','Uma configuração que impede o modelo de discutir ou responder sobre tópicos específicos indesejados','Um tipo de fine-tuning','Uma métrica de avaliação de qualidade'],a:1,e:'Guardrails de tópico bloqueiam ou redirecionam o modelo quando o conteúdo se aproxima de tópicos definidos como indesejados.'},
+{d:'D3',q:'Qual é uma limitação de usar apenas prompt engineering sem RAG ou fine-tuning para conhecimento especializado?',o:['Prompt engineering não tem limitação alguma','O modelo permanece limitado ao conhecimento do pré-treinamento, sem acesso a dados privados/atualizados a menos que estejam no prompt','Prompt engineering sempre requer GPUs dedicadas','Prompt engineering elimina toda alucinação automaticamente'],a:1,e:'Sem RAG ou fine-tuning, o modelo só "sabe" o que aprendeu no pré-treinamento e o que está explicitamente no prompt atual.'},
+{d:'D3',q:'O que é "latência" em uma aplicação de IA generativa, e por que é uma consideração de design importante?',o:['O custo por token gerado','O tempo entre o envio de uma requisição e o recebimento da resposta — crítico para experiência do usuário em aplicações interativas','A quantidade de dados de treino do modelo','O número de parâmetros do modelo'],a:1,e:'Latência é o tempo de resposta; para aplicações interativas, baixa latência é essencial para boa experiência do usuário.'},
+{d:'D3',q:'Qual abordagem é mais indicada quando uma organização precisa que o modelo responda exclusivamente com base em seus documentos proprietários, minimizando alucinação?',o:['Aumentar a temperature','Implementar RAG com uma base de conhecimento restrita aos documentos proprietários e citação de fontes','Usar apenas zero-shot prompting','Reduzir o tamanho da janela de contexto'],a:1,e:'RAG com base restrita e citação de fontes ancora as respostas nos documentos proprietários e reduz o risco de alucinação.'},
+{d:'D3',q:'O que são "hyperparameters" no contexto de fine-tuning de um modelo?',o:['Os dados de entrada do modelo','Configurações definidas antes do treinamento (taxa de aprendizado, número de épocas) que controlam o processo','O resultado final do treinamento','Os embeddings gerados pelo modelo'],a:1,e:'Hyperparameters são configurações definidas ANTES do treinamento que controlam como o processo de aprendizado ocorre.'},
+{d:'D3',q:'Qual é o propósito de "chunking" (particionamento) de documentos em uma pipeline RAG?',o:['Reduzir a qualidade da busca','Dividir documentos grandes em trechos menores antes de gerar embeddings, melhorando a precisão da recuperação','Aumentar artificialmente o tamanho do dataset','Eliminar a necessidade de embeddings'],a:1,e:'Chunking divide documentos longos em trechos menores antes da indexação, permitindo recuperação mais precisa.'},
+{d:'D3',q:'Qual métrica avalia fluência comparando com referências humanas usando sobreposição de n-gramas, popular em avaliação de tradução automática?',o:['ROUGE','BLEU','F1-score','Perplexity'],a:1,e:'BLEU compara n-gramas entre a saída gerada e referências humanas, tradicionalmente usada para avaliar tradução automática.'},
+{d:'D3',q:'Uma aplicação precisa responder perguntas sobre uma política interna que muda mensalmente. Qual abordagem evita ter que re-treinar o modelo a cada mudança?',o:['Fine-tuning mensal completo do modelo','RAG, atualizando apenas a base de conhecimento indexada quando a política mudar','Pré-treinamento do zero a cada mudança','Ignorar as mudanças e manter o modelo desatualizado'],a:1,e:'RAG desacopla o conhecimento do modelo em si, evitando a necessidade de re-treinamento a cada atualização de conteúdo.'},
+{d:'D4',q:'O que significa "fairness" (justiça) como princípio de IA responsável?',o:['Que o modelo é sempre 100% preciso','Que o modelo trata diferentes grupos de forma equitativa, evitando discriminação injusta','Que o modelo é gratuito para usar','Que o modelo funciona apenas em uma região'],a:1,e:'Fairness busca garantir que o modelo não produza resultados sistematicamente desfavoráveis a grupos protegidos.'},
+{d:'D4',q:'Uma empresa percebe que seu modelo de triagem de currículos rejeita desproporcionalmente candidatos de um determinado grupo demográfico. Qual é a causa mais provável?',o:['O modelo está funcionando perfeitamente','Viés presente nos dados de treinamento ou no processo de rotulagem, refletido nas previsões do modelo','Falta de capacidade computacional','Um erro de rede'],a:1,e:'Padrões discriminatórios nas previsões geralmente refletem viés presente nos dados históricos de treinamento.'},
+{d:'D4',q:'O que é "robustez" (robustness) em um sistema de IA?',o:['A velocidade de resposta do modelo','A capacidade do modelo de manter desempenho consistente diante de entradas variadas, ruidosas ou levemente adversariais','O tamanho do modelo em parâmetros','O custo de operação do modelo'],a:1,e:'Robustez refere-se à estabilidade do desempenho do modelo frente a variações ou pequenas perturbações nos dados de entrada.'},
+{d:'D4',q:'Por que "controlabilidade" é considerada um princípio importante de IA responsável?',o:['Não é um princípio relevante','Garante que humanos possam monitorar, intervir e ajustar o comportamento do sistema de IA quando necessário','Significa que o modelo controla todas as decisões de negócio sem supervisão','Refere-se apenas ao custo de controle de infraestrutura'],a:1,e:'Controlabilidade assegura que existam mecanismos para humanos supervisionarem e corrigirem o comportamento do sistema de IA.'},
+{d:'D4',q:'O que é um "model card"?',o:['Um cartão de crédito para pagar serviços de IA','Documentação estruturada que descreve propósito, dados de treino, limitações e considerações éticas de um modelo','Um tipo de instância de hardware','Um relatório financeiro da empresa'],a:1,e:'Model cards documentam de forma padronizada e transparente as características, limitações e considerações de um modelo.'},
+{d:'D4',q:'Quando é mais apropriado inserir revisão humana (human-in-the-loop) em um pipeline de IA?',o:['Nunca, pois adiciona custo desnecessário','Em decisões de alto impacto, previsões de baixa confiança, ou quando exigido por regulamentação','Apenas durante os testes iniciais','Somente para tarefas triviais de baixo risco'],a:1,e:'Human-in-the-loop é mais valioso em decisões de alto impacto/risco ou previsões com baixa confiança do modelo.'},
+{d:'D4',q:'O que é "veracity" (veracidade) como dimensão de IA responsável, especialmente relevante para IA generativa?',o:['A velocidade com que o modelo gera texto','A precisão factual e ausência de alucinações nas saídas geradas pelo modelo','O custo de licenciamento do modelo','O número de idiomas suportados'],a:1,e:'Veracidade refere-se à precisão factual das saídas do modelo — crítico em IA generativa, onde alucinações comprometem a confiabilidade.'},
+{d:'D4',q:'Como o uso de dados de treinamento não representativos pode impactar negativamente um negócio?',o:['Nunca traz impacto negativo','Pode gerar previsões enviesadas, resultando em discriminação, perda de confiança e riscos legais/regulatórios','Sempre melhora a precisão do modelo','Reduz automaticamente os custos operacionais'],a:1,e:'Dados não representativos podem levar a decisões enviesadas, gerando riscos legais, regulatórios e reputacionais.'},
+{d:'D4',q:'Qual é uma prática recomendada para mitigar viés em um pipeline de ML?',o:['Ignorar a composição demográfica dos dados de treino','Avaliar a representatividade dos dados, testar o modelo em diferentes subgrupos e usar ferramentas como SageMaker Clarify','Usar apenas dados de uma única fonte sem diversificação','Remover toda documentação sobre o modelo'],a:1,e:'Mitigar viés requer avaliação da representatividade dos dados, testes por subgrupo e uso de ferramentas de detecção de bias.'},
+{d:'D5',q:'Qual controle de segurança é fundamental para proteger dados usados por um modelo de IA tanto em repouso quanto em trânsito?',o:['Desabilitar todo logging','Criptografia (encryption at rest e in transit)','Compartilhar credenciais entre todos os serviços','Usar apenas endpoints públicos sem autenticação'],a:1,e:'Criptografia de dados em repouso e em trânsito é um controle fundamental de segurança para soluções de IA.'},
+{d:'D5',q:'O que é "MLOps"?',o:['Um serviço específico da AWS','Conjunto de práticas que aplicam princípios de DevOps ao ciclo de vida de ML, incluindo versionamento, CI/CD e monitoramento','Um tipo de algoritmo de treinamento','Um framework de deep learning'],a:1,e:'MLOps aplica práticas de automação, versionamento, testes e monitoramento contínuo ao ciclo de vida completo de modelos de ML.'},
+{d:'D5',q:'Qual é o benefício de citar as fontes (source attribution) nas respostas de uma aplicação RAG?',o:['Não traz nenhum benefício','Aumenta a transparência e permite que usuários verifiquem a veracidade da informação, facilitando auditoria','Torna as respostas mais lentas sem qualquer ganho','É proibido por lei em qualquer país'],a:1,e:'Citar fontes permite que usuários verifiquem a informação na origem, aumentando confiança e facilitando auditoria.'},
+{d:'D5',q:'Por que é importante monitorar continuamente um modelo de IA em produção?',o:['Não é necessário após o deploy inicial','Para detectar degradação de desempenho (model drift), uso indevido, e garantir conformidade contínua','Apenas para reduzir custos de infraestrutura','Monitoramento é responsabilidade exclusiva da AWS'],a:1,e:'Monitoramento contínuo detecta model drift, uso anômalo e fornece evidências de conformidade contínua.'},
+{d:'D5',q:'O que é "data residency" e por que é relevante para soluções de IA?',o:['A velocidade de acesso aos dados','Requisitos legais/regulatórios sobre em qual localização geográfica os dados devem ser armazenados e processados','O tamanho do dataset','Um tipo de criptografia'],a:1,e:'Data residency refere-se a exigências legais sobre onde os dados devem fisicamente residir, relevante ao escolher regiões AWS.'},
+{d:'D5',q:'Qual é uma prática recomendada de IAM para uma aplicação que usa Amazon Bedrock?',o:['Usar as credenciais da conta root diretamente na aplicação','Criar uma IAM Role com permissões mínimas necessárias (least privilege) para invocar os modelos do Bedrock','Desabilitar toda autenticação para simplificar','Compartilhar uma única access key entre todas as aplicações da empresa'],a:1,e:'Usar IAM Roles com permissões mínimas necessárias, em vez de credenciais root ou compartilhadas, é a prática recomendada.'},
+{d:'D5',q:'O que são "audit trails" (trilhas de auditoria) no contexto de governança de IA?',o:['Backups automáticos de modelos','Registros detalhados de ações, acessos e decisões relacionadas ao sistema de IA, usados para investigação e conformidade','Um tipo de teste de performance','Relatórios financeiros da empresa'],a:1,e:'Audit trails registram quem acessou/modificou o quê e quando, essenciais para investigar incidentes e demonstrar conformidade.'},
+{d:'D5',q:'Qual é uma consideração de segurança específica para prompts em aplicações de IA generativa expostas a usuários finais?',o:['Prompts nunca representam risco de segurança','Risco de "prompt injection", em que um usuário mal-intencionado tenta manipular o modelo a ignorar instruções originais ou vazar informações sensíveis','Apenas a velocidade de resposta importa','Prompts não precisam de nenhuma validação'],a:1,e:'Prompt injection é uma técnica onde inputs maliciosos tentam manipular o modelo a ignorar suas instruções de sistema originais.'},
+{d:'D5',q:'Qual serviço AWS oferece uma trilha de auditoria detalhada de todas as chamadas de API feitas contra serviços de IA como o Bedrock?',o:['Amazon CloudWatch','AWS CloudTrail','AWS Config','Amazon Inspector'],a:1,e:'CloudTrail registra quem chamou qual API, quando e de onde — essencial para auditoria de uso de serviços de IA como o Bedrock.'},
+];
+const FCS=[
+{d:'D1',f:'O que é Machine Learning?',b:'Subcampo da IA em que sistemas aprendem padrões a partir de dados para fazer previsões, sem serem explicitamente programados para cada regra.'},
+{d:'D1',f:'Hierarquia: IA vs ML vs Deep Learning',b:'IA (mais amplo) ⊃ ML ⊃ Deep Learning (mais específico). Cada um é subconjunto do anterior.'},
+{d:'D1',f:'Aprendizado supervisionado vs não supervisionado',b:'Supervisionado: treina com dados rotulados (label conhecido). Não supervisionado: encontra padrões em dados sem rótulos (ex: clustering).'},
+{d:'D1',f:'Aprendizado por reforço (RL)',b:'Um agente aprende por tentativa e erro, recebendo recompensas/penalidades por suas ações em um ambiente.'},
+{d:'D1',f:'Overfitting vs Underfitting',b:'Overfitting: modelo memoriza o treino, generaliza mal. Underfitting: modelo simples demais, performa mal em treino e teste.'},
+{d:'D1',f:'Amazon SageMaker',b:'Serviço central da AWS para construir, treinar, ajustar e implantar modelos de ML customizados em todo o ciclo de vida.'},
+{d:'D1',f:'Amazon Comprehend',b:'Serviço de NLP para análise de sentimento, extração de entidades/frases-chave e detecção de idioma em texto.'},
+{d:'D1',f:'Amazon Textract',b:'Extrai texto, tabelas e formulários de documentos escaneados usando OCR + ML.'},
+{d:'D1',f:'Amazon Rekognition',b:'Serviço de análise de imagem e vídeo: detecção de objetos, rostos, texto e conteúdo impróprio.'},
+{d:'D1',f:'Quando NÃO usar ML',b:'Quando regras simples e determinísticas já resolvem o problema com precisão — ML adiciona complexidade e custo desnecessários.'},
+{d:'D2',f:'Foundation Model',b:'Modelo grande pré-treinado em dados massivos e diversos, adaptável a múltiplas tarefas via prompting ou fine-tuning.'},
+{d:'D2',f:'Token',b:'Unidade básica de texto (palavra, subpalavra ou caractere) que um modelo de linguagem processa.'},
+{d:'D2',f:'Embeddings',b:'Representações numéricas (vetores) de texto/dados que capturam significado semântico — itens similares ficam próximos no espaço vetorial.'},
+{d:'D2',f:'Arquitetura Transformer',b:'Base dos LLMs modernos; usa mecanismo de "self-attention" para processar sequências em paralelo, pesando a importância relativa de cada token.'},
+{d:'D2',f:'Alucinação (hallucination)',b:'Quando um modelo generativo produz conteúdo factualmente incorreto ou fabricado, apresentado com confiança como se fosse verdadeiro.'},
+{d:'D2',f:'Amazon Bedrock',b:'Serviço serverless que dá acesso via API unificada a foundation models de múltiplos provedores, sem gerenciar infraestrutura.'},
+{d:'D2',f:'Base model vs Fine-tuned model',b:'Base model = FM pré-treinado original. Fine-tuned = mesmo modelo, adicionalmente treinado em dados específicos de domínio/tarefa.'},
+{d:'D2',f:'RAG (Retrieval-Augmented Generation)',b:'Combina recuperação de informação de uma base de conhecimento externa com geração de texto, ancorando respostas em dados atualizados sem retreinar o modelo.'},
+{d:'D2',f:'Temperature',b:'Parâmetro de inferência que controla aleatoriedade: valores baixos = respostas mais determinísticas; valores altos = mais criativas/variadas.'},
+{d:'D2',f:'Modelos de difusão (diffusion models)',b:'Modelos generativos que aprendem a reverter um processo de adição de ruído, usados principalmente para gerar imagens.'},
+{d:'D2',f:'GAN (Generative Adversarial Network)',b:'Duas redes (gerador e discriminador) competindo entre si: o gerador cria dados falsos, o discriminador tenta identificá-los.'},
+{d:'D2',f:'Amazon Q',b:'Assistente de IA generativa da AWS para produtividade empresarial (Amazon Q Business) e desenvolvimento de software (Amazon Q Developer).'},
+{d:'D3',f:'Prompt engineering',b:'Prática de projetar e refinar prompts (instruções + exemplos) para obter as melhores respostas de um modelo generativo, sem alterar seus pesos.'},
+{d:'D3',f:'Zero-shot vs Few-shot prompting',b:'Zero-shot: nenhum exemplo no prompt. Few-shot: alguns exemplos de entrada-saída incluídos para guiar o formato/estilo esperado.'},
+{d:'D3',f:'Chain-of-thought prompting',b:'Instrui o modelo a explicitar seu raciocínio passo a passo antes da resposta final, melhorando desempenho em tarefas complexas.'},
+{d:'D3',f:'Componentes de uma arquitetura RAG',b:'Base de conhecimento → embeddings → banco de dados vetorial → retriever (busca) → foundation model (geração da resposta final).'},
+{d:'D3',f:'Knowledge Bases for Amazon Bedrock',b:'Recurso gerenciado que implementa RAG automaticamente: indexa documentos, gera embeddings e recupera contexto relevante para o modelo.'},
+{d:'D3',f:'Agents for Amazon Bedrock',b:'Permite que FMs executem tarefas multi-etapas invocando APIs/ações externas de forma autônoma para completar um objetivo.'},
+{d:'D3',f:'Quando usar fine-tuning em vez de prompt engineering',b:'Quando é necessário comportamento/estilo consistente e especializado que exige muitos exemplos, além do que prompt engineering sozinho consegue entregar.'},
+{d:'D3',f:'ROUGE vs BLEU',b:'ROUGE: mede sobreposição de n-gramas, comum em sumarização. BLEU: mede sobreposição de n-gramas, tradicional em tradução automática.'},
+{d:'D3',f:'BERTScore',b:'Métrica de avaliação que usa embeddings contextuais (não só palavras exatas) para medir similaridade semântica entre texto gerado e referência.'},
+{d:'D3',f:'SageMaker JumpStart',b:'Hub que oferece foundation models e modelos pré-treinados prontos para deploy e fine-tuning simplificados dentro do SageMaker.'},
+{d:'D3',f:'Chunking em pipelines RAG',b:'Dividir documentos longos em trechos menores antes de gerar embeddings, melhorando a precisão da recuperação de contexto relevante.'},
+{d:'D3',f:'Pré-treinamento vs Fine-tuning',b:'Pré-treinamento: constrói capacidades gerais do zero, com dados massivos. Fine-tuning: refina um modelo já pronto com dados menores e específicos.'},
+{d:'D3',f:'Guardrails de tópico',b:'Configurações que impedem o modelo de discutir ou responder sobre tópicos específicos indesejados, definidas via Guardrails for Amazon Bedrock.'},
+{d:'D3',f:'Hyperparameters de fine-tuning',b:'Configurações definidas ANTES do treinamento (taxa de aprendizado, épocas, batch size) que controlam como o processo de ajuste do modelo ocorre.'},
+{d:'D4',f:'Dimensões de IA responsável (AWS)',b:'Fairness, explicabilidade, privacidade/segurança, transparência, robustez, veracidade, controlabilidade e governança.'},
+{d:'D4',f:'Origem do viés (bias) em modelos de ML',b:'Geralmente vem de dados de treinamento não representativos (data bias) ou de escolhas no design do algoritmo (algorithm bias).'},
+{d:'D4',f:'Amazon SageMaker Clarify',b:'Ferramenta que detecta possível viés nos dados/modelos e fornece explicações sobre as previsões (feature attribution).'},
+{d:'D4',f:'Amazon Augmented AI (A2I)',b:'Serviço que facilita construir fluxos de revisão humana (human-in-the-loop) para previsões de ML, especialmente as de baixa confiança.'},
+{d:'D4',f:'Interpretabilidade vs Explicabilidade',b:'Interpretabilidade: entender como o modelo funciona internamente. Explicabilidade: explicar por que uma previsão específica foi feita.'},
+{d:'D4',f:'AI Service Cards',b:'Documentação da AWS que descreve propósito, limitações e considerações de justiça/desempenho de seus serviços de IA — similar a "model cards".'},
+{d:'D4',f:'Guardrails for Amazon Bedrock',b:'Recurso para implementar filtros de conteúdo e políticas que restringem tópicos e conteúdo indesejado nas respostas de FMs.'},
+{d:'D5',f:'Responsabilidade compartilhada em IA',b:'AWS protege a segurança DA infraestrutura de IA; o cliente é responsável pela segurança NOS dados, configurações de acesso e uso apropriado.'},
+{d:'D5',f:'AWS Artifact',b:'Portal self-service para baixar relatórios de conformidade/auditoria (SOC, ISO, PCI DSS) aplicáveis também a workloads de IA.'},
+{d:'D5',f:'Data lineage (linhagem de dados)',b:'Rastreamento da origem e transformações dos dados usados em um modelo — essencial para auditoria, conformidade e debugging.'},
+{d:'D5',f:'AWS PrivateLink / VPC Endpoints',b:'Permitem que uma aplicação acesse serviços de IA (ex: Bedrock) sem passar pela internet pública, reduzindo a superfície de exposição.'},
+{d:'D5',f:'Least privilege em IAM para IA',b:'Conceder apenas as permissões mínimas necessárias para uma aplicação/usuário interagir com modelos e dados de IA.'},
+{d:'D5',f:'MLOps',b:'Conjunto de práticas que aplicam princípios de DevOps (versionamento, CI/CD, monitoramento) ao ciclo de vida completo de modelos de ML.'},
+{d:'D5',f:'Prompt injection',b:'Ataque em que um usuário mal-intencionado tenta manipular o modelo para ignorar suas instruções originais ou vazar informação sensível.'},
+];
+const CIG=[
+  {g:"🧠 D1: Fundamentos de IA e ML (20%)",items:[
+    "Diferenciar IA, Machine Learning e Deep Learning e como se relacionam",
+    "Diferenciar aprendizado supervisionado, não supervisionado e por reforço",
+    "Entender o ciclo de vida de ML: coleta, preparação, treino, avaliação, deploy, monitoramento",
+    "Saber diferenciar overfitting de underfitting",
+    "Conhecer os principais serviços de IA/ML da AWS (SageMaker, Comprehend, Textract, Rekognition, Polly, Transcribe, Lex, Kendra, Forecast, Personalize)",
+    "Saber quando usar (e quando NÃO usar) machine learning para um problema",
+    "Entender o que são features, labels e engenharia de features",
+    "Saber por que GPUs aceleram o treinamento de deep learning",
+    "Conhecer o propósito específico de cada serviço de IA gerenciado da AWS",
+  ]},
+  {g:"✨ D2: Fundamentos de IA Generativa (24%)",items:[
+    "Definir o que é um foundation model e como difere de modelos tradicionais",
+    "Entender tokens, embeddings e janela de contexto",
+    "Explicar a arquitetura Transformer e o mecanismo de self-attention",
+    "Saber o que é alucinação e por que ocorre em modelos generativos",
+    "Entender o Amazon Bedrock e seu modelo de acesso via API unificada",
+    "Diferenciar base model de modelo fine-tuned",
+    "Definir RAG (Retrieval-Augmented Generation) e seu propósito",
+    "Entender o parâmetro temperature e seu efeito na saída do modelo",
+    "Saber o que são GANs e modelos de difusão",
+    "Conhecer PartyRock e Amazon Q como ferramentas de IA generativa da AWS",
+    "Identificar riscos de negócio do uso de IA generativa (alucinação, viés, reputação)",
+  ]},
+  {g:"🏗️ D3: Aplicações de Foundation Models (28%)",items:[
+    "Aplicar zero-shot, few-shot e chain-of-thought prompting",
+    "Explicar os componentes de uma arquitetura RAG",
+    "Conhecer Knowledge Bases for Amazon Bedrock e seu propósito",
+    "Conhecer Agents for Amazon Bedrock e seu propósito",
+    "Saber quando escolher prompt engineering vs RAG vs fine-tuning",
+    "Entender métricas de avaliação: ROUGE, BLEU, BERTScore",
+    "Saber por que avaliação humana continua importante além de métricas automáticas",
+    "Conhecer o SageMaker JumpStart e seu propósito",
+    "Entender o Model Evaluation no Amazon Bedrock",
+    "Entender o conceito de chunking em pipelines RAG",
+    "Diferenciar hyperparameters de parâmetros/pesos do modelo",
+    "Saber o que são guardrails de tópico e seu propósito",
+    "Considerar trade-offs de custo, latência e complexidade entre as abordagens de customização",
+  ]},
+  {g:"🔐 D4: Diretrizes para IA Responsável (14%)",items:[
+    "Conhecer as dimensões de IA responsável definidas pela AWS",
+    "Entender de onde vem o viés (bias) em modelos de ML",
+    "Conhecer o Amazon SageMaker Clarify e seu propósito (detecção de bias e explicabilidade)",
+    "Conhecer o Amazon Augmented AI (A2I) para human-in-the-loop",
+    "Diferenciar interpretabilidade de explicabilidade",
+    "Saber o que são AI Service Cards e model cards",
+  ]},
+  {g:"🛡️ D5: Segurança, Conformidade e Governança (14%)",items:[
+    "Explicar o modelo de responsabilidade compartilhada aplicado a serviços de IA",
+    "Conhecer o AWS Artifact para relatórios de conformidade",
+    "Entender data lineage e governança de dados em pipelines de IA",
+    "Conhecer AWS PrivateLink/VPC Endpoints para acesso privado a serviços de IA",
+    "Aplicar least privilege em IAM para soluções de IA",
+    "Entender riscos de prompt injection em aplicações de IA generativa",
+  ]},
+];
+const CIG_URLS=["https://aws.amazon.com/what-is/artificial-intelligence/","https://aws.amazon.com/what-is/machine-learning/","https://docs.aws.amazon.com/sagemaker/latest/dg/whatis.html",null,"https://aws.amazon.com/machine-learning/ai-services/",null,null,null,"https://aws.amazon.com/machine-learning/ai-services/","https://aws.amazon.com/what-is/foundation-models/",null,null,"https://aws.amazon.com/what-is/hallucinations-in-ai/","https://aws.amazon.com/bedrock/",null,"https://aws.amazon.com/what-is/retrieval-augmented-generation/",null,null,"https://aws.amazon.com/q/",null,null,"https://aws.amazon.com/what-is/retrieval-augmented-generation/","https://docs.aws.amazon.com/bedrock/latest/userguide/knowledge-base.html","https://docs.aws.amazon.com/bedrock/latest/userguide/agents.html",null,null,null,"https://aws.amazon.com/sagemaker/jumpstart/","https://docs.aws.amazon.com/bedrock/latest/userguide/model-evaluation.html",null,null,"https://docs.aws.amazon.com/bedrock/latest/userguide/guardrails.html",null,"https://aws.amazon.com/machine-learning/responsible-ai/",null,"https://aws.amazon.com/sagemaker/clarify/","https://aws.amazon.com/augmented-ai/",null,"https://aws.amazon.com/ai/responsible-ai/policy/","https://aws.amazon.com/compliance/shared-responsibility-model/","https://aws.amazon.com/artifact/",null,"https://aws.amazon.com/privatelink/","https://docs.aws.amazon.com/IAM/latest/UserGuide/best-practices.html",null];
+StudyEngine.init({
+  certId: 'aif',
+  titles: TITLES,
+  quizzes: QD,
+  exam: EXAM,
+  examMinutes: 90,
+  passScore: 700,
+  flashcards: FCS,
+  checklist: { mode:'grouped', groups: CIG, urls: CIG_URLS, legacyKey:'aif_unused_ck', containerId:'chklist', barId:'cpfill', txtId:'cptxt' }
+});
+</script>
+</body>
+</html>
