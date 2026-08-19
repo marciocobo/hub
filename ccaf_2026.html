@@ -5,98 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>CCA-F 2026 — Guia Completo de Estudos</title>
 <style>
-:root{--bg:#0f1117;--bg2:#1a1d27;--bg3:#22263a;--border:#2e3250;--accent:#7c6aff;--accent2:#a78bfa;--green:#34d399;--yellow:#fbbf24;--red:#f87171;--blue:#60a5fa;--text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;--r:10px;}
-*{box-sizing:border-box;margin:0;padding:0;}
-body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,sans-serif;font-size:15px;line-height:1.7;display:flex;min-height:100vh;}
-#sidebar{width:260px;min-width:260px;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto;}
-#sh{padding:20px 16px 12px;border-bottom:1px solid var(--border);}
-#sh h1{font-size:15px;font-weight:700;color:var(--accent2);}
-#sh p{font-size:11px;color:var(--text3);margin-top:2px;}
-.ns{padding:10px 8px 4px;}
-.nst{font-size:10px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:1px;padding:0 8px 6px;}
-.ni{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;cursor:pointer;font-size:13px;color:var(--text2);transition:all .15s;}
-.ni:hover{background:var(--bg3);color:var(--text);}
-.ni.active{background:rgba(124,106,255,.18);color:var(--accent2);font-weight:600;}
-.ni .dot{width:7px;height:7px;border-radius:50%;background:var(--border);flex-shrink:0;}
-.nb{margin-left:auto;font-size:10px;background:var(--bg3);padding:1px 6px;border-radius:99px;color:var(--text3);}
-#main{flex:1;overflow-y:auto;}
-#topbar{position:sticky;top:0;z-index:50;background:rgba(15,17,23,.92);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);padding:10px 28px;display:flex;align-items:center;gap:16px;}
-#topbar h2{font-size:14px;font-weight:600;}
-.pp{margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--text2);}
-.pbw{width:120px;height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;}
-.pbf{height:100%;background:var(--accent);border-radius:99px;transition:width .4s;}
-#content{padding:28px 32px;max-width:900px;}
-.card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;}
-.ct{font-size:17px;font-weight:700;margin-bottom:4px;display:flex;align-items:center;gap:10px;}
-.cs{font-size:13px;color:var(--text2);margin-bottom:16px;}
-.hero{background:linear-gradient(135deg,rgba(124,106,255,.15),rgba(96,165,250,.08));border:1px solid rgba(124,106,255,.3);border-radius:var(--r);padding:28px;margin-bottom:24px;}
-.hero h1{font-size:22px;font-weight:800;background:linear-gradient(90deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.hero p{color:var(--text2);margin-top:6px;font-size:14px;}
-.ig{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin:16px 0;}
-.ii{background:var(--bg3);border-radius:8px;padding:14px;}
-.ii .lb{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:600;}
-.ii .vl{font-size:16px;font-weight:700;color:var(--text);margin-top:4px;}
-.dbi{margin-bottom:14px;}
-.dbh{display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px;}
-.dbt{height:10px;background:var(--bg3);border-radius:99px;overflow:hidden;}
-.dbf{height:100%;border-radius:99px;transition:width 1s .2s;}
-pre{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;font-size:12.5px;line-height:1.6;margin:12px 0;}
-code{font-family:'Cascadia Code','Fira Code',monospace;}
-.ic{background:rgba(124,106,255,.15);color:var(--accent2);padding:1px 6px;border-radius:4px;font-family:monospace;font-size:13px;}
-.al{border-radius:8px;padding:12px 16px;margin:12px 0;font-size:13.5px;border-left:3px solid;}
-.aw{background:rgba(251,191,36,.08);border-color:var(--yellow);color:#fde68a;}
-.at{background:rgba(52,211,153,.08);border-color:var(--green);color:#a7f3d0;}
-.ai{background:rgba(96,165,250,.08);border-color:var(--blue);color:#bfdbfe;}
-.ad{background:rgba(248,113,113,.08);border-color:var(--red);color:#fecaca;}
-table{width:100%;border-collapse:collapse;font-size:13px;margin:12px 0;}
-th{background:var(--bg3);color:var(--text2);font-weight:600;text-align:left;padding:8px 12px;border-bottom:1px solid var(--border);}
-td{padding:8px 12px;border-bottom:1px solid rgba(46,50,80,.5);vertical-align:top;}
-tr:last-child td{border-bottom:none;}
-.qo{padding:11px 16px;border-radius:8px;cursor:pointer;font-size:13.5px;border:1px solid var(--border);background:var(--bg3);color:var(--text);transition:all .15s;text-align:left;width:100%;margin-bottom:8px;}
-.qo:hover:not(.correct):not(.wrong){border-color:var(--accent);background:rgba(124,106,255,.1);}
-.qo.correct{background:rgba(52,211,153,.15);border-color:var(--green);color:#a7f3d0;}
-.qo.wrong{background:rgba(248,113,113,.15);border-color:var(--red);color:#fecaca;}
-.qfb{margin-top:14px;padding:12px 16px;border-radius:8px;font-size:13.5px;display:none;}
-.qfb.show{display:block;}
-.qfb.ok{background:rgba(52,211,153,.1);color:#a7f3d0;border:1px solid rgba(52,211,153,.3);}
-.qfb.bad{background:rgba(248,113,113,.1);color:#fecaca;border:1px solid rgba(248,113,113,.3);}
-.qnav{display:flex;align-items:center;gap:10px;margin-top:16px;}
-.btn{padding:8px 18px;border-radius:7px;font-size:13px;font-weight:600;cursor:pointer;border:none;transition:all .15s;}
-.bp{background:var(--accent);color:#fff;}
-.bp:hover{background:#6b58f0;}
-.bg{background:var(--bg3);color:var(--text2);border:1px solid var(--border);}
-.bg:hover{background:var(--border);color:var(--text);}
-.qc{font-size:12px;color:var(--text3);margin-left:auto;}
-.fcw{perspective:1000px;height:200px;cursor:pointer;margin-bottom:16px;}
-.fc{width:100%;height:100%;position:relative;transform-style:preserve-3d;transition:transform .5s;border-radius:var(--r);}
-.fc.flipped{transform:rotateY(180deg);}
-.cf{position:absolute;width:100%;height:100%;backface-visibility:hidden;border-radius:var(--r);display:flex;align-items:center;justify-content:center;padding:24px;text-align:center;border:1px solid var(--border);}
-.cf.front{background:var(--bg2);}
-.cf.back{background:linear-gradient(135deg,rgba(124,106,255,.12),rgba(96,165,250,.08));transform:rotateY(180deg);}
-.cf .hint{position:absolute;bottom:10px;right:14px;font-size:11px;color:var(--text3);}
-.chi{display:flex;align-items:flex-start;gap:12px;padding:10px 0;border-bottom:1px solid rgba(46,50,80,.4);cursor:pointer;}
-.chi:last-child{border-bottom:none;}
-.chb{width:20px;height:20px;border-radius:5px;border:2px solid var(--border);flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s;}
-.chi.ck .chb{background:var(--green);border-color:var(--green);}
-.chi.ck .cht{text-decoration:line-through;color:var(--text3);}
-.cht{font-size:13.5px;}
-.cp{height:8px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:16px 0 8px;}
-.cpf{height:100%;background:var(--green);border-radius:99px;transition:width .4s;}
-.td{font-size:52px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-2px;color:var(--accent2);text-align:center;margin:10px 0;}
-.page{display:none;}
-.page.active{display:block;}
-h2.sh{font-size:20px;font-weight:700;margin-bottom:6px;}
-h3.sbh{font-size:15px;font-weight:700;color:var(--accent2);margin:18px 0 8px;}
-p{margin-bottom:10px;color:var(--text2);}
-ul,ol{padding-left:20px;margin-bottom:10px;}
-li{color:var(--text2);margin-bottom:4px;}
-strong{color:var(--text);}
-.tag{display:inline-block;padding:2px 8px;border-radius:99px;font-size:11px;font-weight:600;}
+:root{--accent:#7c6aff;--accent2:#a78bfa;--accent-rgb:124,106,255;}
 .td1{background:rgba(167,139,250,.2);color:#c4b5fd;}
 .td2{background:rgba(96,165,250,.2);color:#93c5fd;}
 .td3{background:rgba(52,211,153,.2);color:#6ee7b7;}
 .td4{background:rgba(251,191,36,.2);color:#fde68a;}
 .td5{background:rgba(248,113,113,.2);color:#fca5a5;}
+/* ccaf-only: rich domain content (code samples, alerts, summary cards) not used by clf/saa */
+pre{background:#0d1117;border:1px solid var(--border);border-radius:8px;padding:16px;overflow-x:auto;font-size:12.5px;line-height:1.6;margin:12px 0;}
+code{font-family:'Cascadia Code','Fira Code',monospace;}
+.ic{background:rgba(124,106,255,.15);color:var(--accent2);padding:1px 6px;border-radius:4px;font-family:monospace;font-size:13px;}
+.ad{background:rgba(248,113,113,.08);border-color:var(--red);color:#fecaca;}
+ul,ol{padding-left:20px;margin-bottom:10px;}
+li{color:var(--text2);margin-bottom:4px;}
+strong{color:var(--text);}
 .wb{display:flex;align-items:center;gap:12px;margin-bottom:16px;}
 .wbg{width:36px;height:36px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;}
 .sg{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:14px;}
@@ -104,89 +26,8 @@ strong{color:var(--text);}
 .sc h4{font-size:13px;font-weight:700;color:var(--text);margin-bottom:8px;}
 .sc ul{padding-left:16px;}
 .sc li{font-size:12px;color:var(--text2);}
-/* MOCK EXAM */
-.exam-header{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r);padding:16px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;}
-.exam-timer{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums;color:var(--yellow);}
-.exam-prog{flex:1;}
-.exam-qnum{font-size:13px;color:var(--text3);margin-bottom:4px;}
-.exam-bar{height:6px;background:var(--bg3);border-radius:99px;overflow:hidden;}
-.exam-bf{height:100%;background:var(--accent);border-radius:99px;transition:width .3s;}
-.exam-q{font-size:15px;font-weight:600;margin-bottom:16px;line-height:1.6;}
-.exam-domain{font-size:11px;color:var(--text3);margin-bottom:8px;}
-.exam-nav{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap;}
-.exam-flag{padding:6px 14px;border-radius:7px;font-size:12px;cursor:pointer;border:1px solid var(--yellow);background:rgba(251,191,36,.08);color:var(--yellow);}
-.result-bar{height:20px;background:var(--bg3);border-radius:99px;overflow:hidden;margin:12px 0;}
-.result-fill{height:100%;border-radius:99px;transition:width 1s;}
-.rcard{background:var(--bg3);border-radius:8px;padding:12px 16px;margin-bottom:8px;font-size:13px;border-left:3px solid var(--border);}
-.rcard.rc{border-color:var(--green);}
-.rcard.rw{border-color:var(--red);}
-/* CertSafari card */
-.certsafari-card{background:linear-gradient(135deg,rgba(251,191,36,.12),rgba(248,113,113,.08));border:1px solid rgba(251,191,36,.3);border-radius:var(--r);padding:20px 24px;margin-bottom:20px;display:flex;align-items:center;gap:20px;text-decoration:none;cursor:pointer;transition:all .2s;}
-.certsafari-card:hover{border-color:rgba(251,191,36,.6);background:linear-gradient(135deg,rgba(251,191,36,.18),rgba(248,113,113,.12));}
-.certsafari-icon{font-size:36px;flex-shrink:0;}
-.certsafari-text h3{font-size:16px;font-weight:700;color:var(--yellow);margin-bottom:4px;}
-.certsafari-text p{font-size:13px;color:var(--text2);margin:0;}
-.certsafari-arrow{margin-left:auto;font-size:20px;color:var(--yellow);}
-::-webkit-scrollbar{width:6px;height:6px;}
-::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--border);border-radius:99px;}
-
-/* ── RESPONSIVE ─────────────────────────────────────── */
-#hamburger{display:none;background:none;border:none;cursor:pointer;padding:6px 10px;border-radius:6px;color:var(--text);font-size:22px;line-height:1;flex-shrink:0;}
-#hamburger:hover{background:var(--bg3);}
-#overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:98;}
-#overlay.open{display:block;}
-@media(max-width:768px){
-  body{display:block;}
-  #sidebar{position:fixed!important;left:-290px;top:0;height:100%!important;width:270px!important;min-width:0!important;z-index:99;transition:left .28s ease;box-shadow:6px 0 32px rgba(0,0,0,.5);overflow-y:auto;}
-  #sidebar.open{left:0!important;}
-  #hamburger{display:inline-flex!important;align-items:center;justify-content:center;}
-  #main{width:100%;overflow-x:hidden;}
-  #topbar{padding:10px 12px;gap:8px;}
-  #topbar h2{font-size:13px;flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-  .pp{display:none!important;}
-  #content{padding:14px 12px!important;max-width:100%!important;box-sizing:border-box;}
-  .card{padding:14px 12px;margin-bottom:14px;}
-  .hero{padding:18px 14px;}
-  .hero h1{font-size:18px;}
-  .hero p{font-size:13px;}
-  .ig{grid-template-columns:repeat(2,1fr);gap:8px;margin:12px 0;}
-  .ii{padding:10px 12px;}
-  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;font-size:13px;}
-  .qo{padding:11px 12px;font-size:14px;}
-  .qt{font-size:15px;}
-  .fcw{height:200px;}
-  .cf.front .fq{font-size:15px;padding:16px;}
-  .cf.back{font-size:13px;padding:14px;}
-  .fcc{flex-wrap:wrap;gap:6px;justify-content:center;}
-  .fbt{min-width:80px;}
-  .fdom{flex-wrap:wrap;gap:6px;}
-  .etime{font-size:20px;}
-  .eqn{font-size:12px;}
-  .eco{padding:9px 10px;font-size:13px;}
-  .epb{width:28px;height:28px;font-size:11px;}
-  .chi{padding:9px 10px;gap:8px;font-size:13.5px;}
-  .chb{width:18px;height:18px;min-width:18px;}
-  .certsafari-card{padding:14px 16px;gap:12px;}
-  .certsafari-icon{font-size:28px;}
-  .certsafari-text h3{font-size:14px;}
-  .certsafari-text p{font-size:12px;}
-}
-@media(max-width:480px){
-  .ig{grid-template-columns:1fr;}
-  .hero h1{font-size:16px;}
-  #content{padding:12px 10px!important;}
-  .qo{font-size:13px;}
-  .eco{font-size:12px;}
-}
-
-/* ── CHECKLIST LINKS ── */
-.chi-link { display:inline-block; margin-left:8px; font-size:10px; color:var(--accent2);
-            opacity:0.55; text-decoration:none; vertical-align:middle; padding:1px 5px;
-            border-radius:3px; border:1px solid transparent; transition:all .2s; }
-.chi-link:hover { opacity:1; background:rgba(99,102,241,.15); border-color:var(--accent2); }
-
 </style>
+<link rel="stylesheet" href="study-engine.css">
 </head>
 <body>
 <div id="overlay"></div>
@@ -194,7 +35,7 @@ strong{color:var(--text);}
   <div id="sh" onclick="P('home',document.getElementById('nhome'))" style="cursor:pointer"><h1>CCA-F 2026</h1><p>Claude Certified Architect Foundations</p></div>
   <div class="ns">
     <div class="nst">Visão Geral</div>
-    <div class="ni active" onclick="P('home',this)">🏠 Dashboard</div>
+    <div class="ni active" id="nhome" onclick="P('home',this)">🏠 Dashboard</div>
     <div class="ni" onclick="P('simulado',this)">📝 Simulado Completo (60q)</div>
     <div class="ni" onclick="P('checklist',this)">✅ Checklist de Prontidão</div>
   </div>
@@ -215,7 +56,7 @@ strong{color:var(--text);}
     <div class="ni" onclick="P('flashcards',this)">🃏 Flashcards (66)</div>
     <div class="ni" onclick="P('docs',this)">📖 Docs Oficiais</div>
     <div class="ni" onclick="P('academy',this)">🎓 Anthropic Academy</div>
-    <div class="ni" onclick="P('resources',this)">📚 Recursos & Links</div>
+    <div class="ni" id="nresources" onclick="P('resources',this)">📚 Recursos & Links</div>
   </div>
 </nav>
 
@@ -322,6 +163,7 @@ strong{color:var(--text);}
   <div id="exam-result" style="display:none">
     <div class="card" id="exam-result-card"></div>
   </div>
+  <div class="card"><div class="ct">📈 Histórico de Tentativas</div><div id="exam-history"></div></div>
 </div>
 
 <!-- WEEKS (conteúdo inline) -->
@@ -596,18 +438,24 @@ Responda APENAS com JSON válido. Sem texto adicional.
 
 <!-- FLASHCARDS -->
 <div id="page-flashcards" class="page">
-  <h2 class="sh" style="margin-bottom:4px">🃏 Flashcards (50+)</h2>
-  <p style="margin-bottom:16px">Clique no cartão para ver a resposta.</p>
+  <h2 class="sh" style="margin-bottom:4px">🃏 Flashcards</h2>
+  <p>Clique no card para revelar. Use setas ou teclado ← → para navegar, Espaço para virar.</p>
+  <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap" id="fc-tags"></div>
   <div class="fcw" onclick="flipFC()">
-    <div class="fc" id="fccard">
-      <div class="cf front"><div><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px" id="fcdomain">D1</div><div style="font-size:16px;font-weight:600" id="fcfront">…</div></div><span class="hint">clique para virar</span></div>
-      <div class="cf back"><div style="font-size:14px" id="fcback">…</div><span class="hint">clique para virar</span></div>
+    <div class="fc" id="fc-card">
+      <div class="cf front"><div style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px"><span id="fc-dom"></span><span id="fc-due-badge" class="fc-due-badge" style="display:none">revisão</span></div><div style="font-size:16px;font-weight:600" id="fc-front"></div><div class="hint">clique para revelar →</div></div>
+      <div class="cf back"><div style="font-size:12px;color:var(--green);margin-bottom:10px" id="fc-dom2"></div><div style="font-size:14px" id="fc-back"></div><div class="hint">clique para virar</div></div>
     </div>
   </div>
-  <div style="display:flex;align-items:center;justify-content:space-between">
-    <button class="btn bg" onclick="prevFC()">← Anterior</button>
-    <span style="font-size:12px;color:var(--text3)" id="fcctr">1/50</span>
-    <button class="btn bp" onclick="nextFC()">Próximo →</button>
+  <div class="fc-known-controls">
+    <button class="btn fbt-unknown" onclick="fcMarkUnknown()">😕 Ainda não sei</button>
+    <button class="btn fbt-known" onclick="fcMarkKnown()">✅ Já sei</button>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+    <button class="btn bg" onclick="fcNav(-1)">← Anterior</button>
+    <span style="font-size:13px;color:var(--text3)" id="fc-ctr">1 / 50</span>
+    <button class="btn bg" onclick="fcNav(1)">Próximo →</button>
+    <button class="btn bp" onclick="shuffleFC()" style="margin-left:auto">🔀 Embaralhar</button>
   </div>
 </div>
 
@@ -911,20 +759,9 @@ Responda APENAS com JSON válido. Sem texto adicional.
 
   </div>
 </div>
+<script src="study-engine.js"></script>
 <script>
-// ── PAGE NAV ──────────────────────────────────────────────
 const titles={home:'Dashboard',simulado:'Simulado Completo',w1:'S1 — Fundamentos API',w2:'S2 — Agentic Loop',w3:'S3 — Multi-Agent',w4:'S4 — Claude Code',w5:'S5 — Prompt Engineering',w6:'S6 — MCP & Tools',w7:'S7 — Context & Reliability',w8:'S8 — Revisão Final',tricky:'Pegadinhas',flashcards:'Flashcards',checklist:'Checklist',docs:'Docs Oficiais',academy:'Anthropic Academy',resources:'Recursos'};
-function P(id,el){
-  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  document.getElementById('page-'+id).classList.add('active');
-  document.querySelectorAll('.ni').forEach(n=>n.classList.remove('active'));
-  if(el)el.classList.add('active');
-  document.getElementById('tbtitle').textContent=titles[id]||id;
-  document.getElementById('main').scrollTo(0,0);window.scrollTo(0,0);
-  if(id==='home')setTimeout(animBars,150);
-}
-function animBars(){document.querySelectorAll('.dbf[data-t]').forEach(e=>{e.style.width=e.dataset.t+'%';});}
-setTimeout(animBars,300);
 
 // ── QUIZ DATA ─────────────────────────────────────────────
 const QD={
@@ -1030,57 +867,6 @@ w8:[
 ]};
 
 // ── QUIZ ENGINE ────────────────────────────────────────────
-function buildQ(cid,qs){
-  const el=document.getElementById(cid);
-  if(!el)return;
-  let cur=0,score=0,ans=false;
-  const sq=qs.map(q=>{const n=q.o.length,ix=[...Array(n).keys()].sort(()=>Math.random()-.5);return{...q,o:ix.map(i=>q.o[i]),a:ix.indexOf(q.a)};});const st={qs:sq,cur:0,score:0,ans:false};
-  window['_q'+cid]=st;
-  renderQ(el,st);
-}
-function renderQ(el,st){
-  const q=st.qs[st.cur];
-  el.innerHTML=`<div style="font-size:15px;font-weight:600;margin-bottom:14px;line-height:1.5">${st.cur+1}. ${q.q}</div>
-  ${q.o.map((o,i)=>`<button class="qo" onclick="pickQ(this,${i},'_q${el.id}')">${o}</button>`).join('')}
-  <div class="qfb" id="fb_${el.id}"></div>
-  <div class="qnav">
-    ${st.cur>0?`<button class="btn bg" onclick="navQ('${el.id}',-1)">← Ant.</button>`:''}
-    <span class="qc">${st.cur+1}/${st.qs.length} · Acertos: ${st.score}</span>
-    ${st.cur<st.qs.length-1?`<button class="btn bp" onclick="navQ('${el.id}',1)" style="margin-left:auto">Próx. →</button>`:`<button class="btn bp" onclick="finQ('${el.id}')" style="margin-left:auto">Ver resultado</button>`}
-  </div>`;
-}
-window.pickQ=function(btn,idx,stk){
-  const st=window[stk];if(st.ans)return;st.ans=true;
-  const q=st.qs[st.cur];
-  btn.closest('.page,.card').querySelectorAll('.qo').forEach((o,i)=>{
-    if(i===q.a)o.classList.add('correct');
-    else if(i===idx&&idx!==q.a)o.classList.add('wrong');
-    o.disabled=true;
-  });
-  if(idx===q.a)st.score++;
-  const fb=document.getElementById('fb_'+stk.slice(2));
-  if(fb){fb.textContent=(idx===q.a?'✅ Correto! ':'❌ Incorreto. ')+q.e;fb.className='qfb show '+(idx===q.a?'ok':'bad');}
-};
-window.navQ=function(eid,dir){
-  const st=window['_q'+eid];
-  st.cur=Math.max(0,Math.min(st.qs.length-1,st.cur+dir));st.ans=false;
-  renderQ(document.getElementById(eid),st);
-};
-window.finQ=function(eid){
-  const st=window['_q'+eid];
-  const pct=Math.round((st.score/st.qs.length)*100);
-  const col=pct>=72?'#34d399':pct>=50?'#fbbf24':'#f87171';
-  document.getElementById(eid).innerHTML=`<div style="text-align:center;padding:20px">
-    <div style="font-size:48px;font-weight:800;color:${col}">${pct}%</div>
-    <div style="font-size:16px;font-weight:600;margin:8px 0">${st.score}/${st.qs.length} corretas</div>
-    <div style="color:var(--text2);font-size:14px;margin-bottom:20px">${pct>=72?'🏆 Aprovado!':pct>=50?'📚 Bom! Revise os erros.':'🔁 Continue estudando.'}</div>
-    <button class="btn bp" onclick="restQ('${eid}')">↺ Refazer</button></div>`;
-};
-window.restQ=function(eid){
-  const st=window['_q'+eid];st.cur=0;st.score=0;st.ans=false;
-  renderQ(document.getElementById(eid),st);
-};
-Object.keys(QD).forEach(k=>buildQ('q'+k,QD[k]));
 
 // ── MOCK EXAM DATA (60 questões) ───────────────────────────
 const EXAM=[
@@ -1152,83 +938,6 @@ const EXAM=[
   {d:"D5",q:"Streaming de respostas beneficia principalmente:",o:["Qualidade do output","Percepção de latência pelo usuário","Custo por token","Confiabilidade do sistema"],a:1,e:"Streaming não reduz tempo total de geração — melhora a percepção do usuário que começa a ler imediatamente."}
 ];
 
-// ── MOCK EXAM ENGINE ───────────────────────────────────────
-let examQ=[],examIdx=0,examAns={},examFlags=new Set(),examSec=7200,examTmr=null;
-const EL=EXAM.length;
-window.startExam=function(){
-  examQ=[...EXAM].sort(()=>Math.random()-.5).map(q=>{const n=q.o.length,ix=[...Array(n).keys()].sort(()=>Math.random()-.5);return{...q,o:ix.map(i=>q.o[i]),a:ix.indexOf(q.a)};});
-  examIdx=0;examAns={};examFlags.clear();examSec=7200;
-  document.getElementById('exam-start').style.display='none';
-  document.getElementById('exam-body').style.display='block';
-  renderExamQ();
-  examTmr=setInterval(()=>{
-    examSec--;
-    const m=Math.floor(examSec/60),s=examSec%60;
-    const el=document.getElementById('exam-clock');
-    if(el)el.textContent=`${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
-    if(el&&examSec<=300)el.style.color='#f87171';
-    if(examSec<=0){clearInterval(examTmr);finishExam();}
-  },1000);
-};
-function renderExamQ(){
-  const q=examQ[examIdx];
-  document.getElementById('exam-domain').textContent=q.d+' — Questão '+(examIdx+1)+' de '+EL;
-  document.getElementById('exam-qnum').textContent='Questão '+(examIdx+1)+' de '+EL;
-  document.getElementById('exam-q').textContent=q.q;
-  document.getElementById('exam-bf').style.width=((examIdx+1)/EL*100)+'%';
-  const sel=examAns[examIdx];
-  document.getElementById('exam-opts').innerHTML=q.o.map((o,i)=>`<button class="qo${sel===i?' correct':''}" onclick="examPick(${i})">${String.fromCharCode(65+i)}) ${o}</button>`).join('');
-  const flagBtn=document.querySelector('.exam-flag');
-  if(flagBtn)flagBtn.style.background=examFlags.has(examIdx)?'rgba(251,191,36,.3)':'rgba(251,191,36,.08)';
-  const answered=Object.keys(examAns).length;
-  document.getElementById('exam-score-live').textContent=`Respondidas: ${answered} | Marcadas: ${examFlags.size}`;
-  const dots=document.getElementById('exam-dots');
-  if(dots){
-    dots.innerHTML=Array.from({length:EL},(_,i)=>{
-      const cls=i===examIdx?'background:#a78bfa':examFlags.has(i)?'background:#fbbf24':examAns[i]!==undefined?'background:#34d399':'background:var(--border)';
-      return `<div onclick="examGoto(${i})" style="width:12px;height:12px;border-radius:3px;cursor:pointer;${cls}"></div>`;
-    }).join('');
-  }
-}
-window.examPick=function(i){examAns[examIdx]=i;renderExamQ();};
-window.examNav=function(dir){examIdx=Math.max(0,Math.min(EL-1,examIdx+dir));renderExamQ();};
-window.examGoto=function(i){examIdx=i;renderExamQ();};
-window.examFlag=function(){if(examFlags.has(examIdx))examFlags.delete(examIdx);else examFlags.add(examIdx);renderExamQ();};
-window.finishExam=function(){
-  clearInterval(examTmr);
-  document.getElementById('exam-body').style.display='none';
-  document.getElementById('exam-result').style.display='block';
-  let correct=0;
-  examQ.forEach((q,i)=>{if(examAns[i]===q.a)correct++;});
-  const pct=Math.round(correct/EL*100);
-  const scaled=Math.round(correct/EL*1000);
-  const pass=scaled>=720;
-  const col=pass?'#34d399':'#f87171';
-  const d1c=examQ.filter((q,i)=>q.d==='D1'&&examAns[i]===q.a).length,d1t=examQ.filter(q=>q.d==='D1').length;
-  const d2c=examQ.filter((q,i)=>q.d==='D2'&&examAns[i]===q.a).length,d2t=examQ.filter(q=>q.d==='D2').length;
-  const d3c=examQ.filter((q,i)=>q.d==='D3'&&examAns[i]===q.a).length,d3t=examQ.filter(q=>q.d==='D3').length;
-  const d4c=examQ.filter((q,i)=>q.d==='D4'&&examAns[i]===q.a).length,d4t=examQ.filter(q=>q.d==='D4').length;
-  const d5c=examQ.filter((q,i)=>q.d==='D5'&&examAns[i]===q.a).length,d5t=examQ.filter(q=>q.d==='D5').length;
-  document.getElementById('exam-result-card').innerHTML=`
-    <div style="text-align:center;padding:10px 0 20px">
-      <div style="font-size:64px;font-weight:800;color:${col}">${scaled}</div>
-      <div style="font-size:18px;font-weight:700;margin:4px 0">${pass?'✅ APROVADO':'❌ REPROVADO'}</div>
-      <div style="font-size:14px;color:var(--text2)">${correct}/${EL} corretas (${pct}%) · Mínimo: 720/1000</div>
-    </div>
-    <div class="result-bar"><div class="result-fill" style="width:${pct}%;background:${col}"></div></div>
-    <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:8px;margin:16px 0;text-align:center">
-      <div style="background:var(--bg3);padding:10px;border-radius:8px"><div style="font-size:11px;color:var(--text3)">D1 (27%)</div><div style="font-size:18px;font-weight:700;color:${d1c/d1t>=.72?'#34d399':'#f87171'}">${d1c}/${d1t}</div></div>
-      <div style="background:var(--bg3);padding:10px;border-radius:8px"><div style="font-size:11px;color:var(--text3)">D2 (20%)</div><div style="font-size:18px;font-weight:700;color:${d2c/d2t>=.72?'#34d399':'#f87171'}">${d2c}/${d2t}</div></div>
-      <div style="background:var(--bg3);padding:10px;border-radius:8px"><div style="font-size:11px;color:var(--text3)">D3 (20%)</div><div style="font-size:18px;font-weight:700;color:${d3c/d3t>=.72?'#34d399':'#f87171'}">${d3c}/${d3t}</div></div>
-      <div style="background:var(--bg3);padding:10px;border-radius:8px"><div style="font-size:11px;color:var(--text3)">D4 (18%)</div><div style="font-size:18px;font-weight:700;color:${d4c/d4t>=.72?'#34d399':'#f87171'}">${d4c}/${d4t}</div></div>
-      <div style="background:var(--bg3);padding:10px;border-radius:8px"><div style="font-size:11px;color:var(--text3)">D5 (15%)</div><div style="font-size:18px;font-weight:700;color:${d5c/d5t>=.72?'#34d399':'#f87171'}">${d5c}/${d5t}</div></div>
-    </div>
-    <h3 style="font-size:15px;font-weight:700;margin-bottom:12px;color:var(--text2)">Revisão de Erros</h3>
-    ${examQ.map((q,i)=>examAns[i]!==q.a?`<div class="rcard rw"><strong>Q${i+1} [${q.d}]</strong> ${q.q}<br><span style="color:#f87171">Sua: ${q.o[examAns[i]]||'—'}</span><br><span style="color:#34d399">Correta: ${q.o[q.a]}</span><br><span style="color:var(--text3);font-size:12px">${q.e}</span></div>`:'').join('')}
-    <div style="margin-top:20px;text-align:center"><button class="btn bp" onclick="restartExam()">↺ Refazer Simulado</button></div>`;
-};
-window.restartExam=function(){document.getElementById('exam-result').style.display='none';document.getElementById('exam-start').style.display='block';};
-
 // ── FLASHCARDS (65+) ───────────────────────────────────────
 const FCS=[
   {d:"D1",f:"O que é o Agentic Loop?",b:"Ciclo: Tarefa → Planejamento → Tool Use → Observação → Replanning → Resultado. Cada iteração = uma chamada à API."},
@@ -1299,20 +1008,6 @@ const FCS=[
   {d:"D1",f:"Parallel tool use — o que o modelo pode fazer?",b:"Retornar múltiplas tool calls em uma única resposta. Seu código executa TODAS em paralelo e retorna todos os tool_results antes da próxima iteração."},
   {d:"D2",f:"Qual CLAUDE.md tem precedência em um projeto?",b:"O mais específico. Hierarquia: Path-specific (./src/CLAUDE.md) > Project-level (./CLAUDE.md) > User-level (~/.claude/CLAUDE.md)."}
 ];
-let fci=0;
-function renderFC(){
-  const c=FCS[fci];
-  document.getElementById('fcdomain').textContent=c.d;
-  document.getElementById('fcfront').innerHTML=c.f;
-  document.getElementById('fcback').innerHTML=c.b;
-  document.getElementById('fcctr').textContent=`${fci+1}/${FCS.length}`;
-  document.getElementById('fccard').classList.remove('flipped');
-}
-window.flipFC=()=>document.getElementById('fccard').classList.toggle('flipped');
-window.nextFC=()=>{fci=(fci+1)%FCS.length;renderFC();};
-window.prevFC=()=>{fci=(fci-1+FCS.length)%FCS.length;renderFC();};
-renderFC();
-
 // ── CHECKLIST ──────────────────────────────────────────────
 const CIG=[
   {g:"🧠 D1: Fundamentos do Claude (27%)",items:[
@@ -1375,44 +1070,16 @@ const CIG=[
   ]},
 ];
 const CIG_URLS=["https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/about-claude/models/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking","https://docs.anthropic.com/en/docs/build-with-claude/token-counting","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users","https://docs.anthropic.com/en/docs/claude-code/memory","https://docs.anthropic.com/en/docs/about-claude/models/overview","https://docs.anthropic.com/en/docs/about-claude/models/overview",null,null,"https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/structured-outputs","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",null,null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/claude-code/memory","https://docs.anthropic.com/en/docs/mcp","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/structured-outputs",null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/agents",null,"https://www.anthropic.com/pricing","https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching","https://docs.anthropic.com/en/api/errors","https://docs.anthropic.com/en/docs/build-with-claude/overview","https://docs.anthropic.com/en/docs/build-with-claude/security-best-practices","https://www.anthropic.com/legal/aup",null,"https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback","https://www.anthropic.com/responsible-scaling-policy","https://docs.anthropic.com/en/docs/build-with-claude/content-moderation","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users",null,"https://privacy.anthropic.com","https://trust.anthropic.com",null,null];
-const CKflat=CIG.flatMap(g=>g.items);
-const saved=JSON.parse(localStorage.getItem('ccaf_ck')||'[]');
-function renderCL(){
-  let offset=0;
-  document.getElementById('chklist').innerHTML=CIG.map(g=>{
-    const items=g.items.map((t,li)=>{
-      const gi=offset+li;
-      const ck=saved.includes(gi);
-      return `<div class="chi${ck?' ck':''}" onclick="tck(${gi})"><div class="chb">${ck?'<svg width="12" height="12" viewBox="0 0 12 12" fill="none"><path d="M2 6l3 3 5-5" stroke="#0d1117" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>':''}</div><div class="cht">${t}${CIG_URLS[gi]?'<a class="chi-link" href="'+CIG_URLS[gi]+'" target="_blank" rel="noopener" onclick="event.stopPropagation()" title="Abrir documentação">↗</a>':'<a class="chi-link" href="#" onclick="event.stopPropagation();P(\'resources\',document.getElementById(\'nresources\'));return false;" title="Ver Recursos">📚</a>'}</div></div>`;
-    }).join('');
-    offset+=g.items.length;
-    return `<div style="font-size:14px;font-weight:700;color:var(--accent2);margin:20px 0 10px;padding-top:12px;border-top:1px solid var(--border)">${g.g}</div><div class="card" style="padding:12px 20px">${items}</div>`;
-  }).join('');
-  const p=Math.round(saved.length/CKflat.length*100);
-  document.getElementById('cpfill').style.width=p+'%';
-  document.getElementById('cptxt').textContent=saved.length+' de '+CKflat.length+' completos ('+p+'%)';
-  document.getElementById('ptext').textContent=saved.length+'/'+CKflat.length+' itens';
-  document.getElementById('gpbar').style.width=p+'%';
-}
-window.tck=function(i){const x=saved.indexOf(i);if(x===-1)saved.push(i);else saved.splice(x,1);localStorage.setItem('ccaf_ck',JSON.stringify(saved));renderCL();};
-renderCL();
 
-// ── SIDEBAR MOBILE ────────────────────────────────────
-function toggleSidebar(){
-  document.getElementById('sidebar').classList.toggle('open');
-  document.getElementById('overlay').classList.toggle('open');
-}
-document.getElementById('overlay').addEventListener('click',function(){
-  document.getElementById('sidebar').classList.remove('open');
-  document.getElementById('overlay').classList.remove('open');
-});
-document.querySelectorAll('.ni').forEach(function(ni){
-  ni.addEventListener('click',function(){
-    if(window.innerWidth<=768){
-      document.getElementById('sidebar').classList.remove('open');
-      document.getElementById('overlay').classList.remove('open');
-    }
-  });
+StudyEngine.init({
+  certId: 'ccaf',
+  titles: titles,
+  quizzes: QD,
+  exam: EXAM,
+  examMinutes: 120,
+  passScore: 720,
+  flashcards: FCS,
+  checklist: { mode:'grouped', groups: CIG, urls: CIG_URLS, legacyKey:'ccaf_ck', containerId:'chklist', barId:'cpfill', txtId:'cptxt' }
 });
 </script>
 </body>

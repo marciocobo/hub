@@ -113,6 +113,16 @@ header p{color:var(--text2);font-size:15px;}
 .card.awssvc .cert-badge{background:rgba(249,115,22,.2);color:#fb923c;}
 .card.awssvc:hover{box-shadow:0 20px 60px rgba(249,115,22,.2);border-color:rgba(249,115,22,.4);}
 
+.hub-progress{display:none;align-items:center;gap:8px;font-size:11px;color:var(--text2);margin-bottom:14px;}
+.hub-progress.has-data{display:flex;}
+.hub-progress .hp-bar{flex:1;height:4px;background:rgba(255,255,255,.12);border-radius:99px;overflow:hidden;}
+.hub-progress .hp-fill{height:100%;background:currentColor;border-radius:99px;}
+
+.hub-actions{display:flex;align-items:center;justify-content:center;gap:10px;padding:0 12px 20px;flex-wrap:wrap;}
+.hub-btn{background:var(--bg2);border:1px solid var(--border);color:var(--text2);font-size:12px;padding:7px 14px;border-radius:8px;cursor:pointer;transition:all .15s;}
+.hub-btn:hover{background:var(--bg3);color:var(--text);}
+.hub-import-status{font-size:12px;}
+
 </style>
 </head>
 <body>
@@ -149,6 +159,7 @@ header p{color:var(--text2);font-size:15px;}
             <div class="dom-bar"><div class="dom-label"><span>D3 — Arquitetura de Sistemas</span><strong>27%</strong></div><div class="dom-track"><div class="dom-fill" style="width:27%;background:#7c6aff"></div></div></div>
             <div class="dom-bar"><div class="dom-label"><span>D4 — Segurança & Conformidade</span><strong>21%</strong></div><div class="dom-track"><div class="dom-fill" style="width:21%;background:#a78bfa"></div></div></div>
           </div>
+          <div class="hub-progress" data-cert="ccaf" data-total="50"><span class="hp-txt"></span><div class="hp-bar"><div class="hp-fill" style="width:0%"></div></div></div>
           <button class="open-btn" onclick="event.preventDefault();window.location.href='ccaf_2026.html'">Abrir Guia de Estudos →</button>
         </a>
 
@@ -170,6 +181,7 @@ header p{color:var(--text2);font-size:15px;}
             <div class="dom-bar"><div class="dom-label"><span>D3 — Alta Performance</span><strong>24%</strong></div><div class="dom-track"><div class="dom-fill" style="width:24%;background:#fbbf24"></div></div></div>
             <div class="dom-bar"><div class="dom-label"><span>D4 — Custo Otimizado</span><strong>20%</strong></div><div class="dom-track"><div class="dom-fill" style="width:20%;background:#a78bfa"></div></div></div>
           </div>
+          <div class="hub-progress" data-cert="saa" data-total="53"><span class="hp-txt"></span><div class="hp-bar"><div class="hp-fill" style="width:0%"></div></div></div>
           <button class="open-btn" onclick="event.preventDefault();window.location.href='aws_saa_study.html'">Abrir Guia de Estudos →</button>
         </a>
 
@@ -191,6 +203,7 @@ header p{color:var(--text2);font-size:15px;}
             <div class="dom-bar"><div class="dom-label"><span>D3 — Serviços Cloud</span><strong>34%</strong></div><div class="dom-track"><div class="dom-fill" style="width:34%;background:#34d399"></div></div></div>
             <div class="dom-bar"><div class="dom-label"><span>D4 — Faturamento</span><strong>12%</strong></div><div class="dom-track"><div class="dom-fill" style="width:12%;background:#a78bfa"></div></div></div>
           </div>
+          <div class="hub-progress" data-cert="clf" data-total="45"><span class="hp-txt"></span><div class="hp-bar"><div class="hp-fill" style="width:0%"></div></div></div>
           <button class="open-btn" onclick="event.preventDefault();window.location.href='clf_c02_study.html'">Abrir Guia de Estudos →</button>
         </a>
         <!-- AI Concepts -->
@@ -246,6 +259,14 @@ header p{color:var(--text2);font-size:15px;}
   <div class="stat">✅ Checklists de prontidão</div>
 </div>
 
+<div class="hub-actions">
+  <button class="hub-btn" id="btnExportProgress">⬇ Exportar progresso</button>
+  <button class="hub-btn" id="btnImportProgress">⬆ Importar progresso</button>
+  <input type="file" id="importProgressFile" accept="application/json" style="display:none">
+  <span id="importProgressStatus" class="hub-import-status"></span>
+</div>
+
+<script src="study-engine.js"></script>
 <script>
 var TOTAL = 5, cur = 0;
 function isMobile(){ return window.innerWidth <= 768; }
@@ -292,6 +313,67 @@ window.addEventListener('resize', function(){
 });
 
 if(isMobile()) updateCarousel();
+
+// ── HUB PROGRESS (study-progress-tracking) ─────────────────────────
+function renderHubProgress(){
+  document.querySelectorAll('.hub-progress').forEach(function(el){
+    var certId = el.dataset.cert;
+    var total = parseInt(el.dataset.total, 10) || 0;
+    var cert = getCertProgress(certId);
+    var done = Object.values(cert.checklist).filter(Boolean).length;
+    if(!done && !cert.examHistory.length){ el.classList.remove('has-data'); return; }
+    el.classList.add('has-data');
+    var pct = total ? Math.round(done/total*100) : 0;
+    var txt = pct + '% do checklist';
+    if(cert.examHistory.length){
+      var last = cert.examHistory[cert.examHistory.length-1];
+      txt += ' · último simulado: ' + last.score + '/1000';
+    }
+    el.querySelector('.hp-txt').textContent = txt;
+    el.querySelector('.hp-fill').style.width = pct + '%';
+  });
+}
+renderHubProgress();
+
+// ── PROGRESS EXPORT / IMPORT (progress-export-import) ───────────────
+function showImportStatus(msg, isError){
+  var el = document.getElementById('importProgressStatus');
+  el.textContent = msg;
+  el.style.color = isError ? '#f87171' : '#34d399';
+  setTimeout(function(){ el.textContent=''; }, 6000);
+}
+document.getElementById('btnExportProgress').addEventListener('click', function(){
+  var envelope = exportProgressEnvelope();
+  var blob = new Blob([JSON.stringify(envelope,null,2)], {type:'application/json'});
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url; a.download = 'hub-study-progress-' + new Date().toISOString().slice(0,10) + '.json';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+});
+document.getElementById('btnImportProgress').addEventListener('click', function(){
+  document.getElementById('importProgressFile').click();
+});
+document.getElementById('importProgressFile').addEventListener('change', function(e){
+  var file = e.target.files[0];
+  if(!file) return;
+  var reader = new FileReader();
+  reader.onload = function(){
+    var parsed;
+    try{ parsed = JSON.parse(reader.result); }
+    catch(err){ showImportStatus('❌ Arquivo inválido (JSON malformado).', true); return; }
+    if(!validateProgressEnvelope(parsed)){ showImportStatus('❌ Formato de arquivo não reconhecido.', true); return; }
+    if(hasAnyProgress()){
+      if(!confirm('Isso substituirá o progresso já salvo neste navegador. Continuar?')) return;
+    }
+    saveAllProgress(parsed.progress);
+    showImportStatus('✅ Progresso importado com sucesso!', false);
+    renderHubProgress();
+  };
+  reader.onerror = function(){ showImportStatus('❌ Não foi possível ler o arquivo.', true); };
+  reader.readAsText(file);
+  e.target.value = '';
+});
 </script>
 </body>
 </html>
