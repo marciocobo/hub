@@ -21,12 +21,14 @@ header p{color:var(--text2);font-size:15px;}
 .card.saa::before{background:linear-gradient(90deg,#3b82f6,#60a5fa);}
 .card.clf::before{background:linear-gradient(90deg,#f59e0b,#fbbf24);}
 .card.aif::before{background:linear-gradient(90deg,#ec4899,#f472b6);}
+.card.dva::before{background:linear-gradient(90deg,#10b981,#34d399);}
 .cert-icon{font-size:42px;margin-bottom:16px;}
 .cert-badge{display:inline-block;padding:3px 10px;border-radius:99px;font-size:11px;font-weight:700;margin-bottom:14px;}
 .card.ccaf .cert-badge{background:rgba(124,106,255,.2);color:#a78bfa;}
 .card.saa .cert-badge{background:rgba(59,130,246,.2);color:#60a5fa;}
 .card.clf .cert-badge{background:rgba(245,158,11,.2);color:#fbbf24;}
 .card.aif .cert-badge{background:rgba(236,72,153,.2);color:#f472b6;}
+.card.dva .cert-badge{background:rgba(16,185,129,.2);color:#34d399;}
 .cert-title{font-size:19px;font-weight:800;margin-bottom:6px;line-height:1.3;}
 .cert-sub{font-size:13px;color:var(--text2);margin-bottom:20px;}
 .cert-info{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
@@ -43,6 +45,7 @@ header p{color:var(--text2);font-size:15px;}
 .card.saa .open-btn{background:#3b82f6;color:#fff;}
 .card.clf .open-btn{background:#f59e0b;color:#000;}
 .card.aif .open-btn{background:#ec4899;color:#fff;}
+.card.dva .open-btn{background:#10b981;color:#fff;}
 .open-btn:hover{opacity:.9;}
 
 /* ── STATS ── */
@@ -66,6 +69,7 @@ header p{color:var(--text2);font-size:15px;}
   .card.saa:hover{border-color:rgba(59,130,246,.4);}
   .card.clf:hover{border-color:rgba(245,158,11,.4);}
   .card.aif:hover{border-color:rgba(236,72,153,.4);}
+  .card.dva:hover{border-color:rgba(16,185,129,.4);}
 }
 
 /* ══════════════════════════════════
@@ -98,6 +102,7 @@ header p{color:var(--text2);font-size:15px;}
   .card.saa.active-card{border-color:rgba(59,130,246,.45);}
   .card.clf.active-card{border-color:rgba(245,158,11,.45);}
   .card.aif.active-card{border-color:rgba(236,72,153,.45);}
+  .card.dva.active-card{border-color:rgba(16,185,129,.45);}
 
   /* dots */
   .c-dot{width:8px;height:8px;border-radius:99px;cursor:pointer;transition:all .25s;border:none;background:var(--border);}
@@ -106,6 +111,7 @@ header p{color:var(--text2);font-size:15px;}
   .c-dot.d1.active{background:#3b82f6;}
   .c-dot.d2.active{background:#f59e0b;}
   .c-dot.d3.active{background:#ec4899;}
+  .c-dot.d4.active{background:#10b981;}
 
   .stats{font-size:12px;padding:14px 12px;gap:8px;}
 }
@@ -234,8 +240,30 @@ header p{color:var(--text2);font-size:15px;}
           <div class="hub-progress" data-cert="aif" data-total="45"><span class="hp-txt"></span><div class="hp-bar"><div class="hp-fill" style="width:0%"></div></div></div>
           <button class="open-btn" onclick="event.preventDefault();window.location.href='aws_aif_c01_study.html'">Abrir Guia de Estudos →</button>
         </a>
+
+        <!-- AWS DVA-C02 -->
+        <a href="aws_dva_c02_study.html" class="card dva" data-idx="4">
+          <div class="cert-icon">☁️</div>
+          <div class="cert-badge">AWS</div>
+          <div class="cert-title">Developer — Associate</div>
+          <div class="cert-sub">DVA-C02 · Desenvolvimento, segurança, deployment e troubleshooting na AWS</div>
+          <div class="cert-info">
+            <div class="ci"><div class="label">Questões</div><div class="value">65</div></div>
+            <div class="ci"><div class="label">Tempo</div><div class="value">130 min</div></div>
+            <div class="ci"><div class="label">Mínimo</div><div class="value">720/1000</div></div>
+            <div class="ci"><div class="label">Nível</div><div class="value">Associate</div></div>
+          </div>
+          <div class="cert-domains">
+            <div class="dom-bar"><div class="dom-label"><span>D1 — Desenvolvimento</span><strong>32%</strong></div><div class="dom-track"><div class="dom-fill" style="width:32%;background:#fb923c"></div></div></div>
+            <div class="dom-bar"><div class="dom-label"><span>D2 — Segurança</span><strong>26%</strong></div><div class="dom-track"><div class="dom-fill" style="width:26%;background:#f87171"></div></div></div>
+            <div class="dom-bar"><div class="dom-label"><span>D3 — Implantação</span><strong>24%</strong></div><div class="dom-track"><div class="dom-fill" style="width:24%;background:#38bdf8"></div></div></div>
+            <div class="dom-bar"><div class="dom-label"><span>D4 — Troubleshooting</span><strong>18%</strong></div><div class="dom-track"><div class="dom-fill" style="width:18%;background:#a78bfa"></div></div></div>
+          </div>
+          <div class="hub-progress" data-cert="dva" data-total="45"><span class="hp-txt"></span><div class="hp-bar"><div class="hp-fill" style="width:0%"></div></div></div>
+          <button class="open-btn" onclick="event.preventDefault();window.location.href='aws_dva_c02_study.html'">Abrir Guia de Estudos →</button>
+        </a>
         <!-- AI Concepts -->
-        <a href="ai_concepts.html" class="card concepts" data-idx="4">
+        <a href="ai_concepts.html" class="card concepts" data-idx="5">
           <div class="cert-icon">&#x1F9E0;</div>
           <div class="cert-badge">REFER&#xCA;NCIA</div>
           <div class="cert-title">Conceitos de IA Avan&#xE7;ados</div>
@@ -248,7 +276,7 @@ header p{color:var(--text2);font-size:15px;}
           </div>
         </a>
         <!-- AWS Services -->
-        <a href="aws_services.html" class="card awssvc" data-idx="5">
+        <a href="aws_services.html" class="card awssvc" data-idx="6">
           <div class="cert-icon">&#x2601;&#xFE0F;</div>
           <div class="cert-badge">AWS</div>
           <div class="cert-title">Servi&#xE7;os AWS — Guia Completo</div>
@@ -274,16 +302,17 @@ header p{color:var(--text2);font-size:15px;}
     <button class="c-dot d3" onclick="goTo(3)"></button>
     <button class="c-dot d4" onclick="goTo(4)"></button>
     <button class="c-dot d5" onclick="goTo(5)"></button>
+    <button class="c-dot d6" onclick="goTo(6)"></button>
   </div>
   <p class="c-hint">← deslize para navegar →</p>
 </main>
 
 <div class="stats">
-  <div class="stat">🎓 4 certificações</div>
+  <div class="stat">🎓 5 certificações</div>
   <div class="stat">·</div>
-  <div class="stat">📝 245+ questões de simulado</div>
+  <div class="stat">📝 310+ questões de simulado</div>
   <div class="stat">·</div>
-  <div class="stat">🃏 214 flashcards</div>
+  <div class="stat">🃏 264 flashcards</div>
   <div class="stat">·</div>
   <div class="stat">✅ Checklists de prontidão</div>
 </div>
@@ -297,7 +326,7 @@ header p{color:var(--text2);font-size:15px;}
 
 <script src="study-engine.js"></script>
 <script>
-var TOTAL = 6, cur = 0;
+var TOTAL = 7, cur = 0;
 function isMobile(){ return window.innerWidth <= 768; }
 
 function updateCarousel(){
