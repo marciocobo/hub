@@ -1010,7 +1010,7 @@ const FCS=[
 ];
 // ── CHECKLIST ──────────────────────────────────────────────
 const CIG=[
-  {g:"🧠 D1: Fundamentos do Claude (27%)",items:[
+  {g:"🧠 Fundamentos do Claude",items:[
     "Explicar o agentic loop completo: percepção → raciocínio → ação → observação",
     "Descrever as janelas de contexto do Claude (Haiku, Sonnet, Opus) e seus trade-offs",
     "Diferenciar temperatura, top-p e top-k: saídas criativas vs determinísticas",
@@ -1024,7 +1024,7 @@ const CIG=[
     "Descrever o comportamento de alucinação e estratégias para mitigá-lo",
     "Entender como Claude lida com ambiguidade em instruções do usuário",
   ]},
-  {g:"✍️ D2: Prompt Engineering (25%)",items:[
+  {g:"✍️ Prompt Engineering",items:[
     "Escrever system prompt eficaz: role, contexto, formato e restrições",
     "Aplicar few-shot prompting com exemplos bem escolhidos e balanceados",
     "Usar Chain-of-Thought (CoT) para problemas que requerem raciocínio passo a passo",
@@ -1038,7 +1038,7 @@ const CIG=[
     "Entender como o comprimento do context window afeta qualidade de respostas longas",
     "Testar e iterar prompts sistematicamente com casos de teste definidos",
   ]},
-  {g:"🏗️ D3: Arquitetura de Sistemas com Claude (27%)",items:[
+  {g:"🏗️ Arquitetura de Sistemas com Claude",items:[
     "Defender quando usar Orchestrator-Worker vs Prompt Chaining vs Paralelização",
     "Projetar sistema agêntico com planejamento, execução e verificação de resultados",
     "Configurar um CLAUDE.md para projeto real com regras do time e contexto de codebase",
@@ -1054,7 +1054,7 @@ const CIG=[
     "Implementar tratamento de erros e retry em integrações com Claude API",
     "Diferenciar API direta, Claude Code, MCP e Workspaces: quando usar cada um",
   ]},
-  {g:"🔐 D4: Segurança e Conformidade (21%)",items:[
+  {g:"🔐 Segurança e Conformidade",items:[
     "Explicar prompt injection e como defender sistemas contra ela",
     "Descrever as políticas de uso aceitável da Anthropic e seus limites",
     "Implementar validação de input/output para prevenir vazamento de dados sensíveis",
@@ -1068,8 +1068,18 @@ const CIG=[
     "Implementar logging e auditoria em sistemas Claude para rastreabilidade",
     "Avaliar riscos de segurança antes de dar permissões de execução a agentes",
   ]},
+  {g:"🔌 Tool Design, MCP e Context Management (D4 18% · D5 15%)",items:[
+    "Escrever descrições e JSON schemas de ferramentas claros para o modelo escolher a ferramenta certa",
+    "Usar tool_choice (auto, any, tool específica) e saber o efeito de cada modo",
+    "Devolver erros de ferramentas de forma útil ao modelo (tool_result com is_error) para permitir recuperação",
+    "Diferenciar tools, resources e prompts em um servidor MCP e quando usar cada um",
+    "Gerenciar a janela de contexto: resumir, podar histórico e evitar poluir o contexto com saídas longas de ferramentas",
+    "Preservar informação crítica entre turnos longos (resumos, notas externas, memória fora do contexto)",
+    "Projetar para confiabilidade: retries com backoff, idempotência, timeouts e fallbacks",
+    "Medir qualidade e regressões com avaliações (evals) antes de promover mudanças de prompt ou ferramenta",
+  ]},
 ];
-const CIG_URLS=["https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/about-claude/models/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking","https://docs.anthropic.com/en/docs/build-with-claude/token-counting","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users","https://docs.anthropic.com/en/docs/claude-code/memory","https://docs.anthropic.com/en/docs/about-claude/models/overview","https://docs.anthropic.com/en/docs/about-claude/models/overview",null,null,"https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/structured-outputs","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",null,null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/claude-code/memory","https://docs.anthropic.com/en/docs/mcp","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/structured-outputs",null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/agents",null,"https://www.anthropic.com/pricing","https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching","https://docs.anthropic.com/en/api/errors","https://docs.anthropic.com/en/docs/build-with-claude/overview","https://docs.anthropic.com/en/docs/build-with-claude/security-best-practices","https://www.anthropic.com/legal/aup",null,"https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback","https://www.anthropic.com/responsible-scaling-policy","https://docs.anthropic.com/en/docs/build-with-claude/content-moderation","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users",null,"https://privacy.anthropic.com","https://trust.anthropic.com",null,null];
+const CIG_URLS=["https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/about-claude/models/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/extended-thinking","https://docs.anthropic.com/en/docs/build-with-claude/token-counting","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users","https://docs.anthropic.com/en/docs/claude-code/memory","https://docs.anthropic.com/en/docs/about-claude/models/overview","https://docs.anthropic.com/en/docs/about-claude/models/overview",null,null,"https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/use-xml-tags","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/structured-outputs","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview","https://docs.anthropic.com/en/docs/build-with-claude/prompt-engineering/overview",null,null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/claude-code/memory","https://docs.anthropic.com/en/docs/mcp","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/structured-outputs",null,"https://docs.anthropic.com/en/docs/build-with-claude/agents","https://docs.anthropic.com/en/docs/build-with-claude/agents",null,"https://www.anthropic.com/pricing","https://docs.anthropic.com/en/docs/build-with-claude/prompt-caching","https://docs.anthropic.com/en/api/errors","https://docs.anthropic.com/en/docs/build-with-claude/overview","https://docs.anthropic.com/en/docs/build-with-claude/security-best-practices","https://www.anthropic.com/legal/aup",null,"https://www.anthropic.com/research/constitutional-ai-harmlessness-from-ai-feedback","https://www.anthropic.com/responsible-scaling-policy","https://docs.anthropic.com/en/docs/build-with-claude/content-moderation","https://docs.anthropic.com/en/docs/build-with-claude/operators-and-users",null,"https://privacy.anthropic.com","https://trust.anthropic.com",null,null,"https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview","https://docs.anthropic.com/en/docs/build-with-claude/tool-use/overview","https://docs.anthropic.com/en/docs/mcp",null,null,"https://docs.anthropic.com/en/api/errors",null];
 
 StudyEngine.init({
   certId: 'ccaf',
