@@ -123,6 +123,9 @@ header p{color:var(--text2);font-size:15px;}
 
 .card.awssvc{background:linear-gradient(135deg,rgba(249,115,22,.15),rgba(251,146,60,.05));}
 .card.awssvc .cert-badge{background:rgba(249,115,22,.2);color:#fb923c;}
+.card.camlive{background:linear-gradient(135deg,rgba(244,63,94,.15),rgba(251,113,133,.05));}
+.card.camlive .cert-badge{background:rgba(244,63,94,.2);color:#fb7185;}
+.card.camlive:hover{box-shadow:0 20px 60px rgba(244,63,94,.2);border-color:rgba(244,63,94,.4);}
 .card.awssvc:hover{box-shadow:0 20px 60px rgba(249,115,22,.2);border-color:rgba(249,115,22,.4);}
 
 .hub-progress{display:none;align-items:center;gap:8px;font-size:11px;color:var(--text2);margin-bottom:14px;}
@@ -288,6 +291,17 @@ header p{color:var(--text2);font-size:15px;}
             <div class="ci"><div class="label">SAA-C03</div><div class="value">&#x2714;</div></div>
           </div>
         </a>
+        <!-- Camera Live -->
+        <a href="camera-live.html" class="card camlive" data-idx="7">
+          <div class="cert-icon">&#x1F4F7;</div>
+          <div class="cert-badge">FERRAMENTA</div>
+          <div class="cert-title">Camera Live</div>
+          <div class="cert-sub">Visualiza&#xE7;&#xE3;o de c&#xE2;mera ao vivo no navegador</div>
+          <div class="cert-info">
+            <div class="ci"><div class="label">Tipo</div><div class="value">Ferramenta</div></div>
+            <div class="ci"><div class="label">Modo</div><div class="value">Ao vivo</div></div>
+          </div>
+        </a>
 
       </div><!-- /c-track -->
     </div><!-- /c-wrap -->
@@ -303,6 +317,7 @@ header p{color:var(--text2);font-size:15px;}
     <button class="c-dot d4" onclick="goTo(4)"></button>
     <button class="c-dot d5" onclick="goTo(5)"></button>
     <button class="c-dot d6" onclick="goTo(6)"></button>
+    <button class="c-dot d7" onclick="goTo(7)"></button>
   </div>
   <p class="c-hint">← deslize para navegar →</p>
 </main>
@@ -326,7 +341,7 @@ header p{color:var(--text2);font-size:15px;}
 
 <script src="study-engine.js"></script>
 <script>
-var TOTAL = 7, cur = 0;
+var TOTAL = 8, cur = 0;
 function isMobile(){ return window.innerWidth <= 768; }
 
 function updateCarousel(){
