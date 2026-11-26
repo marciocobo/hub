@@ -1,0 +1,23 @@
+name: Deploy hub
+
+on:
+  push:
+    branches: [main]
+
+concurrency: deploy-hub
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configurar SSH
+        run: |
+          install -m 700 -d ~/.ssh
+          echo "${{ secrets.VPS_SSH_KEY }}" > ~/.ssh/id_ed25519
+          chmod 600 ~/.ssh/id_ed25519
+          echo "${{ secrets.VPS_KNOWN_HOSTS }}" > ~/.ssh/known_hosts
+      # a chave na VPS tem command= forçado: só executa `git pull --ff-only` em /root/hub
+      - name: Pull na VPS
+        run: ssh -o IdentitiesOnly=yes root@${{ secrets.VPS_HOST }}
+      - name: Verificar
+        run: curl -fsS https://hub.mcobo.com.br/ -o /dev/null
