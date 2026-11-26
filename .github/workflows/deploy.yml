@@ -8,6 +8,7 @@ concurrency: deploy-hub
 
 jobs:
   deploy:
+    environment: producao
     runs-on: ubuntu-latest
     steps:
       - name: Configurar SSH
