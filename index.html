@@ -31,7 +31,8 @@ header p{color:var(--text2);font-size:15px;}
 .card.dva .cert-badge{background:rgba(16,185,129,.2);color:#34d399;}
 .cert-title{font-size:19px;font-weight:800;margin-bottom:6px;line-height:1.3;}
 .cert-sub{font-size:13px;color:var(--text2);margin-bottom:20px;}
-.card-updated{margin-top:14px;font-size:11px;color:var(--text2);text-align:center;}
+.card-updated{position:absolute;top:20px;right:20px;padding:4px 10px;border-radius:99px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);font-size:11px;font-weight:600;line-height:1.4;white-space:nowrap;color:var(--text2);}
+@media(max-width:359px){.card-updated{top:16px;right:12px;padding:3px 8px;font-size:10px;}}
 .cert-info{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:20px;}
 .ci{background:var(--bg3);border-radius:8px;padding:10px 12px;}
 .ci .label{font-size:10px;text-transform:uppercase;letter-spacing:1px;color:var(--text3);font-weight:600;}
