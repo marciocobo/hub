@@ -96,6 +96,10 @@ Never read or write `hub_study_progress` directly from page code — go through 
 6. Verify: `node --check` the page's extracted inline script (syntax), and cross-check that every `getElementById`/`onclick` the engine references exists in the new page's markup (see the grep-based checks used during the original migration — `openspec/changes/unify-and-enhance-study-hub/` if not yet archived, or ask to re-derive them; they're not checked into the repo as a script).
 7. Open the page in a real browser and click through: dashboard load, one quiz, the full timed simulado + result screen + history, flashcard flip/known/unknown/due-badge, checklist toggle + reload-persistence, and the hub's progress indicator for the new card.
 
+## "Atualizado em" dates on the hub cards
+
+Every card on `index.html` shows the date of the last change to the page it opens. Don't edit these dates by hand: after changing a page (or adding a card), run `python3 scripts/update-card-dates.py` and commit `index.html` together with the page. `--check` verifies the dates without writing.
+
 ## Non-goals
 
 - No build step. `study-engine.js`/`.css` are hand-authored plain files, not bundled or transpiled. Don't introduce one for this.
