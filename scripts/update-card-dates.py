@@ -19,6 +19,7 @@ INDEX = ROOT / "index.html"
 BRT = timezone(timedelta(hours=-3))  # horário de Brasília
 
 CARD = re.compile(r'(<a href="([^"]+)" class="card\b[^>]*>)(.*?)(\r?\n[ \t]*</a>)', re.S)
+CARD_TAG = re.compile(r'<a\b[^>]*\sclass="card[ "]')  # todo link de card, em qualquer ordem
 STAMP = re.compile(r'\r?\n[ \t]*<div class="card-updated">.*?</div>')
 
 
@@ -55,6 +56,10 @@ def main():
     updated, total = CARD.subn(stamp, current)
     if not total:
         sys.exit("Nenhum card encontrado no index.html.")
+    # Um card fora do formato esperado ficaria sem data sem ninguém perceber.
+    found = len(CARD_TAG.findall(current))
+    if total != found:
+        sys.exit(f'Só {total} de {found} cards no formato esperado: <a href="..." class="card ...">')
     if "--check" in sys.argv[1:]:
         if updated != current:
             sys.exit("Datas dos cards desatualizadas: rode scripts/update-card-dates.py")
